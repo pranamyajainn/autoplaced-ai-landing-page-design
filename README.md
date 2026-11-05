@@ -45,3 +45,25 @@ Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json
 | `fonts/` | Geist and Instrument Serif (SIL Open Font License) |
 | `og.html` | Source for the share image `assets/og.jpg` |
 | `build.mjs` | The production build |
+| `brand/logo-options/` | Six logo directions: SVG and PNG files, plus one board image for each direction. These files are not part of the site build or the Vercel upload. |
+
+## Logo options
+
+There are six directions. None is final yet.
+
+| No. | Name | Idea |
+| --- | --- | --- |
+| 01 | Buddy | The robot mascot, redrawn on a strict grid |
+| 02 | Shades | A capital A that wears the robot's sunglasses |
+| 03 | Autopilot | A lowercase a with a dial inside, needle at full |
+| 04 | Night Shift | A moon that holds a tick: you sleep, it applies |
+| 05 | Signature | "auto" in Geist and "placed" in Instrument Serif italic |
+| 06 | Seal | A placement-cell stamp with the robot in the centre |
+
+Each direction has these files in `svg/` and `png/`:
+
+- `mark` and `mark-white`: the symbol alone, for light and dark backgrounds
+- `lockup` and `lockup-white`: the symbol with the name, for light and dark backgrounds
+- `icon`: the app icon
+
+The text in the name versions is converted to shapes, so the files work with no fonts installed.

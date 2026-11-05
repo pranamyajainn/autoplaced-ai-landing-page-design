@@ -1,0 +1,16 @@
+{
+  "name": "autoplaced-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "python3 -m http.server 4417 --bind 127.0.0.1"
+  },
+  "dependencies": {
+    "lenis": "1.3.4",
+    "three": "0.178.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10"
+  }
+}

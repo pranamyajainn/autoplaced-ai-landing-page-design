@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- Renders the 1200x630 social share image. Not linked from the site; screenshot it to assets/og.jpg. -->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1200, initial-scale=1">
+<title>Autoplaced share image</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.178.0/build/three.module.js"}}</script>
+<style>
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: #a6cdec; }
+  .og { position: fixed; inset: 0; z-index: 3; display: grid; justify-items: center; align-content: start; padding-top: 92px; text-align: center; }
+  .og .brand { position: fixed; top: 34px; left: 40px; font-size: 24px; }
+  .og .brand__bot { width: 40px; }
+  .og h1 { font-size: 104px; line-height: .9; letter-spacing: -.055em; font-weight: 620; color: #0c2a2d; }
+  .og h1 em { font-size: 1.1em; }
+  .og p { margin-top: 18px; font-size: 22px; color: #2f4b4d; }
+  .og .pill { position: fixed; top: 34px; right: 40px; }
+</style>
+</head>
+<body>
+<div class="scene" aria-hidden="true"><div class="scene__sky"></div><div class="scene__sun"></div><canvas class="scene__back" data-back></canvas></div>
+<canvas class="scene-front" data-front aria-hidden="true"></canvas>
+<div class="og">
+  <span class="brand"><span class="brand__bot" data-bot="cool"></span><span class="brand__word">autoplaced<span class="brand__dot">.ai</span></span></span>
+  <span class="chip pill"><span class="chip__tag">Founding seats</span><span>100+ applications free</span></span>
+  <h1>Your job search,<br><em>on autopilot.</em></h1>
+  <p>Finds roles, tailors your resume, applies and follows up while you prepare.</p>
+</div>
+<script type="module">
+  import { mountBots } from './js/bot.js';
+  import { createMeadow } from './js/meadow.js';
+  mountBots();
+  const m = createMeadow({ back: document.querySelector('[data-back]'), front: document.querySelector('[data-front]') });
+  m.setProgress(0.12);
+  window.ready = true;
+</script>
+</body>
+</html>

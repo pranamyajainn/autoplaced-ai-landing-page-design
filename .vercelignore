@@ -1,0 +1,5 @@
+og.html
+.vercel
+.env*
+.gitignore
+dist

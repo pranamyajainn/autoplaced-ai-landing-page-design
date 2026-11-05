@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Autoplaced | Your job search, on autopilot</title>
+<meta name="description" content="Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. Claim one of 100 free founding seats.">
+<meta name="theme-color" content="#8fc0e8">
+<meta property="og:title" content="Autoplaced | Your job search, on autopilot">
+<meta property="og:description" content="AI resume builder and job search agent. Claim one of 100 free founding seats.">
+<meta property="og:site_name" content="Autoplaced.ai">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://autoplaced-redesign.vercel.app/">
+<link rel="canonical" href="https://www.autoplaced.ai/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Autoplaced","url":"https://www.autoplaced.ai/","email":"hello@autoplaced.ai","sameAs":["https://www.linkedin.com/company/autoplaced/","https://www.instagram.com/autoplaced.ai/"]},{"@type":"SoftwareApplication","name":"Autoplaced","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI resume builder and job search agent that finds roles, tailors your resume to each one and applies for you.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}]}</script>
+<meta property="og:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Autoplaced: your job search, on autopilot. A sunlit meadow with the Autoplaced robot.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/styles.css">
+<!-- dev only: the production build bundles these and removes this map -->
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","lenis":"./node_modules/lenis/dist/lenis.mjs"}}</script>
+
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 20 20"><path d="M6 6l8 8M14 6l-8 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M13 13l3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 20 20"><path d="M10 2.5c.5 3.6 1.9 5 5.5 5.5-3.6.5-5 1.9-5.5 5.5-.5-3.6-1.9-5-5.5-5.5 3.6-.5 5-1.9 5.5-5.5zM15.5 13c.2 1.4.8 2 2.2 2.2-1.4.2-2 .8-2.2 2.2-.2-1.4-.8-2-2.2-2.2 1.4-.2 2-.8 2.2-2.2z" fill="currentColor"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 20 20"><rect x="4.5" y="9" width="11" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 9V6.8a3 3 0 016 0V9" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 20 20"><path d="M3.5 14a6.5 6.5 0 1113 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 14l3-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 20 20"><path d="M10 2.8l5.8 2.3v4.4c0 3.7-2.5 6.4-5.8 7.7-3.3-1.3-5.8-4-5.8-7.7V5.1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.3 10l1.9 1.9 3.6-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 20 20"><path d="M3 10s2.6-5 7-5 7 5 7 5-2.6 5-7 5-7-5-7-5z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="10" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 16L16 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 20 20"><rect x="3" y="5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 6l6.5 5 6.5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 20 20"><path d="M6 2.8h5.5L15 6.3v10.9H6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M11.3 3v3.5H15M8 10h5M8 13h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 20 20"><path d="M7 5.5v9l7.5-4.5z" fill="currentColor"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9.75h4v11H3zm7 0h3.8v1.5h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1v6.45h-4v-5.7c0-1.36-.03-3.11-1.9-3.11-1.9 0-2.2 1.48-2.2 3v5.81h-4z" fill="currentColor"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 00-7.6 13.2L3.2 20.8l4.5-1.2A8.8 8.8 0 1012 3.2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 8.2c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.6l-.5.6c-.1.2-.1.4 0 .5.6 1 1.4 1.8 2.4 2.3.2.1.4.1.5 0l.6-.7c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .9-.6 1.8-1.6 1.9-1 .1-2.7-.3-4.5-2-1.8-1.6-2.5-3.4-2.5-4.4 0-.6.4-1.3.8-1.6z" fill="currentColor"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="dock" data-dock>
+  <a class="btn btn--ink btn--lg" href="https://www.autoplaced.ai/claim?from=dock">Claim my free seat <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+  <span class="dock__note"><b data-seats-left>56</b> left</span>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" data-nav>
+  <div class="nav__bar">
+    <a class="brand" href="#top" aria-label="Autoplaced home">
+      <span class="brand__bot" data-bot="cool"></span>
+      <span class="brand__word">autoplaced<span class="brand__dot">.ai</span></span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#resume">Resume builder</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav__cta">
+      <a class="nav__login" href="https://www.autoplaced.ai/login">Log in</a>
+      <a class="btn btn--ink btn--sm" href="https://www.autoplaced.ai/claim?from=nav">Claim free seat</a>
+      <button class="nav__burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu" data-burger><span class="burger__label" aria-hidden="true"><span>Menu</span><span>Close</span></span><span class="burger__icon" aria-hidden="true"><i></i><i></i></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- phone and tablet menu: grows out of the menu button -->
+<div class="msheet" id="menu" data-menu aria-hidden="true" inert>
+  <div class="msheet__glow" aria-hidden="true"></div>
+  <nav class="msheet__inner" aria-label="Mobile">
+    <p class="msheet__hello" data-stagger style="--i:0"><i aria-hidden="true"></i><span data-hello>Your agent never sleeps</span></p>
+    <span class="msheet__bot" data-bot="cool" data-sheet-bot aria-hidden="true"></span>
+    <ul class="msheet__links">
+      <li data-stagger style="--i:1"><a href="#how"><span>How it works</span><em>4 steps, start to finish</em></a></li>
+      <li data-stagger style="--i:2"><a href="#control"><span>Control</span><em>Manual to full auto</em></a></li>
+      <li data-stagger style="--i:3"><a href="#resume"><span>Resume builder</span><em>New</em></a></li>
+      <li data-stagger style="--i:4"><a href="#pricing"><span>Pricing</span><em>Free to start</em></a></li>
+      <li data-stagger style="--i:5"><a href="#faq"><span>FAQ</span><em>10 answers</em></a></li>
+    </ul>
+    <div class="msheet__foot" data-stagger style="--i:6">
+      <a class="btn btn--sun btn--lg btn--block" href="https://www.autoplaced.ai/claim?from=menu">Claim my free seat <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <p class="msheet__meta"><span class="msheet__bar" aria-hidden="true"><i data-seats-bar></i></span><span><b data-seats-left>56</b> of 100 founding seats left</span></p>
+      <div class="msheet__row">
+        <a href="https://www.autoplaced.ai/login">Log in</a>
+        <div class="social">
+          <a href="https://www.linkedin.com/company/autoplaced/" aria-label="Autoplaced on LinkedIn" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-in"/></svg></a>
+          <a href="https://www.instagram.com/autoplaced.ai/" aria-label="Autoplaced on Instagram" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-ig"/></svg></a>
+          <a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" aria-label="Join the Autoplaced WhatsApp community" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-wa"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ============ LIVE SCENE (fixed behind hero + final CTA) ============ -->
+<div class="scene" data-scene aria-hidden="true">
+  <div class="scene__sky"></div>
+  <div class="scene__sun"></div>
+  <canvas class="scene__back" data-back></canvas>
+  <div class="scene__fallback"></div>
+</div>
+<canvas class="scene-front" data-front aria-hidden="true"></canvas>
+<div class="peek" data-peek aria-hidden="true">
+  <span class="peek__shadow"></span>
+  <span class="peek__bot" data-bot="skeptic" data-hero-bot></span>
+  <div class="bubble" data-bubble><span data-bubble-text>Same form, 50th time today?</span></div>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" data-hero>
+  <div class="hero__pin">
+    <div class="hero__copy" data-hero-copy>
+      <h1 class="hero__title">
+        <span class="hero__line"><span>Your job search,</span></span>
+        <span class="hero__line"><em>on autopilot.</em></span>
+      </h1>
+      <p class="hero__sub">Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. You wake up to replies.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--ink btn--lg" href="https://www.autoplaced.ai/claim?from=hero">
+          Claim my free seat
+          <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+      <p class="hero__fine"><span class="hero__seats"><i></i><b data-seats-left>56</b> of 100 founding seats left</span><span>Free · No card · You approve what goes out</span></p>
+    </div>
+
+    <!-- product window rising out of the valley -->
+    <div class="app" data-app role="img" aria-label="Autoplaced app: the agent has found 8 matching jobs at companies like CRED, Swiggy, PhonePe and Razorpay, and is applying to the best fits.">
+      <div class="app__frame" aria-hidden="true">
+        <div class="app__chrome">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="app__url"><svg width="11" height="11"><use href="#i-lock"/></svg>app.autoplaced.ai/find-jobs</span>
+          <span class="app__sample">Sample data</span>
+          <span class="app__live"><i class="pulse"></i>Agent running</span>
+        </div>
+        <div class="app__body">
+          <aside class="app__side">
+            <div class="app__brand"><span data-bot="cool"></span>Autoplaced</div>
+            <ul class="app__nav">
+              <li>Dashboard</li>
+              <li class="is-on">Find jobs</li>
+              <li>Resumes</li>
+              <li>Applications <em>62</em></li>
+              <li>Referrals <em class="new">New</em></li>
+              <li>Recruiter outreach</li>
+              <li>Interview prep</li>
+              <li>Inbox <em>3</em></li>
+            </ul>
+            <div class="agentcard">
+              <div class="agentcard__top"><span>Agent</span><span class="agentcard__state"><i></i>Running</span></div>
+              <div class="agentcard__mode">Approve-first</div>
+              <div class="agentcard__bar"><span data-agent-bar style="width:56%"></span></div>
+              <div class="agentcard__count"><b data-agent-count>14</b> / 25 applications today</div>
+            </div>
+          </aside>
+          <div class="app__main">
+            <div class="app__search">
+              <svg width="15" height="15"><use href="#i-search"/></svg>
+              <span>Senior PM · Fintech · Bengaluru</span>
+              <b>Search</b>
+            </div>
+            <div class="app__filters">
+              <span class="fpill is-on">Past month <svg width="10" height="10"><use href="#i-x"/></svg></span>
+              <span class="fpill">Location</span><span class="fpill">Workplace</span><span class="fpill">Companies</span><span class="fpill">Match ≥ 70%</span>
+            </div>
+            <div class="app__listhead"><b>8 job matches for you</b><span class="scan"><i></i>Scanning 20+ sources</span></div>
+            <ul class="jobs" data-jobs>
+              <li class="job">
+                <span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span>
+                <div class="job__info"><b>Product Manager, Rewards</b><span>CRED · Bengaluru · Onsite · ₹32–48 LPA</span></div>
+                <span class="score" style="--s:92"><i>92</i></span>
+                <span class="status status--done"><svg width="11" height="11"><use href="#i-check"/></svg>Applied</span>
+              </li>
+              <li class="job">
+                <span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span>
+                <div class="job__info"><b>Senior PM, Instamart Supply</b><span>Swiggy · Bengaluru · Hybrid · ₹40–55 LPA</span></div>
+                <span class="score" style="--s:88"><i>88</i></span>
+                <span class="status status--work" data-cycle><span class="spin"></span>Tailoring resume</span>
+              </li>
+              <li class="job">
+                <span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span>
+                <div class="job__info"><b>Lead PM, UPI Merchant Payments</b><span>PhonePe · Pune · Hybrid · ₹45–60 LPA</span></div>
+                <span class="score" style="--s:84"><i>84</i></span>
+                <span class="status status--wait">Needs approval</span>
+              </li>
+              <li class="job is-selected">
+                <span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
+                <div class="job__info"><b>Senior PM, Payments Platform</b><span>Razorpay · Bengaluru · Hybrid · ₹38–52 LPA</span></div>
+                <span class="score" style="--s:78"><i>78</i></span>
+                <span class="status">Selected</span>
+              </li>
+            </ul>
+            <div class="runbar">
+              <span class="mono">Today's run</span>
+              <span><b>1,284</b> postings scanned</span>
+              <span><b>31</b> matches</span>
+              <span><b>3</b> recruiter replies</span>
+            </div>
+          </div>
+          <div class="app__detail">
+            <div class="detail__head">
+              <span class="logo logo--lg logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
+              <div><b>Senior Product Manager, Payments Platform</b><span>Razorpay · posted 2 hours ago</span></div>
+            </div>
+            <div class="detail__facts">
+              <div><span>Salary</span><b>₹38–52 LPA</b></div>
+              <div><span>Experience</span><b>5–8 yrs</b></div>
+              <div><span>Location</span><b>Bengaluru · Hybrid</b></div>
+            </div>
+            <div class="detail__why">
+              <span class="mono"><svg width="12" height="12"><use href="#i-spark"/></svg>Why you match</span>
+              <p>Good fit: you have 6 of the 9 skills this role asks for.</p>
+              <div class="tags">
+                <span class="tag tag--yes">SQL</span><span class="tag tag--yes">Payments</span><span class="tag tag--yes">A/B testing</span>
+                <span class="tag tag--yes">Roadmapping</span><span class="tag tag--yes">UPI</span><span class="tag tag--yes">Analytics</span>
+                <span class="tag tag--no">Go</span><span class="tag tag--no">Risk &amp; fraud</span><span class="tag tag--no">Compliance</span>
+              </div>
+            </div>
+            <div class="detail__resume">
+              <span class="detail__doc"><svg width="14" height="14"><use href="#i-doc"/></svg></span>
+              <div><b>Resume v3 · Payments</b><span>Tailored 2 min ago</span></div>
+              <span class="score score--sm" style="--s:91"><i>91</i></span>
+            </div>
+            <div class="detail__cta"><svg width="13" height="13"><use href="#i-spark"/></svg>Tailor resume to this job</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page">
+
+<!-- ============ PROOF ============ -->
+<section class="proof" aria-labelledby="proof-title">
+  <p class="proof__title" id="proof-title">Applies on the job boards and ATS portals you already use</p>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span><i class="ico ico--glyph" style="--c:#24a47f"><img src="assets/logos/greenhouse.svg" alt="" width="22" height="22" loading="lazy"></i>Greenhouse</span><span><i class="ico"><img src="assets/logos/lever.png" alt="" width="22" height="22" loading="lazy"></i>Lever</span><span><i class="ico ico--pad" style="--c:#fff"><img src="assets/logos/workday.svg" alt="" width="22" height="22" loading="lazy"></i>Workday</span><span><i class="ico"><img src="assets/logos/ashby.png" alt="" width="22" height="22" loading="lazy"></i>Ashby</span><span><i class="ico ico--pad" style="--c:#fff"><img src="assets/logos/smartrecruiters.png" alt="" width="22" height="22" loading="lazy"></i>SmartRecruiters</span><span><i class="ico"><img src="assets/logos/naukri.png" alt="" width="22" height="22" loading="lazy"></i>Naukri</span><span><i class="ico ico--glyph" style="--c:#000"><img src="assets/logos/wellfound.svg" alt="" width="22" height="22" loading="lazy"></i>Wellfound</span><span><i class="ico ico--glyph" style="--c:#003a9b"><img src="assets/logos/indeed.svg" alt="" width="22" height="22" loading="lazy"></i>Indeed</span><span><i class="ico"><img src="assets/logos/instahyre.png" alt="" width="22" height="22" loading="lazy"></i>Instahyre</span><span><i class="ico ico--pad" style="--c:#fff"><img src="assets/logos/foundit.png" alt="" width="22" height="22" loading="lazy"></i>Foundit</span><span><i class="ico"><img src="assets/logos/remoteok.png" alt="" width="22" height="22" loading="lazy"></i>RemoteOK</span>
+      <span><i class="ico ico--glyph" style="--c:#24a47f"><img src="assets/logos/greenhouse.svg" alt="" width="22" height="22" loading="lazy"></i>Greenhouse</span><span><i class="ico"><img src="assets/logos/lever.png" alt="" width="22" height="22" loading="lazy"></i>Lever</span><span><i class="ico ico--pad" style="--c:#fff"><img src="assets/logos/workday.svg" alt="" width="22" height="22" loading="lazy"></i>Workday</span><span><i class="ico"><img src="assets/logos/ashby.png" alt="" width="22" height="22" loading="lazy"></i>Ashby</span><span><i class="ico ico--pad" style="--c:#fff"><img src="assets/logos/smartrecruiters.png" alt="" width="22" height="22" loading="lazy"></i>SmartRecruiters</span><span><i class="ico"><img src="assets/logos/naukri.png" alt="" width="22" height="22" loading="lazy"></i>Naukri</span><span><i class="ico ico--glyph" style="--c:#000"><img src="assets/logos/wellfound.svg" alt="" width="22" height="22" loading="lazy"></i>Wellfound</span><span><i class="ico ico--glyph" style="--c:#003a9b"><img src="assets/logos/indeed.svg" alt="" width="22" height="22" loading="lazy"></i>Indeed</span><span><i class="ico"><img src="assets/logos/instahyre.png" alt="" width="22" height="22" loading="lazy"></i>Instahyre</span><span><i class="ico ico--pad" style="--c:#fff"><img src="assets/logos/foundit.png" alt="" width="22" height="22" loading="lazy"></i>Foundit</span><span><i class="ico"><img src="assets/logos/remoteok.png" alt="" width="22" height="22" loading="lazy"></i>RemoteOK</span>
+    </div>
+  </div>
+  <p class="sr-only">Supported: Greenhouse, Lever, Workday, Ashby, SmartRecruiters, Naukri, Wellfound, Indeed, Instahyre, Foundit and RemoteOK.</p>
+  <p class="statline" data-reveal>Watching <b>2 lakh+</b> live openings at <b>50,000+</b> companies across <b>20+</b> job sites. New roles get picked up <b>within hours</b>, day and night.</p>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how" id="how" aria-labelledby="how-title" data-how>
+  <header class="shead" data-reveal>
+    <span class="eyebrow">How it works</span>
+    <h2 id="how-title">Every job site. <em>One list worth your time.</em></h2>
+    <p>Tell Autoplaced what you want in plain words. It searches everywhere, scores every role and applies only to the best ones.</p>
+  </header>
+
+  <div class="how__grid">
+    <ol class="how__steps">
+      <li class="step" data-step="0">
+        <span class="step__num">01 · Find</span>
+        <h3>Finds jobs that actually fit</h3>
+        <p>Scans job boards and career pages day and night, removes duplicates and scores every role against your profile. Every score comes with the reasons.</p>
+        <ul class="step__points"><li>Same job on three sites? You see it once</li><li>A match score, with the reasons</li></ul>
+      </li>
+      <li class="step" data-step="1">
+        <span class="step__num">02 · Tailor</span>
+        <h3>Tailors your resume for every role</h3>
+        <p>Rewrites and reorders your real experience to match each job description. It never adds skills you don't have. Before anything goes out, you see its ATS score: how well the software companies use to filter resumes can read it.</p>
+        <ul class="step__points"><li>Uses only experience you have</li><li>ATS score before you send</li></ul>
+      </li>
+      <li class="step" data-step="2">
+        <span class="step__num">03 · Apply</span>
+        <h3>Applies in seconds, not evenings</h3>
+        <p>Fills every form from your profile and your saved answers. If it isn't sure about an answer, it stops and asks you instead of guessing.</p>
+        <ul class="step__points"><li>Works on Workday, Greenhouse, Lever and more</li><li>Human pace, with daily limits</li></ul>
+      </li>
+      <li class="step" data-step="3">
+        <span class="step__num">04 · Follow up</span>
+        <h3>Follows up with recruiters and tracks every reply</h3>
+        <p>Drafts personal notes to recruiters for your top roles, sent only when you say so. Inbox sync moves your pipeline when replies land, with a record of exactly what was sent.</p>
+        <ul class="step__points"><li>Recruiter and LinkedIn notes</li><li>One pipeline, auto-synced</li></ul>
+      </li>
+    </ol>
+
+    <div class="how__stage" aria-hidden="true">
+      <div class="device" data-device>
+        <span class="tint tint--0"></span><span class="tint tint--1"></span><span class="tint tint--2"></span><span class="tint tint--3"></span>
+        <!-- 01 find -->
+        <div class="screen screen--find" data-screen="0">
+          <div class="prompt"><span class="prompt__label">Find me</span><span class="prompt__text">Senior PM roles in fintech, Bengaluru</span><span class="caret"></span></div>
+          <div class="flow">
+            <div class="sources">
+              <span><i class="ico"><img src="assets/logos/naukri.png" alt="" width="22" height="22" loading="lazy"></i>Naukri</span><span><i class="ico"><img src="assets/logos/instahyre.png" alt="" width="22" height="22" loading="lazy"></i>Instahyre</span><span><i class="ico ico--glyph" style="--c:#000"><img src="assets/logos/wellfound.svg" alt="" width="22" height="22" loading="lazy"></i>Wellfound</span><span><i class="ico ico--glyph" style="--c:#24a47f"><img src="assets/logos/greenhouse.svg" alt="" width="22" height="22" loading="lazy"></i>Greenhouse</span><span><i class="ico"><img src="assets/logos/lever.png" alt="" width="22" height="22" loading="lazy"></i>Lever</span>
+            </div>
+            <svg class="flow__lines" viewBox="0 0 120 220" preserveAspectRatio="none">
+              <path d="M0 22 C60 22 60 110 120 110"/><path d="M0 66 C60 66 60 110 120 110"/><path d="M0 110 C60 110 60 110 120 110"/><path d="M0 154 C60 154 60 110 120 110"/><path d="M0 198 C60 198 60 110 120 110"/>
+            </svg>
+            <svg class="flow__lines flow__lines--down" viewBox="0 0 300 36" preserveAspectRatio="none"><path d="M50 0 C50 20 150 16 150 36"/><path d="M150 0 L150 36"/><path d="M250 0 C250 20 150 16 150 36"/></svg>
+            <ul class="ranked">
+              <li><span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span><b>CRED</b><span class="bar"><i style="--w:92%"></i></span><em>92</em></li>
+              <li><span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span><b>Swiggy</b><span class="bar"><i style="--w:88%"></i></span><em>88</em></li>
+              <li><span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span><b>PhonePe</b><span class="bar"><i style="--w:84%"></i></span><em>84</em></li>
+              <li><span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span><b>Razorpay</b><span class="bar"><i style="--w:78%"></i></span><em>78</em></li>
+            </ul>
+          </div>
+          <div class="fresh"><span class="fresh__dot"></span><div><b>First in line, every time.</b><span>Posted 4 min ago · applied in 6 min · you're applicant #3 of 200+</span></div></div>
+        </div>
+
+        <!-- 02 tailor -->
+        <div class="screen screen--tailor" data-screen="1">
+          <div class="doc">
+            <div class="doc__head"><b>Himanshu Jain</b><span>Product Manager · Bengaluru</span></div>
+            <span class="doc__label">Experience</span>
+            <div class="diff">
+              <p class="diff__old"><s>Worked on the payments product.</s></p>
+              <p class="diff__new"><svg width="12" height="12"><use href="#i-spark"/></svg><span>Launched UPI checkout, lifting conversion 12%.</span></p>
+            </div>
+            <div class="diff">
+              <p class="diff__old"><s>Responsible for roadmap and stakeholders.</s></p>
+              <p class="diff__new"><svg width="12" height="12"><use href="#i-spark"/></svg><span>Owned a 4-quarter roadmap across 3 squads.</span></p>
+            </div>
+            <span class="doc__label">Skills matched to this job</span>
+            <div class="tags"><span class="tag tag--yes">SQL</span><span class="tag tag--yes">Payments</span><span class="tag tag--yes">A/B testing</span><span class="tag tag--yes">Roadmapping</span></div>
+          </div>
+          <div class="ats">
+            <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" class="ats__track"/><circle cx="60" cy="60" r="50" class="ats__val"/></svg>
+            <div class="ats__num"><b data-ats>91</b><span>ATS score</span></div>
+          </div>
+        </div>
+
+        <!-- 03 apply -->
+        <div class="screen screen--apply" data-screen="2">
+          <div class="form">
+            <div class="form__head"><span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span><div><b>Senior PM, Payments Platform</b><span>Razorpay · careers page</span></div></div>
+            <div class="field"><span>Full name</span><b>Himanshu Jain</b><i class="ok"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+            <div class="field"><span>Notice period</span><b>30 days</b><i class="ok"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+            <div class="field"><span>Why this role?</span><b>Drafted from your profile</b><i class="ok"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
+            <div class="field field--ask"><span>Visa sponsorship</span><b>Needs you</b><i class="ask">?</i></div>
+            <div class="form__foot"><span class="progress"><i></i></span><span class="form__state">Submitting at a human pace</span></div>
+          </div>
+        </div>
+
+        <!-- 04 follow up -->
+        <div class="screen screen--follow" data-screen="3">
+          <div class="mail">
+            <div class="mail__to"><svg width="13" height="13"><use href="#i-mail"/></svg>To: Hiring Manager · Razorpay</div>
+            <p>Hi Priya, I just applied for the PM role and noticed your team is rebuilding checkout. I led a similar rebuild at my last company and would love to share what worked…</p>
+            <div class="mail__actions"><span class="btn-mini">Edit</span><span class="btn-mini btn-mini--ink">Approve &amp; send <svg width="12" height="12"><use href="#i-arrow"/></svg></span></div>
+          </div>
+          <ul class="pipe">
+            <li><span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span><div><b>Product Manager, Rewards</b><span>CRED</span></div><em class="st st--int">Interview</em></li>
+            <li><span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span><div><b>Senior PM, Instamart</b><span>Swiggy</span></div><em class="st st--view">Viewed</em></li>
+            <li><span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span><div><b>Lead PM, UPI</b><span>PhonePe</span></div><em class="st">Applied</em></li>
+          </ul>
+        </div>
+      </div>
+      <div class="how__dots"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTROL ============ -->
+<section class="control" id="control" aria-labelledby="control-title">
+  <header class="shead" data-reveal>
+    <span class="eyebrow">You set the dial</span>
+    <h2 id="control-title">You decide how much <em>it does alone.</em></h2>
+  </header>
+
+  <div class="control__grid" data-control>
+    <div class="dial">
+      <div class="dial__face" data-dial-face>
+        <svg viewBox="0 0 320 200" class="dial__svg" aria-hidden="true">
+          <defs><linearGradient id="dialg" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#4cc0c8"/><stop offset="1" stop-color="#f2b542"/></linearGradient></defs>
+          <path class="dial__track" d="M30 180 A130 130 0 0 1 290 180"/>
+          <path class="dial__fill" d="M30 180 A130 130 0 0 1 290 180" data-dial-fill/>
+          <g class="dial__ticks" data-ticks></g>
+          <g class="dial__needle" data-needle><g class="dial__wobble"><line x1="160" y1="180" x2="160" y2="80"/><circle cx="160" cy="80" r="7"/><circle cx="160" cy="80" r="2.6" class="dial__knob"/></g></g>
+          <circle cx="160" cy="180" r="17" class="dial__hub"/><circle cx="160" cy="180" r="6" class="dial__hubdot"/>
+        </svg>
+        <button type="button" class="dial__pick dial__pick--0" data-dial-pick="0" tabindex="-1" aria-hidden="true">Manual</button>
+        <button type="button" class="dial__pick dial__pick--1" data-dial-pick="1" tabindex="-1" aria-hidden="true">Approve-first</button>
+        <button type="button" class="dial__pick dial__pick--2" data-dial-pick="2" tabindex="-1" aria-hidden="true">Full auto</button>
+      </div>
+      <p class="dial__readout" data-readout aria-hidden="true"><b>1 tap</b><span>approves the whole batch</span></p>
+      <p class="dial__hint" aria-hidden="true">Drag the needle</p>
+      <div class="lane" data-lane data-lane-mode="1" aria-hidden="true">
+        <div class="lane__head"><span>Matched roles</span><span data-lane-note>Batched for your OK</span><span>Sent <b data-lane-sent>0</b></span></div>
+        <div class="lane__track" data-lane-track>
+          <span class="lane__gate" data-gate><em data-gate-label>Approve all</em></span>
+          <span class="lane__tray">Needs you</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modes">
+      <div class="seg" role="tablist" aria-label="Automation level">
+        <button role="tab" id="t-manual" aria-controls="p-mode" aria-selected="false" data-mode="0">Manual</button>
+        <button role="tab" id="t-approve" aria-controls="p-mode" aria-selected="true" data-mode="1">Approve-first</button>
+        <button role="tab" id="t-auto" aria-controls="p-mode" aria-selected="false" data-mode="2">Full auto</button>
+        <span class="seg__glide" data-glide aria-hidden="true"></span>
+        <span class="seg__progress" aria-hidden="true"><i data-progress></i></span>
+      </div>
+      <div class="mode" id="p-mode" role="tabpanel" tabindex="0" aria-labelledby="t-approve" data-mode-panel>
+        <h3 data-mode-title>Review a daily batch, approve in bulk</h3>
+        <p data-mode-text>Every application is prepared and waits for your thumbs-up. Only roles above your score threshold make the list.</p>
+        <p class="mode__best"><span>Best for</span><b data-mode-best>Employed and open to the right role</b></p>
+      </div>
+      <ul class="trust">
+        <li><svg width="18" height="18"><use href="#i-lock"/></svg>Encrypted credentials</li>
+        <li><svg width="18" height="18"><use href="#i-gauge"/></svg>Daily caps and cool-downs</li>
+        <li><svg width="18" height="18"><use href="#i-shield"/></svg>No CAPTCHA bypass</li>
+        <li><svg width="18" height="18"><use href="#i-eye-off"/></svg>Not used for AI training</li>
+      </ul>
+      <a class="btn btn--ink control__cta" href="https://www.autoplaced.ai/claim?from=control">Claim my free seat <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A DAY ON AUTOPILOT ============ -->
+<section class="day" id="day" aria-labelledby="day-title" data-day>
+  <div class="day__pin">
+    <div class="day__sky"></div>
+    <div class="day__stars"></div>
+    <div class="day__orb day__orb--sun" data-sun></div>
+    <div class="day__orb day__orb--moon" data-moon></div>
+    <svg class="day__hills" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true">
+      <path class="h3" data-hill="3"/><path class="h2" data-hill="2"/><path class="h1" data-hill="1"/>
+    </svg>
+    <span class="day__bot" data-bot="cool" data-day-bot></span>
+
+    <div class="day__content">
+      <div class="day__panel">
+        <span class="eyebrow">24 hours with your agent</span>
+        <h2 id="day-title">It works the night shift, <em>so you don't have to.</em></h2>
+        <div class="day__clock" aria-hidden="true"><span data-clock>6:00</span><small data-ampm>AM</small></div>
+        <ol class="day__events">
+          <li data-ev="0"><b class="sr-only">6:00 AM.</b><p>Scans overnight postings across job sites and career pages.</p></li>
+          <li data-ev="1"><b class="sr-only">11:00 AM.</b><p>Tailors a resume for each top match and applies.</p></li>
+          <li data-ev="2"><b class="sr-only">3:00 PM.</b><p>Drafts notes to recruiters for your priority roles.</p></li>
+          <li data-ev="3"><b class="sr-only">8:00 PM.</b><p>Syncs replies, moves your pipeline and plans tomorrow.</p></li>
+          <li data-ev="4"><b class="sr-only">2:00 AM.</b><p>Still watching. New roles get picked up within hours.</p></li>
+          <li data-ev="5"><b class="sr-only">Next morning.</b><p>You wake up to replies to read, not forms to fill.</p></li>
+        </ol>
+      </div>
+      <ol class="feed" aria-hidden="true">
+        <li class="note" data-note="0"><span class="note__ico note__ico--teal"><svg width="16" height="16"><use href="#i-search"/></svg></span><div><b>Found 38 new roles overnight</b><span>Naukri, Lever and 18 more sites</span></div><time>5:58 AM</time></li>
+        <li class="note" data-note="1"><span class="note__ico note__ico--ok"><svg width="16" height="16"><use href="#i-check"/></svg></span><div><b>Applied to 12 roles</b><span>Each with its own tailored resume</span></div><time>10:56 AM</time></li>
+        <li class="note" data-note="2"><span class="note__ico note__ico--sun"><svg width="16" height="16"><use href="#i-mail"/></svg></span><div><b>3 recruiter notes drafted</b><span>Waiting for your OK</span></div><time>2:58 PM</time></li>
+        <li class="note" data-note="3"><span class="note__ico note__ico--teal"><svg width="16" height="16"><use href="#i-spark"/></svg></span><div><b>2 replies synced</b><span>Pipeline updated</span></div><time>7:55 PM</time></li>
+        <li class="note" data-note="4"><span class="note__ico note__ico--night"><svg width="16" height="16"><use href="#i-search"/></svg></span><div><b>4 roles posted after midnight</b><span>Queued for the morning run</span></div><time>1:57 AM</time></li>
+        <li class="note note--hero" data-note="5"><span class="note__ico note__ico--sun"><svg width="16" height="16"><use href="#i-mail"/></svg></span><div><b>Reply from Razorpay</b><span>“Are you free for a call this week?”</span></div><time>7:24 AM</time></li>
+      </ol>
+    </div>
+    <div class="day__track" aria-hidden="true"><span data-track></span><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- ============ RESUME BUILDER ============ -->
+<section class="resume" id="resume" aria-labelledby="resume-title">
+  <div class="resume__grid">
+    <div class="resume__copy">
+      <header class="shead shead--left" data-reveal>
+        <span class="eyebrow"><span class="newtag">New</span> AI Resume Builder</span>
+        <h2 id="resume-title">One resume. <em>A sharper version for every job.</em></h2>
+        <p>Build it once. Autoplaced rewrites, tailors and ATS-scores it for every role you apply to, using only experience you actually have.</p>
+      </header>
+      <ol class="trio" data-reveal>
+        <li><span>01</span><b>Build</b><p>From scratch, a template or your old PDF.</p></li>
+        <li><span>02</span><b>Tailor</b><p>A version shaped for every job, automatically.</p></li>
+        <li><span>03</span><b>Score</b><p>See your ATS score before you hit send.</p></li>
+      </ol>
+      <ul class="facts" data-reveal>
+        <li>Never invents experience</li><li>Every version saved</li><li>ATS-safe templates for Workday, Greenhouse and Lever</li><li>Export to PDF or DOCX</li>
+      </ul>
+      <a class="btn btn--ink" href="https://www.autoplaced.ai/claim?from=resume" data-reveal>Claim a seat, build your resume <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+    </div>
+
+    <div class="resume__art" data-resume aria-hidden="true">
+      <div class="sheet">
+        <div class="sheet__top">
+          <div><b>Himanshu Jain</b><span>Product Manager · Bengaluru</span></div>
+          <span class="sheet__tpl">Classic template</span>
+        </div>
+        <span class="sheet__label">Experience</span>
+        <div class="sheet__role"><b>Product Manager, Payments</b><span>Payments startup · 2021 – now</span></div>
+        <div class="rewrite">
+          <span class="rewrite__old">• Worked on the payments product.</span>
+          <span class="rewrite__new"><span class="rewrite__ai">AI</span><span data-type="Launched UPI checkout, lifting conversion 12%."></span></span>
+        </div>
+        <ul class="sheet__bullets"><li>Ran pricing experiments across 4 merchant segments.</li><li>Cut payment failures by working with risk and engineering.</li></ul>
+        <span class="sheet__label">Skills</span>
+        <div class="tags"><span class="tag">SQL</span><span class="tag">Payments</span><span class="tag">A/B testing</span><span class="tag">Roadmapping</span></div>
+      </div>
+      <div class="float float--ats"><span class="ring" style="--p:0" data-ring><b data-ring-num>0</b></span><div><b>ATS score</b><span>Parses cleanly in Workday</span></div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="compare" aria-labelledby="compare-title">
+  <header class="shead" data-reveal>
+    <span class="eyebrow">The difference</span>
+    <h2 id="compare-title">The old way <em>vs. Autoplaced</em></h2>
+  </header>
+  <div class="table" role="table" aria-label="Doing it yourself compared with Autoplaced" data-reveal>
+    <div class="table__row table__row--head" role="row">
+      <span role="columnheader">Task</span><span role="columnheader">Doing it yourself</span><span role="columnheader"><span class="table__brand"><span data-bot="cool"></span>With Autoplaced</span></span>
+    </div>
+    <div class="table__row" role="row"><span role="rowheader">Writing a resume</span><span role="cell">Hours in Word, guessing ATS rules</span><span role="cell">AI builds it, ATS-checked</span></div>
+    <div class="table__row" role="row"><span role="rowheader">Finding roles</span><span role="cell">10+ tabs, every morning</span><span role="cell">Scanned 24×7, de-duplicated</span></div>
+    <div class="table__row" role="row"><span role="rowheader">Choosing what to apply to</span><span role="cell">Gut feel</span><span role="cell">Match score with reasons</span></div>
+    <div class="table__row" role="row"><span role="rowheader">Tailoring per job</span><span role="cell">Usually skipped</span><span role="cell">Every application, automatically</span></div>
+    <div class="table__row" role="row"><span role="rowheader">Filling forms</span><span role="cell">15–30 min each</span><span role="cell">Seconds, from your profile</span></div>
+    <div class="table__row" role="row"><span role="rowheader">Tracking replies</span><span role="cell">A spreadsheet you abandon</span><span role="cell">Auto-synced from your inbox</span></div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="pricing" aria-labelledby="pricing-title">
+  <header class="shead" data-reveal>
+    <span class="eyebrow">Pricing</span>
+    <h2 id="pricing-title">Start free. <em>Upgrade when it clicks.</em></h2>
+    <p>The free plan stays free. Paid plans launch soon, and founding members pay <b>half, for life.</b></p>
+  </header>
+  <div class="plans">
+    <article class="plan" data-reveal>
+      <h3>Free</h3>
+      <p class="plan__for">Build your resume and try the agent</p>
+      <p class="plan__price"><b>₹0</b><span>forever</span></p>
+      <a class="btn btn--line" href="https://www.autoplaced.ai/claim?from=pricing">Start free</a>
+      <ul>
+        <li>AI Resume Builder (1 resume)</li><li>ATS score checks</li><li>20 job matches / week</li><li>Application tracker</li>
+      </ul>
+    </article>
+    <article class="plan plan--paid" data-reveal style="--d:.08s">
+      <div class="plan__top">
+        <div>
+          <h3>Paid plans</h3>
+          <p class="plan__for">Prices are announced at launch. Founding members pay 50% less, for life.</p>
+        </div>
+        <span class="plan__badge">Launching soon</span>
+      </div>
+      <div class="tiers">
+        <div class="tier">
+          <b>Starter</b><span>For a focused, steady search</span>
+          <ul><li>Everything in Free</li><li>Unlimited job matches</li><li>3 resumes + tailored versions</li><li>Auto apply, up to 10 / day</li><li>Inbox sync</li></ul>
+        </div>
+        <div class="tier tier--pro">
+          <b>Pro <em>Best for an active search</em></b><span>Full autopilot</span>
+          <ul><li>Everything in Starter</li><li>Unlimited resumes and tailoring</li><li>Auto apply, up to 25 / day</li><li>Recruiter outreach drafts</li><li>Approve-first and Full auto</li></ul>
+        </div>
+        <div class="tier">
+          <b>Pro Max</b><span>Between roles? Go all in.</span>
+          <ul><li>Everything in Pro</li><li>Auto apply, up to 40 / day</li><li>Unlimited recruiter outreach</li><li>Priority discovery on new posts</li><li>Priority support</li></ul>
+        </div>
+      </div>
+      <a class="btn btn--sun" href="https://www.autoplaced.ai/claim?from=pricing">Lock in 50% off: claim a free seat <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+    </article>
+  </div>
+</section>
+
+<!-- ============ FOUNDING SEATS ============ -->
+<section class="seats" id="seats" aria-labelledby="seats-title">
+  <div class="seats__card">
+    <div class="seats__copy">
+      <span class="eyebrow eyebrow--light">100 founding seats</span>
+      <h2 id="seats-title">Claim your free seat. <em>Before someone else does.</em></h2>
+      <p>The first 100 people get a free founding seat. When all 100 are claimed, the offer closes. Everyone after that joins the regular waitlist, without the free applications or the lifetime discount.</p>
+    </div>
+      <ul class="perks">
+        <li><b>100+ applications, free</b><span>Your agent applies to 100+ matching jobs for you, on us. No card needed.</span></li>
+        <li><b>50% off for life</b><span>Your founding discount stays for as long as you're a member.</span></li>
+        <li><b>First in line</b><span>Seat holders get their invites before anyone on the regular waitlist.</span></li>
+        <li><b>Shape the product</b><span>A direct line to the team and a say in which features and job boards come next.</span></li>
+      </ul>
+    <div class="seats__board">
+      <div class="seats__count">
+        <span class="live"><i></i>Live count</span>
+        <p><b data-claimed aria-hidden="true">44</b><span aria-hidden="true">of 100 seats claimed</span><span class="sr-only" data-claimed-sr>44 of 100 seats claimed</span></p>
+      </div>
+      <div class="grid100" data-grid aria-hidden="true"></div>
+      <div class="seats__legend" aria-hidden="true"><span><i class="k k--taken"></i>Claimed</span><span><i class="k k--you"></i>Your seat</span><span class="seats__left"><b data-left>56</b> seats left</span></div>
+      <a class="btn btn--sun btn--lg btn--block" href="https://www.autoplaced.ai/claim?from=offer">Claim my free seat <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <p class="seats__fine">Takes 20 seconds · No card · Seat holders are invited first, in the order they joined</p>
+      <a class="seats__wa" href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" rel="noopener" target="_blank"><svg width="16" height="16"><use href="#i-wa"/></svg>Questions first? Ask the team in our WhatsApp community</a>
+    </div>
+  </div>
+  <ol class="next3">
+    <li data-reveal><span>1</span><b>Claim your seat</b><p>Takes 20 seconds. Your founding perks are locked in.</p></li>
+    <li data-reveal style="--d:.08s"><span>2</span><b>Get your invite</b><p>Seat holders are invited first, in the order they joined.</p></li>
+    <li data-reveal style="--d:.16s"><span>3</span><b>Set up once</b><p>About ten minutes to build your resume and set preferences.</p></li>
+  </ol>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq" aria-labelledby="faq-title">
+  <header class="shead shead--left" data-reveal>
+    <span class="eyebrow">FAQ</span>
+    <h2 id="faq-title">Before you <em>claim a seat.</em></h2>
+    <p>Still curious? Write to <a href="mailto:hello@autoplaced.ai">hello@autoplaced.ai</a> or ask in our <a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" rel="noopener" target="_blank">WhatsApp community</a>.</p>
+  </header>
+  <div class="faq__list">
+    <details><summary>Is the Resume Builder free?<i></i></summary><div class="faq__a"><p>Yes. Build one resume, check its ATS score and export it on the Free plan. Paid plans add more resumes and a tailored version for every job.</p></div></details>
+    <details><summary>Will it make things up on my resume?<i></i></summary><div class="faq__a"><p>Never. It reorders and rephrases what is already on your profile. It will not add skills or roles you do not have.</p></div></details>
+    <details><summary>Can recruiters tell an AI applied?<i></i></summary><div class="faq__a"><p>They see you: your real name, your own resume, your answers. Applications go out at a human pace with daily limits, not hundreds at once. Anything it isn't sure about waits for you.</p></div></details>
+    <details><summary>Will my job site accounts get blocked?<i></i></summary><div class="faq__a"><p>Autoplaced never bypasses CAPTCHAs and works at a human pace, with daily caps and cool-downs. Recruiter and LinkedIn notes are drafts, sent only when you say so.</p></div></details>
+    <details><summary>What happens to my data and logins?<i></i></summary><div class="faq__a"><p>Your login details are stored encrypted, and your data is never used to train AI.</p></div></details>
+    <details><summary>Will it apply to every job it finds?<i></i></summary><div class="faq__a"><p>No. It scores every role against your profile, and only roles above your score threshold make the list. In Approve-first mode, nothing goes out without your OK.</p></div></details>
+    <details><summary>Which platforms are supported?<i></i></summary><div class="faq__a"><p>Greenhouse, Lever, Ashby, Workday, SmartRecruiters, Naukri, Wellfound, Instahyre, Indeed, Foundit and major remote boards, with more added regularly.</p></div></details>
+    <details><summary>Can I control the automation?<i></i></summary><div class="faq__a"><p>Choose Manual, Approve-first or Full auto. Set roles, locations, salary and seniority, cap daily volume, and pause anytime.</p></div></details>
+    <details><summary>What does it cost after the free applications?<i></i></summary><div class="faq__a"><p>The free plan stays free. Paid plans launch soon, and founding members pay half, for life.</p></div></details>
+    <details><summary>Can I cancel a paid plan anytime?<i></i></summary><div class="faq__a"><p>Yes. Plans are monthly and you can cancel whenever you like. Your resumes and history stay available on the Free plan.</p></div></details>
+  </div>
+</section>
+
+</div><!-- /.page -->
+
+<!-- ============ FINAL CTA over the golden meadow ============ -->
+<section class="final" id="final" aria-labelledby="final-title" data-final>
+  <div class="final__inner">
+    <span class="final__bot" data-bot="happy"></span>
+    <h2 id="final-title">You've filled enough <em>forms.</em></h2>
+    <p>Set it up once. Autoplaced finds the roles, tailors your resume and applies while you get ready for interviews.</p>
+    <div class="hero__ctas">
+      <a class="btn btn--ink btn--lg" href="https://www.autoplaced.ai/claim?from=final">Claim my free seat <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+    </div>
+    <p class="final__fine"><span><b data-seats-left>56</b> founding seats left · Takes 20 seconds · No card</span></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__top">
+    <div class="foot__brand">
+      <a class="brand brand--light" href="#top"><span class="brand__bot" data-bot="cool"></span><span class="brand__word">autoplaced<span class="brand__dot">.ai</span></span></a>
+      <p>Apply less. Interview more.</p>
+      <div class="social">
+        <a href="https://www.linkedin.com/company/autoplaced/" aria-label="Autoplaced on LinkedIn" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-in"/></svg></a>
+        <a href="https://www.instagram.com/autoplaced.ai/" aria-label="Autoplaced on Instagram" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-ig"/></svg></a>
+        <a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" aria-label="Join the Autoplaced WhatsApp community" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-wa"/></svg></a>
+      </div>
+    </div>
+    <nav class="foot__cols" aria-label="Footer">
+      <div><b>Product</b><a href="#how">How it works</a><a href="#resume">Resume builder</a><a href="#pricing">Pricing</a><a href="#seats">Early access</a><a href="#faq">FAQ</a></div>
+      <div><b>Community</b><a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" rel="noopener" target="_blank">WhatsApp community</a><a href="https://whatsapp.com/channel/0029Vb9URlSHAdNRsMXYMJ2x" rel="noopener" target="_blank">WhatsApp channel</a><a href="https://www.linkedin.com/company/autoplaced/" rel="noopener" target="_blank">LinkedIn</a><a href="https://www.instagram.com/autoplaced.ai/" rel="noopener" target="_blank">Instagram</a></div>
+      <div><b>Company</b><a href="mailto:hello@autoplaced.ai">Contact us</a><a href="#seats">Founding seats</a><a href="https://www.autoplaced.ai/login">Log in</a></div>
+    </nav>
+  </div>
+  <span class="foot__bot" data-bot="night" aria-hidden="true"></span>
+  <div class="foot__base"><span>© 2026 Autoplaced</span><span>Your job search, on autopilot.</span></div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

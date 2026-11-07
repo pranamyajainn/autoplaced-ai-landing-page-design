@@ -16,11 +16,11 @@
   frame.addEventListener('load', () => {
     const style = frame.contentDocument.createElement('style');
     style.textContent = `
-      .nav, .dock, .gift__ui, .gift__bubble, .hero__sub { display: none !important; }
-      .hero { padding: 40px 64px 0 !important; }
-      .hero__grid { min-height: 590px !important; grid-template-columns: 1fr 1fr !important; }
-      .hero__title { font-size: 92px !important; }
-      .gift { --gh: 600px !important; --by: 55% !important; }
+      .nav, .dock, .gift__ui, .gift__bubble { display: none !important; }
+      .hero__sub, .hero__row .hero__ctas { visibility: hidden; }
+      .hero { min-height: 630px !important; padding-top: 34px !important; --lift: 92px !important; }
+      .hero__title { font-size: 98px !important; }
+      .gift { --gh: 420px !important; --by: 48% !important; }
       .gift__dust { display: none; }`;
     frame.contentDocument.head.appendChild(style);
     setTimeout(() => { window.ready = true; }, 2800);

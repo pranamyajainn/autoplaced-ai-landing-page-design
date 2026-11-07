@@ -179,6 +179,7 @@ function measure() {
   // keep the stage steady while mobile browser bars slide in and out
   const h = window.innerHeight;
   if (Math.abs(h - vh) > 120 || !mqMobile.matches) vh = h;
+  L.heroTop = pageTop(hero); L.heroH = hero.offsetHeight;
   L.showTop = pageTop(showcase); L.showH = showcase.offsetHeight;
   L.finalTop = pageTop(finalSec);
   L.dayTop = pageTop(daySec); L.dayH = daySec.offsetHeight;
@@ -199,8 +200,14 @@ new ResizeObserver(queueMeasure).observe(document.querySelector('main'));
 document.fonts?.ready.then(queueMeasure);
 
 let showOn = false;
+let heroSy = -1;
 function updateTop(y) {
-  nav.classList.toggle('is-solid', y > 40);
+  const heroBottom = L.heroTop + L.heroH - y;
+  nav.classList.toggle('is-solid', heroBottom < 90);
+
+  // the poster's layers drift apart as it scrolls away: near cards fastest, the sun slowest
+  const sy = reduced ? 0 : Math.round(clamp(y / Math.max(1, L.heroH)) * 1000) / 1000;
+  if (sy !== heroSy && heroBottom > -40) { heroSy = sy; hero.style.setProperty('--sy', String(sy)); }
 
   // the product window tips up to face you as it scrolls in
   const top = L.showTop - y;

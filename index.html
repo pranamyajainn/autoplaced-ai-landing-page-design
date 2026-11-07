@@ -54,7 +54,6 @@
 
 <div class="dock" data-dock>
   <a class="btn btn--ink btn--lg" href="#join" data-join="dock">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-  <a class="dock__wa" href="#community" data-wa rel="noopener" target="_blank" aria-label="Join the Autoplaced WhatsApp community"><svg width="22" height="22"><use href="#i-wa"/></svg></a>
 </div>
 
 <!-- ============ NAV ============ -->
@@ -106,7 +105,7 @@
 </div>
 
 <!-- ============ LIVE SCENE (fixed behind the closing section) ============ -->
-<div class="scene" data-scene aria-hidden="true">
+<div class="scene is-golden" data-scene aria-hidden="true">
   <div class="scene__sky"></div>
   <div class="scene__sun"></div>
   <canvas class="scene__back" data-back></canvas>
@@ -118,21 +117,18 @@
 
 <!-- ============ HERO: the gift box ============ -->
 <section class="hero" id="top" data-hero>
-  <div class="hero__bg" aria-hidden="true"><i class="hero__beam"></i></div>
-  <div class="hero__grid">
-    <div class="hero__copy">
+  <div class="hero__bg" aria-hidden="true"><i class="hero__sun"></i><i class="hero__ring"></i><i class="hero__ring"></i><i class="hero__ring"></i></div>
+  <div class="hero__field" aria-hidden="true" data-field></div>
+  <div class="hero__inner">
+    <div class="hero__head">
       <p class="hero__chip"><span><i></i>The waitlist is open</span><b>Free to join</b></p>
       <h1 class="hero__title">
         <span class="hero__line"><span>Your job search,</span></span>
         <span class="hero__line"><em>on autopilot.</em></span>
       </h1>
-      <p class="hero__sub">Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. You wake up to replies.</p>
-      <div class="hero__ctas">
-        <a class="btn btn--ink btn--lg" href="#join" data-join="hero">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-        <a class="btn btn--wa btn--lg" href="#community" data-wa rel="noopener" target="_blank" aria-label="Join our WhatsApp community"><span class="btn__wa"><svg width="18" height="18"><use href="#i-wa"/></svg></span><span class="btn--wa__label">WhatsApp community</span></a>
-      </div>
     </div>
-
+    <div class="hero__row">
+      <p class="hero__sub">Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. You wake up to replies.</p>
     <div class="gift" data-gift>
       <div class="gift__dust" aria-hidden="true" data-dust></div>
       <div class="bubble gift__bubble" data-gift-bubble aria-hidden="true"><span data-gift-say>I brought you something.</span></div>
@@ -182,6 +178,11 @@
         <button class="gift__skip" type="button" data-gift-skip>No patience? <u>Open it now</u></button>
       </div>
       <p class="sr-only" id="gift-status" aria-live="polite" data-gift-live></p>
+    </div>
+      <div class="hero__ctas">
+        <a class="btn btn--ink btn--lg" href="#join" data-join="hero">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+        <a class="btn btn--wa btn--lg" href="#community" data-wa rel="noopener" target="_blank" aria-label="Join our WhatsApp community"><span class="btn__wa"><svg width="18" height="18"><use href="#i-wa"/></svg></span><span class="btn--wa__label">WhatsApp community</span></a>
+      </div>
     </div>
   </div>
 </section>

@@ -9,6 +9,23 @@ export function renderGifts(ul) {
   ul.innerHTML = GIFTS.map((g, i) => `<li style="--i:${i}"><span class="gn" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(g)}</span></li>`).join('');
 }
 
+// The agent at work: sample job cards floating around the poster (the same sample data as the product window).
+// x, y: place on desktop, in % of the hero; mx, my: place on phones (no mx: hidden on phones). z: depth, 0 far to 1 near.
+const CARDS = [
+  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', x: 3, y: 23, z: 0.5, r: -5 },
+  { logo: 'swiggy.svg', c: '#fc8019', t: 'Senior PM, Instamart', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', x: 81, y: 19, z: 0.42, r: 4 },
+  { logo: 'phonepe.svg', c: '#5f259f', t: 'Lead PM, UPI Payments', s: 'PhonePe · Pune · Hybrid', st: 'Needs your OK', tone: 'wait', x: -2, y: 79, z: 0.95, r: 6, mx: -36, my: 47, mz: 0.92 },
+  { logo: 'razorpay.svg', c: '#0c2451', t: 'Senior PM, Payments', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', x: 80, y: 80, z: 0.84, r: -6, mx: 76, my: 53, mz: 0.86 },
+  { kind: 'ring', v: 91, t: 'Resume v3 · Payments', s: 'Tailored 2 min ago', st: 'ATS score 91', tone: 'work', x: 11, y: 43, z: 0.16, r: -3, mx: -14, my: 25, mz: 0.18 },
+  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', tone: 'work', x: 74, y: 40, z: 0.2, r: 3 },
+];
+function cardHTML(k) {
+  const icon = k.kind === 'ring' ? `<span class="jc__ring" style="--v:${k.v}"><i>${k.v}</i></span>`
+    : k.kind === 'scan' ? '<span class="jc__scan"><i></i></span>'
+      : `<span class="jc__logo${k.fill ? ' jc__logo--fill' : ''}" style="--c:${k.c}"><img src="assets/logos/${k.logo}" alt="" width="20" height="20"></span>`;
+  return `<div class="jc__push"><div class="jc__in"><div class="jc__card">${icon}<b>${esc(k.t)}</b><small>${esc(k.s)}</small><span class="jc__st${k.tone ? ` jc__st--${k.tone}` : ''}">${esc(k.st)}</span></div></div></div>`;
+}
+
 // what the bot says, before and after each tap
 const LINES = ['I brought you something.', 'Ooh. Yes! Keep going.', 'One more. It’s about to pop!', 'Almost there!'];
 const tapsLeft = (n) => (n === TAPS_TO_OPEN ? `Tap ${n} times to open` : `${n} more tap${n > 1 ? 's' : ''}`);
@@ -45,6 +62,54 @@ export function initGift({ reduced, onOpen = () => {} }) {
     const m = document.createElement('i');
     m.style.cssText = `left:${(8 + Math.random() * 84).toFixed(1)}%;top:${(6 + Math.random() * 70).toFixed(1)}%;--z:${(0.3 + Math.random()).toFixed(2)};--dur:${(9 + Math.random() * 10).toFixed(1)}s;--del:-${(Math.random() * 18).toFixed(1)}s`;
     dust.appendChild(m);
+  }
+
+  // the floating cards: depth sets size, blur, fade and how far each one moves
+  const field = hero.querySelector('[data-field]');
+  const phone = matchMedia('(max-width: 760px)');
+  const cards = CARDS.map((k, i) => {
+    const c = document.createElement('div');
+    c.className = 'jc';
+    c.innerHTML = cardHTML(k);
+    c.style.setProperty('--r', `${k.r}deg`);
+    c.querySelector('.jc__in').style.cssText = `--dur:${(5 + (i % 3) * 1.4).toFixed(1)}s;--del:-${(i * 1.7).toFixed(1)}s`;
+    field.appendChild(c);
+    return { c, k };
+  });
+  function place() {
+    cards.forEach(({ c, k }) => {
+      const onPhone = phone.matches;
+      c.hidden = onPhone && k.mx === undefined;
+      const z = onPhone ? k.mz : k.z;
+      c.style.setProperty('--x', `${onPhone ? k.mx : k.x}%`);
+      c.style.setProperty('--y', `${onPhone ? k.my : k.y}%`);
+      c.style.setProperty('--z', z);
+      c.style.setProperty('--s', (0.6 + z * 0.55).toFixed(3));
+      c.style.setProperty('--o', z < 0.35 ? (0.42 + z).toFixed(2) : '1');
+      c.style.setProperty('--zi', z >= 0.8 ? '5' : '0');
+      c.classList.toggle('is-near', z >= 0.8);
+      c.style.setProperty('--f', z > 0.8 ? `blur(${((z - 0.8) * 16).toFixed(1)}px)` : z < 0.3 ? `blur(${((0.3 - z) * 6).toFixed(1)}px)` : 'none');
+    });
+  }
+  place();
+  phone.addEventListener('change', place);
+  // each tap sends a small shock out from the box; opening sends a big one
+  function push(strength) {
+    if (reduced) return;
+    const b = gbox.getBoundingClientRect();
+    cards.forEach(({ c }) => {
+      if (c.hidden) return;
+      const r = c.getBoundingClientRect();
+      const dx = r.left + r.width / 2 - b.left;
+      const dy = r.top + r.height / 2 - b.top;
+      const d = Math.hypot(dx, dy) || 1;
+      const k = strength * (16 + 30 * Number(c.style.getPropertyValue('--z')));
+      c.style.setProperty('--kx', `${((dx / d) * k).toFixed(1)}px`);
+      c.style.setProperty('--ky', `${((dy / d) * k).toFixed(1)}px`);
+      c.style.setProperty('--kr', `${((dx > 0 ? 1 : -1) * strength * 3).toFixed(1)}deg`);
+      c.classList.add('is-push');
+      setTimeout(() => c.classList.remove('is-push'), 360);
+    });
   }
 
   let taps = 0;
@@ -84,6 +149,8 @@ export function initGift({ reduced, onOpen = () => {} }) {
     backLayer.appendChild(lid);
     void lid.offsetWidth;
     el.classList.add('is-opening', 'is-open');
+    hero.classList.add('is-gift-open');
+    setTimeout(() => push(2.6), reduced ? 0 : 120);
     live.textContent = 'The box is open. Your gifts are listed below.';
     if (!reduced) ripple();
     // the box button goes away, so focus moves to what came out of it
@@ -106,7 +173,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
     try { navigator.vibrate?.(taps >= TAPS_TO_OPEN ? [18, 40, 28] : 14); } catch { /* not supported */ }
     if (taps >= TAPS_TO_OPEN) { open('shake'); return; }
     charge();
-    if (!reduced) { shake('is-shake', 0.6 + taps * 0.4); ripple(); }
+    if (!reduced) { shake('is-shake', 0.6 + taps * 0.4); ripple(); push(0.6 + taps * 0.35); }
     speak(LINES[Math.min(taps, LINES.length - 1)]);
     const left = TAPS_TO_OPEN - taps;
     count.textContent = tapsLeft(left);

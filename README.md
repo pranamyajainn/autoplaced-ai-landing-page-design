@@ -41,6 +41,7 @@ Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json
 | `js/main.js` | Start point: scrolling, menu, motion |
 | `js/hero.js` | The hero gift box |
 | `js/join.js` | The "Join the waitlist" form and the "You're in" screen |
+| `js/celebrate.js` | The burst of gold paper when someone joins |
 | `js/bot.js` | The robot mascot |
 | `js/dial.js` | The autopilot dial and needle |
 | `js/meadow.js` | The 3D meadow behind the closing section (three.js) |

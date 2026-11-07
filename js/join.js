@@ -3,6 +3,7 @@
 // Sending is the backend team's endpoint (WAITLIST_ENDPOINT in config.js); this file only collects and checks.
 import { WAITLIST_ENDPOINT } from './config.js';
 import { renderGifts } from './hero.js';
+import { celebrate } from './celebrate.js';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 // with no endpoint set, the form may only pretend to send on a preview address
@@ -176,5 +177,7 @@ export function initJoin({ reduced, getLenis }) {
     tear.hidden = false;
     pass.classList.add('has-tear');
     $('[data-done-title]').focus();
+    // the ticket lifts into the sky, and the moment is celebrated
+    setTimeout(() => celebrate({ canvas: dlg.querySelector('[data-confetti]'), from: pass, reduced }), reduced ? 0 : 420);
   }
 }

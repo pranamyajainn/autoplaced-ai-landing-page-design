@@ -115,10 +115,16 @@
 
 <main id="main">
 
-<!-- ============ HERO: the gift box ============ -->
+<!-- ============ HERO: the gift box in a field at sunrise ============ -->
 <section class="hero" id="top" data-hero>
-  <div class="hero__bg" aria-hidden="true"><i class="hero__sun"></i><i class="hero__dark"></i></div>
+  <div class="hero__bg" aria-hidden="true">
+    <i class="hero__glow"></i><i class="hero__sun"></i>
+    <canvas class="hero__land" data-dawn-back></canvas>
+    <i class="hero__mist"></i><i class="hero__mist hero__mist--low"></i>
+    <i class="hero__dark"></i>
+  </div>
   <div class="hero__field" aria-hidden="true" data-field></div>
+  <canvas class="hero__front" data-dawn-front aria-hidden="true"></canvas>
   <div class="hero__inner">
     <div class="hero__head">
       <p class="hero__chip"><span><i></i>Waitlist open</span><b>Free to join</b></p>

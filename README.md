@@ -44,6 +44,7 @@ Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json
 | `js/bot.js` | The robot mascot |
 | `js/dial.js` | The autopilot dial and needle |
 | `js/meadow.js` | The 3D meadow behind the closing section (three.js) |
+| `js/dawn.js` | The hero's sunrise field, seen from grass height (three.js, reuses the meadow's grass) |
 | `assets/` | Icons, share image and company logos |
 | `fonts/` | Geist and Instrument Serif (SIL Open Font License) |
 | `og.html` | Source for the share image `assets/og.jpg` |

@@ -8,7 +8,7 @@ THREE.ColorManagement.enabled = false;
 /* ------------------------------------------------------------------ */
 /* Small JS noise so hill shapes and flower patches look natural      */
 /* ------------------------------------------------------------------ */
-function rng(seed) {
+export function rng(seed) {
   return function () {
     seed |= 0; seed = (seed + 0x6d2b79f5) | 0;
     let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
@@ -27,7 +27,7 @@ function vnoise(x, y) {
   const a = hash2(ix, iy), b = hash2(ix + 1, iy), c = hash2(ix, iy + 1), d = hash2(ix + 1, iy + 1);
   return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
 }
-function fbm(x, y, oct = 4) {
+export function fbm(x, y, oct = 4) {
   let v = 0, a = 0.5;
   for (let i = 0; i < oct; i++) { v += a * vnoise(x, y); x *= 2.03; y *= 2.03; a *= 0.5; }
   return v;
@@ -49,12 +49,12 @@ const PALETTES = {
     r1: '#8f9a5c', r2: '#c2a27a', r3: '#e2b999', treeDark: '#1b3418', treeLit: '#7f8f2c',
   },
 };
-const toVec = (hex) => { const c = new THREE.Color(hex); return new THREE.Vector3(c.r, c.g, c.b); };
+export const toVec = (hex) => { const c = new THREE.Color(hex); return new THREE.Vector3(c.r, c.g, c.b); };
 
 /* ------------------------------------------------------------------ */
 /* Shared GLSL                                                         */
 /* ------------------------------------------------------------------ */
-const GLSL_NOISE = /* glsl */ `
+export const GLSL_NOISE = /* glsl */ `
 float hash(vec2 p){ p = fract(p*vec2(123.34, 456.21)); p += dot(p, p+45.32); return fract(p.x*p.y); }
 float noise(vec2 p){
   vec2 i = floor(p), f = fract(p);
@@ -246,7 +246,7 @@ function bladeGeometry(segments) {
 const FLOWER_COLORS = ['#fffdf6', '#fffdf6', '#fffaf0', '#f2b542', '#f6c454'];
 
 const slice = () => new Promise((r) => setTimeout(r, 0));
-async function makeGrass({ count, sample, uniforms, rand, segments = 6 }) {
+export async function makeGrass({ count, sample, uniforms, rand, segments = 6 }) {
   const geo = bladeGeometry(segments);
   const offsets = new Float32Array(count * 3);
   const params = new Float32Array(count * 4);

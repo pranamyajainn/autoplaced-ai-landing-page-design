@@ -1450,6 +1450,44 @@ html.join-open { overflow: hidden; }
 .join.is-done .join__art .ticket { animation: thud .5s ease-out .5s; }
 @keyframes thud { 20% { translate: 0 3px; } }
 
+/* ---------- the morning field (test) ----------
+   A sunrise seen from grass height. Sky, sun and mist are CSS; the field and the
+   nearest blades are two canvases (js/dawn.js), the near one drawn over the box. */
+.hero { --horizon: 61%; padding-bottom: clamp(70px, 9vw, 130px); }
+.hero__bg { background: linear-gradient(180deg, #9cc6e4 0%, #c0dbe9 24%, #e4dfd6 44%, #f6dbb6 55%, #f9e2c2 calc(var(--horizon) - 1%), #f3e6d2 var(--horizon), #c9cfae 72%, #6e8a4c 100%); }
+.hero__glow { position: absolute; left: 64%; top: calc(var(--horizon) - 6%); width: 150vmax; height: 80vmax; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(255, 239, 204, .85), rgba(255, 228, 182, .32) 38%, rgba(255, 228, 182, 0) 72%); }
+.hero__sun { display: block; position: absolute; left: 70%; top: calc(var(--horizon) - 7%); width: min(22vw, 300px); aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, #fffdf5 0%, #fffaf0 50%, rgba(255, 238, 200, .8) 62%, rgba(255, 226, 170, .25) 80%, rgba(255, 226, 170, 0) 100%); animation: sunrise 2.4s .2s cubic-bezier(.2, .7, .2, 1) backwards; }
+@keyframes sunrise { from { transform: translate(-50%, 0%); opacity: .3; } }
+.hero__land, .hero__front { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s var(--ease); }
+.hero.is-dawn .hero__land, .hero.is-dawn .hero__front { opacity: 1; }
+.hero__front { z-index: 2; pointer-events: none; }
+.hero.is-gift-open .hero__front { opacity: 0; transition-duration: .6s; }
+/* morning mist lying across the field, drifting slowly */
+.hero__mist { position: absolute; left: -15%; right: -15%; top: calc(var(--horizon) - 4%); height: 10%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 251, 242, .8), rgba(255, 251, 242, 0)); filter: blur(8px); will-change: transform; animation: mist 38s ease-in-out infinite alternate; }
+.hero__mist--low { top: calc(var(--horizon) + 2%); height: 7%; opacity: .55; animation-duration: 52s; animation-direction: alternate-reverse; }
+@keyframes mist { from { transform: translateX(-4%); } to { transform: translateX(4%); } }
+/* the box sits in the grass, not on a stand */
+.gbox__base, .gbox__ring { display: none; }
+/* text and controls stay above the near grass */
+.hero__row { z-index: auto; }
+.hero__head { position: relative; z-index: 3; }
+.hero__field { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.hero__sub, .hero__row > .hero__ctas, .gift__ui { z-index: 3; }
+.hero__sub { position: relative; margin-bottom: 8px; padding: 12px 16px; border-radius: 16px; background: rgba(250, 249, 245, .84); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.hero__row > .hero__ctas { position: relative; }
+.hero.is-gift-open .hero__sub { background: rgba(255, 255, 255, .06); }
+.gift__ui { width: max-content; white-space: nowrap; padding: 4px 16px 0; border-radius: 22px; left: 50%; right: auto; transform: translateX(-50%); background: rgba(250, 249, 245, .8); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+/* the paper page rolls over the field */
+.page::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: calc(100% - 1px); height: clamp(64px, 9vw, 130px); pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 130' preserveAspectRatio='none'%3E%3Cpath d='M0 130V74C170 34 370 18 560 46c200 30 330 52 520 18 160-28 280-30 360-14v106z' fill='%23f7f5ef'/%3E%3C/svg%3E") bottom / 100% 100% no-repeat;
+  filter: drop-shadow(0 -10px 24px rgba(15, 48, 52, .12)); clip-path: inset(-80px 0 0 0);
+}
+@media (prefers-reduced-motion: reduce) { .hero__mist { animation: none; } }
+@media (max-width: 760px) { .hero__sun { left: 78%; width: 34vw; top: calc(var(--horizon) - 9%); } .hero__glow { left: 70%; } }
+@media (min-width: 761px) and (max-width: 980px) { .hero__field .jc:first-child { display: none; } }
+
 /* ---------- smaller screens ---------- */
 @media (max-height: 820px) and (min-width: 981px) {
   .hero { --lift: 84px; padding-top: calc(92px + env(safe-area-inset-top, 0px)); }
@@ -1483,7 +1521,7 @@ html.join-open { overflow: hidden; }
   .join__body { padding: 48px 32px 32px; }
 }
 @media (max-width: 760px) {
-  .hero { --lift: 46px; padding-top: calc(90px + env(safe-area-inset-top, 0px)); padding-bottom: 24px; }
+  .hero { --lift: 46px; padding-top: calc(90px + env(safe-area-inset-top, 0px)); padding-bottom: 80px; }
   .hero__chip { font-size: 13px; white-space: nowrap; }
   .hero__title { margin-top: 16px; font-size: clamp(42px, 12.6vw, 62px); }
 

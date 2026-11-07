@@ -126,6 +126,8 @@ let meadow = null;
 const sceneEl = $('[data-scene]');
 const frontEl = $('[data-front]');
 const hasWebGL = 'WebGL2RenderingContext' in window || 'WebGLRenderingContext' in window;
+const whenIdle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 700 }) : setTimeout(fn, 200));
+let dawn = null;
 function loadMeadow() {
   import('./meadow.js')
     .then(async ({ createMeadow }) => {
@@ -169,6 +171,22 @@ initGift({
 });
 initJoin({ reduced, getLenis: () => lenis });
 
+// the hero's morning field: sunrise from grass height, with the box sitting in it
+if (hasWebGL) {
+  whenIdle(() => {
+    import('./dawn.js')
+      .then(({ createDawn }) => createDawn({
+        back: $('[data-dawn-back]'), front: $('[data-dawn-front]'), host: hero, reduced,
+        onReady: () => hero.classList.add('is-dawn'),
+      }))
+      .then((d) => {
+        dawn = d;
+        new IntersectionObserver(([en]) => d.setActive(en.isIntersecting)).observe(hero);
+      })
+      .catch(() => {});
+  });
+}
+
 let vw = window.innerWidth;
 let vh = window.innerHeight;
 // Layout is read once here, never inside the scroll loop: reading it there forces the browser
@@ -210,7 +228,7 @@ function updateTop(y) {
 
   // the poster's layers drift apart as it scrolls away: near cards fastest, the sun slowest
   const sy = reduced ? 0 : Math.round(clamp(y / Math.max(1, L.heroH)) * 1000) / 1000;
-  if (sy !== heroSy && heroBottom > -40) { heroSy = sy; heroLayers.forEach((el) => el.style.setProperty('--sy', String(sy))); }
+  if (sy !== heroSy && heroBottom > -40) { heroSy = sy; heroLayers.forEach((el) => el.style.setProperty('--sy', String(sy))); dawn?.setRise(sy); }
 
   // the product window tips up to face you as it scrolls in
   const top = L.showTop - y;

@@ -7,9 +7,11 @@ import { makeGrass, toVec, fbm, rng, GLSL_NOISE } from './meadow.js';
 
 // backlit by a low sun: dark stems, glowing tips, a warm haze where the field meets the sky
 const PAL = {
-  base: '#0d2214', mid: '#2f5a24', tip: '#d3e58e', tip2: '#f6dd98', dry: '#ead39b',
-  ground: '#1a3315', far: '#a7b88f', haze: '#f3e6d2',
+  base: '#0a1b0f', mid: '#2b5224', tip: '#a7c46a', tip2: '#e6d589', dry: '#cdbb7c',
+  ground: '#15290f', far: '#8e9f6c', haze: '#eedcbc',
 };
+// the nearest blades are almost silhouettes against the bright sky, with warm light on their edges
+const NEAR = { base: '#061209', mid: '#173119', tip: '#557434', tip2: '#a09a4e', dry: '#8c8346' };
 
 const GROUND_VERT = /* glsl */ `
 varying vec3 vWorld;
@@ -56,9 +58,13 @@ export async function createDawn({ back, front, host, reduced = false, onReady =
     uTip2: { value: toVec(PAL.tip2) }, uDry: { value: toVec(PAL.dry) }, uFog: { value: toVec(PAL.haze) },
     uGround: { value: toVec(PAL.ground) }, uFar: { value: toVec(PAL.far) },
   };
-  const backU = { ...U, uFogNear: { value: 5 }, uFogFar: { value: 46 } };
+  const backU = { ...U, uFogNear: { value: 9 }, uFogFar: { value: 64 } };
   // the nearest blades are wide and never fade into the haze
-  const frontU = { ...U, uBladeWidth: { value: 0.03 }, uFogNear: { value: 80 }, uFogFar: { value: 90 } };
+  const frontU = {
+    ...U, uBladeWidth: { value: 0.03 }, uFogNear: { value: 80 }, uFogFar: { value: 90 },
+    uBase: { value: toVec(NEAR.base) }, uMid: { value: toVec(NEAR.mid) }, uTip: { value: toVec(NEAR.tip) },
+    uTip2: { value: toVec(NEAR.tip2) }, uDry: { value: toVec(NEAR.dry) }, uSheen: { value: 0.35 },
+  };
 
   // the field: flat, running to the horizon, where it dissolves into the morning haze
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(900, 900), new THREE.ShaderMaterial({ vertexShader: GROUND_VERT, fragmentShader: GROUND_FRAG, uniforms: backU }));

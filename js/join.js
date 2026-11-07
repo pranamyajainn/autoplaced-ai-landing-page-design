@@ -92,6 +92,18 @@ export function initJoin({ reduced, getLenis }) {
     setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' }), 300);
   });
 
+  // the community pass: tearing it off opens WhatsApp (the link itself opens the new tab, so nothing blocks it)
+  const tear = $('[data-tear]');
+  tear.addEventListener('click', () => {
+    if (tear.classList.contains('is-torn')) return;
+    tear.classList.add('is-torn');
+    pass.classList.add('is-torn');
+    try { navigator.vibrate?.([10, 30, 22]); } catch { /* not supported */ }
+    $('[data-next-hint]').hidden = true;
+    $('[data-next-done]').hidden = false;
+    setTimeout(() => { tear.hidden = true; }, reduced ? 0 : 950);
+  });
+
   let tried = false;
   function show(err) {
     ['name', 'phone', 'email'].forEach((k) => {
@@ -160,6 +172,9 @@ export function initJoin({ reduced, getLenis }) {
     form.hidden = true;
     done.hidden = false;
     dlg.classList.add('is-done');
+    // the ticket prints its tear-off community pass
+    tear.hidden = false;
+    pass.classList.add('has-tear');
     $('[data-done-title]').focus();
   }
 }

@@ -1127,15 +1127,8 @@ html.menu-open .nav .burger__icon i:last-child { transform: rotate(-45deg); }
 .hero__row .btn { transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .6s, color .6s, border-color .6s; }
 .hero.is-gift-open .hero__row > .hero__ctas .btn--ink { color: var(--ink); background: linear-gradient(180deg, #f9cd66 0%, #f0ad34 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 14px 30px -12px rgba(0, 0, 0, .5); }
 .hero.is-gift-open .hero__row > .hero__ctas .btn--ink .btn__dot { background: var(--ink); color: var(--sun); }
-.hero.is-gift-open .hero__row > .hero__ctas .btn--wa { color: #eef5f4; background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .2); box-shadow: none; }
-.hero.is-gift-open .hero__row > .hero__ctas .btn--wa .btn__wa { background: rgba(255, 255, 255, .12); color: #bfe6e8; box-shadow: none; }
 .hero.is-gift-open .jc { opacity: .22; }
 
-/* WhatsApp community: a quiet partner to the main button, in our colours */
-.btn--wa { color: var(--ink); background: rgba(255, 255, 255, .8); border: 1px solid rgba(15, 48, 52, .12); padding-left: 9px; box-shadow: inset 0 1px 0 #fff, 0 12px 28px -16px rgba(15, 48, 52, .45); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-.btn--wa:hover { background: #fff; border-color: rgba(15, 48, 52, .22); }
-.btn__wa { display: grid; place-items: center; width: calc(var(--h) - 18px); height: calc(var(--h) - 18px); flex: none; border-radius: 50%; background: var(--teal-soft); color: var(--teal-deep); box-shadow: inset 0 0 0 1px rgba(43, 158, 167, .22); transition: transform .5s var(--ease), background .3s; }
-.btn--wa:hover .btn__wa { transform: rotate(-12deg) scale(1.06); background: #d3eeee; }
 
 /* the agent at work: real job cards floating at different depths around the poster.
    Near cards are bigger, blurred and move more with the mouse and the scroll; far ones are small and faint. */
@@ -1410,14 +1403,38 @@ html.join-open { overflow: hidden; }
 .join__form.is-busy .btn__dot svg { animation: nudge .9s var(--ease) infinite; }
 .join__fine { display: flex; gap: 8px; margin-top: 14px; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
 .join__fine svg { flex: none; margin-top: 2px; }
-.join__wa { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 24px; padding: 18px; border-radius: 20px; background: #fff; border: 1px solid var(--line-2); box-shadow: var(--shadow-1); }
-.join__wa p { font-size: 15px; color: var(--ink-2); }
-.join__wa b { color: var(--ink); }
-.join__wa .btn { white-space: normal; height: auto; min-height: var(--h); padding-block: 8px; }
 .join__doneBtn { align-self: center; min-height: 44px; margin-top: 10px; padding: 0 16px; font-size: 15px; font-weight: 550; color: var(--ink-2); }
 .join__doneBtn:hover { color: var(--ink); }
 .join__done h2:focus { outline: none; }
 .join__done:not([hidden]) { display: flex; flex-direction: column; }
+/* after joining: the next step points at the ticket's tear-off pass */
+.join__next { margin-top: 26px; padding: 18px 20px; border-radius: 18px; background: #fff; border: 1px solid var(--line-2); box-shadow: var(--shadow-1); font-size: 15px; color: var(--ink-2); }
+.join__nextCue { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--teal-deep); }
+.join__nextArrow { width: 22px; height: 22px; flex: none; border-radius: 50%; background: var(--teal-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M15 10H5m4.5-4.5L5 10l4.5 4.5' fill='none' stroke='%230a4f57' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat; animation: point 1.6s ease-in-out infinite; }
+@keyframes point { 50% { translate: -4px 0; } }
+.join__next a { color: var(--teal-deep); text-decoration: underline; text-underline-offset: 3px; }
+
+/* the tear-off community pass, printed under the ticket once you join */
+.ticket__tear { position: relative; display: flex; align-items: center; gap: 12px; padding: 14px 16px 15px; color: #2b2105; cursor: pointer; transform-origin: 100% 0;
+  background: linear-gradient(162deg, #f8d27a 0%, #f0b545 55%, #e7a232 100%); border-top: 2px dashed rgba(120, 72, 4, .45); border-radius: 0 0 16px 16px;
+  box-shadow: inset 0 0 0 1px rgba(160, 100, 10, .22);
+  -webkit-mask: radial-gradient(circle 10px at 0 0, #0000 9.5px, #000 10px), radial-gradient(circle 10px at 100% 0, #0000 9.5px, #000 10px); -webkit-mask-composite: source-in; mask-composite: intersect;
+  transition: transform .35s var(--ease); animation: printstub .8s cubic-bezier(.3, 1.3, .5, 1) .9s backwards; }
+@keyframes printstub { from { opacity: 0; transform: translateY(-26px); } }
+.ticket__tear:hover, .ticket__tear:focus-visible { transform: rotate(-1.4deg) translateY(2px); }
+.ticket__tear:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.ticket__tearIcon { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 50%; background: rgba(255, 255, 255, .55); color: var(--teal-deep); box-shadow: inset 0 0 0 1px rgba(150, 95, 10, .22); }
+.ticket__tearText { display: grid; gap: 1px; min-width: 0; }
+.ticket__tearText small { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #4a3000; }
+.ticket__tearText b { font-size: 14.5px; font-weight: 640; letter-spacing: -.015em; line-height: 1.25; }
+.ticket__tearCue { display: grid; place-items: center; width: 30px; height: 30px; flex: none; margin-left: auto; border-radius: 50%; background: var(--ink); color: var(--sun); transform: rotate(-45deg); }
+.ticket__tear.is-torn { pointer-events: none; animation: tear .95s cubic-bezier(.55, 0, .8, .25) forwards; }
+@keyframes tear { 0% { transform: none; } 16% { transform: rotate(-3deg) translate(-2px, 3px); } 30% { transform: rotate(-6deg) translate(-5px, 7px); } 100% { opacity: 0; transform: translate(-40px, 240px) rotate(-26deg); } }
+/* the ticket gets matching notches where the pass joins it */
+.ticket--pass.has-tear .ticket__card { border-radius: 16px 16px 0 0;
+  -webkit-mask: radial-gradient(circle 11px at 0 calc(100% - 74px), #0000 10.5px, #000 11px), radial-gradient(circle 11px at 100% calc(100% - 74px), #0000 10.5px, #000 11px), radial-gradient(circle 10px at 0 100%, #0000 9.5px, #000 10px), radial-gradient(circle 10px at 100% 100%, #0000 9.5px, #000 10px);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
+.ticket--pass.is-torn .ticket__card { border-radius: 16px; transition: border-radius .3s .8s; }
 /* phones: a slim ticket at the top of the form, so the name still prints while typing */
 .join__strip { display: none; }
 
@@ -1458,8 +1475,8 @@ html.join-open { overflow: hidden; }
 }
 @media (max-width: 980px) {
   .hero { --lift: 70px; --disc: min(92vw, 640px); --disc-y: 40%; }
-  .hero__inner { min-height: 0; }
-  .hero__row { display: flex; flex-direction: column; align-items: center; }
+  .hero__inner { min-height: calc(100svh - 120px); justify-content: center; }
+  .hero__row { flex: none; display: flex; flex-direction: column; align-items: center; }
   .hero__row .gift { align-self: center; max-width: 560px; width: 100%; }
   .hero__row .hero__ctas { order: 1; align-self: center; flex-direction: row; justify-content: center; align-items: center; padding: 0; margin-top: 18px; }
   .hero__sub { order: 2; align-self: center; max-width: 560px; padding: 0; margin-top: 18px; text-align: center; }
@@ -1482,10 +1499,7 @@ html.join-open { overflow: hidden; }
   .hero__row .hero__ctas { margin-top: 18px; flex-wrap: nowrap; width: 100%; }
   .hero__ctas { flex-wrap: nowrap; justify-content: center; }
   .hero__ctas .btn { --h: 56px; font-size: 16px; }
-  .hero__ctas .btn--ink { flex: 1 1 auto; max-width: 290px; }
-  .hero__ctas .btn--wa { flex: none; width: 56px; padding: 0; justify-content: center; }
-  .btn--wa__label { display: none; }
-  .hero__ctas .btn--wa .btn__wa { width: 40px; height: 40px; }
+  .hero__ctas .btn--ink { flex: 1 1 auto; max-width: 340px; }
   .final .hero__ctas .btn { width: 100%; max-width: 360px; }
   .gift { --w: 208px; --h: 134px; --d: 148px; --lh: 36px; --lo: 6px; --rw: 23px; --gh: 470px; --by: 54%; }
   .gbox__floor, .gbox__base { width: calc(var(--w) * 1.5); height: calc(var(--w) * 1.5); margin: calc(var(--w) * -.75) 0 0 calc(var(--w) * -.75); }
@@ -1515,7 +1529,9 @@ html.join-open { overflow: hidden; }
   .join__card { min-height: 0; }
   .join.is-done .join__done .eyebrow { display: none; }
   .join__done h2 { order: 1; }
-  .join__done .join__wa { order: 2; margin-top: 16px; }
+  .join__done .join__next { order: 2; margin-top: 16px; }
+  .join__nextArrow { transform: rotate(90deg); }
+  @keyframes point { 50% { translate: 0 -4px; } }
   .join__done .join__lede { order: 3; margin-top: 14px; font-size: 15px; }
   .join__doneBtn { order: 4; }
   .join__art .ticket__gifts li { padding: 5px 0; font-size: 13px; }

@@ -17,9 +17,9 @@ export const TAPS_TO_OPEN = 3;
 // The gifts people unlock by joining, in order. Shown on the ticket in the hero box and on the "You're in" screen.
 export const GIFTS = [
   'Resume review with an industry expert',
-  'Mock interview with an industry expert',
+  '1:1 mock interview with an industry expert',
   'Up to 3 free resume builds',
-  '20+, 30+ or 40+ free job applications',
+  '20+ free job applications',
   // A promise to the visitor: confirm the wording with the client before launch.
   'A referral to your dream company',
 ];

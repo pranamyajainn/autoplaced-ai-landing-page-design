@@ -18,8 +18,9 @@
     style.textContent = `
       .nav, .dock, .gift__ui, .gift__bubble { display: none !important; }
       .hero__sub, .hero__row .hero__ctas { visibility: hidden; }
-      .hero { min-height: 630px !important; padding-top: 34px !important; --lift: 92px !important; }
-      .hero__title { font-size: 98px !important; }
+      .hero { min-height: 630px !important; padding-top: 30px !important; --lift: 150px !important; }
+      .hero__inner { min-height: 0 !important; }
+      .hero__title { font-size: 54px !important; }
       .gift { --gh: 420px !important; --by: 48% !important; }
       .gift__dust { display: none; }`;
     frame.contentDocument.head.appendChild(style);

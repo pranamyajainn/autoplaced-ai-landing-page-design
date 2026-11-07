@@ -12,18 +12,16 @@ export function renderGifts(ul) {
 // The agent at work: sample job cards floating around the poster (the same sample data as the product window).
 // x, y: place on desktop, in % of the hero; mx, my: place on phones (no mx: hidden on phones). z: depth, 0 far to 1 near.
 const CARDS = [
-  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', x: 3, y: 23, z: 0.5, r: -5 },
-  { logo: 'swiggy.svg', c: '#fc8019', t: 'Senior PM, Instamart', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', x: 81, y: 19, z: 0.42, r: 4 },
-  { logo: 'phonepe.svg', c: '#5f259f', t: 'Lead PM, UPI Payments', s: 'PhonePe · Pune · Hybrid', st: 'Needs your OK', tone: 'wait', x: -2, y: 79, z: 0.95, r: 6, mx: -36, my: 47, mz: 0.92 },
-  { logo: 'razorpay.svg', c: '#0c2451', t: 'Senior PM, Payments', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', x: 80, y: 80, z: 0.84, r: -6, mx: 76, my: 53, mz: 0.86 },
-  { kind: 'ring', v: 91, t: 'Resume v3 · Payments', s: 'Tailored 2 min ago', st: 'ATS score 91', tone: 'work', x: 11, y: 43, z: 0.16, r: -3, mx: -14, my: 25, mz: 0.18 },
-  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', tone: 'work', x: 74, y: 40, z: 0.2, r: 3 },
+  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', x: 4, y: 26, z: 0.55, r: -5 },
+  { logo: 'swiggy.svg', c: '#fc8019', t: 'Senior PM, Instamart', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', x: 80, y: 22, z: 0.4, r: 4, mx: 80, my: 43, mz: 0.3 },
+  { logo: 'razorpay.svg', c: '#0c2451', t: 'Senior PM, Payments', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', x: 79, y: 52, z: 0.75, r: -4 },
+  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', x: 6, y: 54, z: 0.3, r: 3, mx: -44, my: 49, mz: 0.3 },
 ];
 function cardHTML(k) {
   const icon = k.kind === 'ring' ? `<span class="jc__ring" style="--v:${k.v}"><i>${k.v}</i></span>`
     : k.kind === 'scan' ? '<span class="jc__scan"><i></i></span>'
       : `<span class="jc__logo${k.fill ? ' jc__logo--fill' : ''}" style="--c:${k.c}"><img src="assets/logos/${k.logo}" alt="" width="20" height="20"></span>`;
-  return `<div class="jc__push"><div class="jc__in"><div class="jc__card">${icon}<b>${esc(k.t)}</b><small>${esc(k.s)}</small><span class="jc__st${k.tone ? ` jc__st--${k.tone}` : ''}">${esc(k.st)}</span></div></div></div>`;
+  return `<div class="jc__push"><div class="jc__in"><div class="jc__card">${icon}<b>${esc(k.t)}</b><small>${esc(k.s)}</small><span class="jc__st">${esc(k.st)}</span></div></div></div>`;
 }
 
 // what the bot says, before and after each tap
@@ -58,7 +56,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
 
   // dust drifting in the light above the box
   const dust = $('[data-dust]');
-  for (let i = 0; i < 22; i++) {
+  for (let i = 0; i < 8; i++) {
     const m = document.createElement('i');
     m.style.cssText = `left:${(8 + Math.random() * 84).toFixed(1)}%;top:${(6 + Math.random() * 70).toFixed(1)}%;--z:${(0.3 + Math.random()).toFixed(2)};--dur:${(9 + Math.random() * 10).toFixed(1)}s;--del:-${(Math.random() * 18).toFixed(1)}s`;
     dust.appendChild(m);
@@ -85,10 +83,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
       c.style.setProperty('--y', `${onPhone ? k.my : k.y}%`);
       c.style.setProperty('--z', z);
       c.style.setProperty('--s', (0.6 + z * 0.55).toFixed(3));
-      c.style.setProperty('--o', z < 0.35 ? (0.42 + z).toFixed(2) : '1');
-      c.style.setProperty('--zi', z >= 0.8 ? '5' : '0');
-      c.classList.toggle('is-near', z >= 0.8);
-      c.style.setProperty('--f', z > 0.8 ? `blur(${((z - 0.8) * 16).toFixed(1)}px)` : z < 0.3 ? `blur(${((0.3 - z) * 6).toFixed(1)}px)` : 'none');
+      c.style.setProperty('--o', (0.72 + z * 0.3).toFixed(2));
     });
   }
   place();
@@ -114,6 +109,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
 
   let taps = 0;
   let opened = false;
+  if (!reduced) setTimeout(() => { if (!opened) ripple(); }, 1250);
   let swapTimer = 0;
   function speak(text) {
     bubble.classList.add('is-swap');
@@ -151,13 +147,13 @@ export function initGift({ reduced, onOpen = () => {} }) {
     el.classList.add('is-opening', 'is-open');
     hero.classList.add('is-gift-open');
     setTimeout(() => push(2.6), reduced ? 0 : 120);
-    live.textContent = 'The box is open. Your gifts are listed below.';
+    live.textContent = 'The box is open. Your gifts are on the ticket.';
     if (!reduced) ripple();
     // the box button goes away, so focus moves to what came out of it
     title.focus({ preventScroll: true });
     hit.hidden = true;
     // the bot climbs out over the near glass, so it is drawn in front of it from here on
-    setTimeout(() => { gbox.appendChild(bot); void bot.offsetWidth; el.classList.add('is-out'); }, reduced ? 0 : 750);
+    setTimeout(() => { ticket.appendChild(bot); el.classList.add('is-out'); }, reduced ? 0 : 850);
     setTimeout(() => onOpen(el), reduced ? 0 : 450);
   }
 
@@ -197,7 +193,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
   };
   if (!reduced) nudgeTimer = setTimeout(nudge, 2500);
   let kick = () => {};
-  new IntersectionObserver(([en]) => { inView = en.isIntersecting; kick(); }).observe(hero);
+  new IntersectionObserver(([en]) => { inView = en.isIntersecting; hero.classList.toggle('is-away', !inView); kick(); }).observe(hero);
 
   if (reduced) return;
   const fine = matchMedia('(hover: hover) and (pointer: fine)');

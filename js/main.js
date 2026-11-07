@@ -156,6 +156,7 @@ initGift({
   reduced,
   // on phones the opened box grows; scroll to where the ticket will settle while it rises
   onOpen: (el) => {
+    lastY = -1; // redraw now, so the nav turns dark over the dimmed hero
     const cs = getComputedStyle(el);
     const ticket = $('.ticket', el);
     const top = el.getBoundingClientRect().top + parseFloat(cs.getPropertyValue('--gh')) * (parseFloat(cs.getPropertyValue('--by')) / 100)
@@ -201,13 +202,15 @@ document.fonts?.ready.then(queueMeasure);
 
 let showOn = false;
 let heroSy = -1;
+// only the layers that drift read the scroll value, so the rest of the hero is not restyled every frame
+const heroLayers = [$('[data-field]'), $('.hero__bg')];
 function updateTop(y) {
   const heroBottom = L.heroTop + L.heroH - y;
   nav.classList.toggle('is-solid', heroBottom < 90);
 
   // the poster's layers drift apart as it scrolls away: near cards fastest, the sun slowest
   const sy = reduced ? 0 : Math.round(clamp(y / Math.max(1, L.heroH)) * 1000) / 1000;
-  if (sy !== heroSy && heroBottom > -40) { heroSy = sy; hero.style.setProperty('--sy', String(sy)); }
+  if (sy !== heroSy && heroBottom > -40) { heroSy = sy; heroLayers.forEach((el) => el.style.setProperty('--sy', String(sy))); }
 
   // the product window tips up to face you as it scrolls in
   const top = L.showTop - y;
@@ -508,6 +511,7 @@ function frame(time) {
     updateHow(y);
     updateResume(y);
     updateDay(y);
+    if (hero.classList.contains('is-gift-open') && L.heroTop + L.heroH - y > 60) nav.classList.add('is-dark');
   }
   requestAnimationFrame(frame);
 }

@@ -1141,7 +1141,7 @@ html.menu-open .nav .burger__icon i:last-child { transform: rotate(-45deg); }
 .jc__logo--fill img { width: 100%; height: 100%; filter: invert(1); }
 .jc__card b { display: block; font-size: 13px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .jc__card small { display: block; font-size: 11.5px; color: #4f6766; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.jc__st { grid-column: 2; justify-self: start; display: inline-flex; align-items: center; gap: 5px; margin-top: 7px; padding: 4px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; background: var(--ok-soft); color: var(--ok); }
+.jc__st { grid-column: 2; justify-self: start; display: inline-flex; align-items: center; gap: 5px; margin-top: 7px; padding: 4px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; background: var(--ok-soft); color: #23703c; }
 .jc__st--work { background: var(--teal-soft); color: var(--teal-deep); }
 .jc__ring { grid-row: span 2; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--teal-2) calc(var(--v) * 1%), #ebe8e0 0); }
 .jc__ring i { width: 26px; height: 26px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-style: normal; font-size: 11px; font-weight: 650; }

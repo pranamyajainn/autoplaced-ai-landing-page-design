@@ -64,6 +64,7 @@ await fs.writeFile(`${OUT}/robots.txt`, `User-agent: *\nAllow: /\n\nSitemap: ${S
 await fs.writeFile(`${OUT}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${SITE}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>\n</urlset>\n`);
 await fs.writeFile(`${OUT}/404.html`, (await fs.readFile('404.html', 'utf8')).replace('__CSS__', mainCss));
 await fs.copyFile('site.webmanifest', `${OUT}/site.webmanifest`);
+await fs.copyFile('favicon.ico', `${OUT}/favicon.ico`);
 
 await fs.mkdir(`${OUT}/assets/logos`, { recursive: true });
 for (const f of ['icon.svg', 'icon-32.png', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'og.jpg', 'bot.png']) await fs.copyFile(`assets/${f}`, `${OUT}/assets/${f}`);

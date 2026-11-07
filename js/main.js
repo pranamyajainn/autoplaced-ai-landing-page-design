@@ -511,7 +511,8 @@ function frame(time) {
     updateHow(y);
     updateResume(y);
     updateDay(y);
-    if (hero.classList.contains('is-gift-open') && L.heroTop + L.heroH - y > 60) nav.classList.add('is-dark');
+    // over the dark stage the header stays light paper, so it stands apart from the stage
+    nav.classList.toggle('is-stage', hero.classList.contains('is-gift-open') && L.heroTop + L.heroH - y > 60);
   }
   requestAnimationFrame(frame);
 }

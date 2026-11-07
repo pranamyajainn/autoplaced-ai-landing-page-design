@@ -1085,11 +1085,12 @@ html.menu-open .nav .burger__icon i:last-child { transform: rotate(-45deg); }
   transform: translate(calc(-50% + var(--px, 0) * 16px), calc(-50% + var(--py, 0) * 10px + var(--sy, 0) * 140px)); animation: fade 1.6s .1s var(--ease) backwards; }
 
 /* lights down: once the box is open the stage goes deep teal and the ticket is the only lit thing */
-.hero__dark { position: absolute; inset: 0; opacity: 0; background: radial-gradient(70% 60% at 50% 42%, #154f55 0%, #0d3a3e 48%, #082528 100%);
-  -webkit-mask: linear-gradient(#000 calc(100% - 28px), transparent); mask: linear-gradient(#000 calc(100% - 28px), transparent); transition: opacity 1s var(--ease) .15s; }
-.hero.is-gift-open .hero__dark { opacity: .97; }
+.hero__dark { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease) .15s;
+  background: radial-gradient(38% 46% at 50% 44%, #1f5a5f 0%, #12393d 42%, #0b2427 72%, #061719 100%); }
+.hero.is-gift-open .hero__dark { opacity: 1; }
 .hero.is-gift-open .hero__sun { opacity: .3; }
 .hero.is-gift-open .hero__chip { opacity: 0; }
+.nav.is-stage .nav__bar { background: rgba(250, 249, 245, .96); border-color: rgba(255, 255, 255, .9); box-shadow: 0 14px 40px -14px rgba(0, 0, 0, .6); }
 /* nothing keeps animating while the hero is off screen */
 .hero.is-away *, .hero.is-away *::before, .hero.is-away *::after { animation-play-state: paused !important; }
 
@@ -1107,7 +1108,7 @@ html.menu-open .nav .burger__icon i:last-child { transform: rotate(-45deg); }
 .hero__line:nth-child(2) > * { animation-delay: .12s; }
 .hero__title em { font-size: 1.14em; letter-spacing: -.03em; padding-right: .06em; }
 
-.hero.is-gift-open .hero__title { color: #f3efe4; opacity: .16; filter: blur(2px); }
+.hero.is-gift-open .hero__title { color: #f3efe4; opacity: .09; filter: blur(2px); }
 
 /* below the headline: the story on the left, the box in the middle, the buttons on the right */
 .hero__row { flex: 1; position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 560px) minmax(0, 1fr); grid-template-rows: 1fr auto; column-gap: 24px; margin-top: calc(var(--lift) * -1); }
@@ -1117,11 +1118,11 @@ html.menu-open .nav .burger__icon i:last-child { transform: rotate(-45deg); }
 .hero__row .hero__ctas { grid-column: 3; grid-row: 2; justify-self: end; align-self: end; flex-direction: column; align-items: flex-end; padding-bottom: 4px; }
 .final .hero__ctas { justify-content: center; margin-top: 28px; }
 /* on the dark stage the buttons swap to their light versions */
-.hero.is-gift-open .hero__sub { color: #cfe3e1; }
+.hero.is-gift-open .hero__sub { color: #a9c6c4; }
+.hero__row > .hero__ctas { transition: opacity .5s var(--ease), visibility .5s; }
+.hero.is-gift-open .hero__row > .hero__ctas { opacity: 0; visibility: hidden; }
 .hero__row .btn { transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .6s, color .6s, border-color .6s; }
-.hero.is-gift-open .hero__row > .hero__ctas .btn--ink { color: var(--ink); background: linear-gradient(180deg, #f9cd66 0%, #f0ad34 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 14px 30px -12px rgba(0, 0, 0, .5); }
-.hero.is-gift-open .hero__row > .hero__ctas .btn--ink .btn__dot { background: var(--ink); color: var(--sun); }
-.hero.is-gift-open .jc { opacity: .22; }
+.hero.is-gift-open .jc { opacity: .1; }
 
 
 /* the agent at work: real job cards floating at different depths around the poster.
@@ -1486,8 +1487,10 @@ html.join-open { overflow: hidden; }
   .hero__chip { font-size: 13px; white-space: nowrap; }
   .hero__title { margin-top: 16px; font-size: clamp(42px, 12.6vw, 62px); }
 
-  .hero.is-gift-open .hero__title { color: #f3efe4; opacity: 1; filter: none; }
-  .hero.is-gift-open .hero__chip { opacity: 1; }
+  .hero.is-gift-open .hero__title { color: #f3efe4; opacity: .92; filter: none; }
+  .hero.is-gift-open .hero__chip { opacity: 1; background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .16); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .hero.is-gift-open .hero__chip b { color: #cfe3e1; }
+  .hero__chip { transition: opacity .5s, background .6s, border-color .6s; }
   .hero__sub { font-size: 16px; }
   .hero__ctas { gap: 8px; }
   .hero__row .hero__ctas { margin-top: 18px; flex-wrap: nowrap; width: 100%; }

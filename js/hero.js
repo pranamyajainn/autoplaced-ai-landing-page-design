@@ -12,16 +12,16 @@ export function renderGifts(ul) {
 // The agent at work: sample job cards floating around the poster (the same sample data as the product window).
 // x, y: place on desktop, in % of the hero; mx, my: place on phones (no mx: hidden on phones). z: depth, 0 far to 1 near.
 const CARDS = [
-  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', x: 4, y: 26, z: 0.55, r: -5 },
-  { logo: 'swiggy.svg', c: '#fc8019', t: 'Senior PM, Instamart', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', x: 80, y: 22, z: 0.4, r: 4, mx: 80, my: 43, mz: 0.3 },
-  { logo: 'razorpay.svg', c: '#0c2451', t: 'Senior PM, Payments', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', x: 79, y: 52, z: 0.75, r: -4 },
-  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', x: 6, y: 54, z: 0.3, r: 3, mx: -44, my: 49, mz: 0.3 },
+  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', tone: 'ok', x: 4, y: 26, z: 0.55, r: -5 },
+  { logo: 'swiggy.svg', c: '#fc8019', t: 'Senior PM, Instamart', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 80, y: 22, z: 0.4, r: 4, mx: 80, my: 43, mz: 0.3 },
+  { logo: 'razorpay.svg', c: '#0c2451', t: 'Senior PM, Payments', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', tone: 'work', x: 79, y: 52, z: 0.75, r: -4 },
+  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', tone: 'work', x: 6, y: 54, z: 0.3, r: 3, mx: -44, my: 49, mz: 0.3 },
 ];
 function cardHTML(k) {
   const icon = k.kind === 'ring' ? `<span class="jc__ring" style="--v:${k.v}"><i>${k.v}</i></span>`
     : k.kind === 'scan' ? '<span class="jc__scan"><i></i></span>'
       : `<span class="jc__logo${k.fill ? ' jc__logo--fill' : ''}" style="--c:${k.c}"><img src="assets/logos/${k.logo}" alt="" width="20" height="20"></span>`;
-  return `<div class="jc__push"><div class="jc__in"><div class="jc__card">${icon}<b>${esc(k.t)}</b><small>${esc(k.s)}</small><span class="jc__st">${esc(k.st)}</span></div></div></div>`;
+  return `<div class="jc__push"><div class="jc__in"><div class="jc__card">${icon}<b>${esc(k.t)}</b><small>${esc(k.s)}</small><span class="jc__st${k.tone === 'work' ? ' jc__st--work' : ''}">${k.tone === 'ok' ? '<svg width="11" height="11"><use href="#i-check"/></svg>' : ''}${esc(k.st)}</span></div></div></div>`;
 }
 
 // what the bot says, before and after each tap
@@ -83,7 +83,6 @@ export function initGift({ reduced, onOpen = () => {} }) {
       c.style.setProperty('--y', `${onPhone ? k.my : k.y}%`);
       c.style.setProperty('--z', z);
       c.style.setProperty('--s', (0.6 + z * 0.55).toFixed(3));
-      c.style.setProperty('--o', (0.72 + z * 0.3).toFixed(2));
     });
   }
   place();

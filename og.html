@@ -18,10 +18,10 @@
     style.textContent = `
       .nav, .dock, .gift__ui, .gift__bubble { display: none !important; }
       .hero__sub, .hero__row .hero__ctas { visibility: hidden; }
-      .hero { min-height: 630px !important; padding-top: 30px !important; --lift: 150px !important; }
+      .hero { min-height: 630px !important; padding-top: 30px !important; --lift: 64px !important; }
       .hero__inner { min-height: 0 !important; }
-      .hero__title { font-size: 54px !important; }
-      .gift { --gh: 420px !important; --by: 48% !important; }
+      .hero__title { font-size: 84px !important; }
+      .gift { --gh: 420px !important; --by: 50% !important; }
       .gift__dust { display: none; }`;
     frame.contentDocument.head.appendChild(style);
     setTimeout(() => { window.ready = true; }, 2800);

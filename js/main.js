@@ -135,16 +135,16 @@ function loadMeadow() {
         onReady: () => { root.classList.add('meadow-ready'); root.dataset.meadow = 'ready'; },
       });
       meadow = m;
-      meadow.setMood(1, true);
+      sceneMode = '';
       lastY = -1;
     })
     .catch(() => root.classList.add('no-webgl'));
 }
-// only the closing section uses the meadow now, so it loads when that section gets near
-if (hasWebGL) {
-  const near = new IntersectionObserver(([en]) => { if (en.isIntersecting) { near.disconnect(); loadMeadow(); } }, { rootMargin: '250% 0px' });
-  near.observe($('[data-final]'));
-}
+// the day starts in the morning meadow behind the gift box and ends in the golden one behind the closing section
+const MORNING = 0.16; // how far the meadow's light leans from midday towards golden hour
+let sceneMode = '';
+const whenIdle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 700 }) : setTimeout(fn, 200));
+if (hasWebGL) whenIdle(loadMeadow);
 else root.classList.add('no-webgl');
 
 /* ---------------- hero + product window ---------------- */
@@ -221,14 +221,24 @@ function updateTop(y) {
     app.style.transform = `perspective(2000px) translate3d(0, ${lerp(70, 0, e).toFixed(1)}px, 0) rotateX(${lerp(22, 0, e).toFixed(2)}deg) scale(${lerp(0.9, 1, e).toFixed(4)})`;
   }
 
-  // the golden meadow behind the closing section
+  // the meadow: morning behind the hero, golden hour behind the closing section, off in between
   const fr = L.finalTop - y;
-  const on = fr < vh + 40;
+  const heroOn = heroBottom > -40;
+  const finalOn = fr < vh + 40;
+  const on = heroOn || finalOn;
   sceneEl.classList.toggle('is-off', !on);
   frontEl.classList.toggle('is-off', !on);
+  const mode = heroOn ? 'hero' : finalOn ? 'final' : 'off';
+  if (mode !== sceneMode && mode !== 'off') {
+    sceneMode = mode;
+    sceneEl.classList.toggle('is-golden', mode === 'final');
+    sceneEl.classList.toggle('is-morning', mode === 'hero');
+    if (meadow) meadow.setMood(mode === 'final' ? 1 : MORNING, true);
+  }
   if (meadow) {
     meadow.setActive(on);
-    if (on) meadow.setProgress(lerp(0.55, 0, easeInOut(clamp(1 - fr / vh))));
+    if (mode === 'hero') meadow.setProgress(lerp(0, 0.16, sy));
+    else if (finalOn) meadow.setProgress(lerp(0.55, 0, easeInOut(clamp(1 - fr / vh))));
   }
 }
 

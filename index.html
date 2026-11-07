@@ -681,9 +681,11 @@
 
 <!-- ============ JOIN THE WAITLIST ============ -->
 <dialog class="join" id="join" aria-labelledby="join-title" data-join-dialog data-lenis-prevent>
+  <canvas class="join__confetti" aria-hidden="true" data-confetti></canvas>
   <div class="join__card">
     <button class="join__x" type="button" data-join-close aria-label="Close"><svg width="18" height="18"><use href="#i-x"/></svg></button>
     <div class="join__art">
+      <div class="join__sky" aria-hidden="true"><i class="cl" style="--x:-6%;--y:84%;--s:1.25;--d:0s"></i><i class="cl" style="--x:30%;--y:90%;--s:1.5;--d:0.08s"></i><i class="cl" style="--x:70%;--y:85%;--s:1.3;--d:0.04s"></i><i class="cl" style="--x:12%;--y:70%;--s:0.8;--d:0.16s"></i><i class="cl" style="--x:82%;--y:68%;--s:0.85;--d:0.12s"></i><i class="cl" style="--x:48%;--y:58%;--s:0.6;--d:0.22s"></i><i class="cl" style="--x:-2%;--y:40%;--s:0.55;--d:0.3s"></i><i class="cl" style="--x:88%;--y:36%;--s:0.5;--d:0.26s"></i></div>
       <div class="ticket ticket--pass" data-pass>
         <div class="ticket__card">
           <i class="ticket__foil" aria-hidden="true"></i>
@@ -694,6 +696,7 @@
           <div class="ticket__stub"><span>Waitlist member</span><b data-pass-date></b></div>
           <span class="stamp" aria-hidden="true"><span>You're<br>in</span></span>
         </div>
+        <span class="join__bot" data-bot="happy" aria-hidden="true"></span>
         <a class="ticket__tear" href="#community" data-wa data-tear rel="noopener" target="_blank" aria-label="Join the Autoplaced WhatsApp community (opens WhatsApp)" hidden>
           <span class="ticket__tearIcon" aria-hidden="true"><svg width="20" height="20"><use href="#i-wa"/></svg></span>
           <span class="ticket__tearText" aria-hidden="true"><small>Community pass</small><b>Tear to join us on WhatsApp</b></span>

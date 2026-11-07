@@ -29,7 +29,7 @@ The build writes the finished site to `dist/`. It also writes `robots.txt` and `
 Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json`.
 
 - Set `SITE_URL` (for example `https://www.autoplaced.ai`) in the Vercel project when the site moves to the real domain. Share links and the sitemap use this address.
-- The page reads the live seat count from `/api/seats`. Vercel sends this request to `https://www.autoplaced.ai/api/seats`.
+- The waitlist form sends its data to `WAITLIST_ENDPOINT` in `js/config.js`. The backend team owns that endpoint. While it is empty, the form shows the "You're in" screen and sends nothing.
 
 ## Folders
 
@@ -37,10 +37,13 @@ Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json
 | --- | --- |
 | `index.html` | The page |
 | `css/styles.css` | All styles and colour tokens |
+| `js/config.js` | Values the client can change: WhatsApp community link, waitlist endpoint, taps to open the box, the gift list |
 | `js/main.js` | Start point: scrolling, menu, motion |
+| `js/hero.js` | The hero gift box |
+| `js/join.js` | The "Join the waitlist" form and the "You're in" screen |
 | `js/bot.js` | The robot mascot |
 | `js/dial.js` | The autopilot dial and needle |
-| `js/meadow.js` | The 3D night scene (three.js) |
+| `js/meadow.js` | The 3D meadow behind the closing section (three.js) |
 | `assets/` | Icons, share image and company logos |
 | `fonts/` | Geist and Instrument Serif (SIL Open Font License) |
 | `og.html` | Source for the share image `assets/og.jpg` |

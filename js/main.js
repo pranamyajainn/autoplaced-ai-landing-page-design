@@ -1,5 +1,8 @@
 import { mountBots } from './bot.js';
 import { initControl } from './dial.js';
+import { initGift } from './hero.js';
+import { initJoin } from './join.js';
+import { WHATSAPP_COMMUNITY_URL } from './config.js';
 
 const root = document.documentElement;
 root.classList.add('js');
@@ -13,36 +16,9 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mqMobile = matchMedia('(max-width: 760px)');
 const mqStack = matchMedia('(max-width: 980px)');
 
-// Founding seats: starts from the last known count, then reads the live number from autoplaced.ai
-// (served through /api/seats on this site, see vercel.json, so the browser treats it as same-site).
-let CLAIMED = 44;
-let dockSync = () => {};
-
 mountBots();
-let seatsDrawn = false;
-function applySeats(n) {
-  CLAIMED = Math.min(100, Math.max(0, Math.round(n)));
-  $$('[data-seats-left]').forEach((el) => { el.textContent = String(100 - CLAIMED); });
-  $$('[data-seats-bar]').forEach((el) => { el.style.width = `${CLAIMED}%`; });
-  const left = $('[data-left]');
-  if (left) left.textContent = String(100 - CLAIMED);
-  const sr = $('[data-claimed-sr]');
-  if (sr) sr.textContent = `${CLAIMED} of 100 seats claimed`;
-  if (seatsDrawn) {
-    // the grid already played its animation: just show the new count
-    $$('[data-grid] i').forEach((c, i) => { c.classList.toggle('is-taken', i < CLAIMED); c.classList.toggle('is-you', i === CLAIMED); });
-    $('[data-claimed]').textContent = String(CLAIMED);
-  }
-}
-applySeats(CLAIMED);
-{
-  const ctrl = new AbortController();
-  setTimeout(() => ctrl.abort(), 4000);
-  fetch('/api/seats', { signal: ctrl.signal, cache: 'no-store' })
-    .then((r) => (r.ok ? r.json() : null))
-    .then((d) => { if (d && Number.isFinite(d.claimed)) applySeats(d.claimed); })
-    .catch(() => { /* keep the last known count */ });
-}
+// every WhatsApp community button takes its address from config.js
+$$('[data-wa]').forEach((a) => { a.href = WHATSAPP_COMMUNITY_URL; });
 
 /* ---------------- smooth scroll ---------------- */
 let lenis = null;
@@ -59,7 +35,7 @@ function scrollToTarget(target) {
   else if (target === 0) window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   else target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
 }
-$$('a[href^="#"]').forEach((a) => {
+$$('a[href^="#"]:not([data-join]):not([data-wa])').forEach((a) => {
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href');
     if (id === '#') return;
@@ -118,6 +94,8 @@ function closeMenu(returnFocus = false) {
   if (returnFocus) burger.focus();
 }
 burger.addEventListener('click', () => (isMenuOpen() ? closeMenu() : openMenu()));
+// the menu's join button opens the waitlist form, so the menu gets out of the way first
+$$('[data-join]', sheet).forEach((a) => a.addEventListener('click', () => closeMenu()));
 document.addEventListener('keydown', (e) => {
   if (!isMenuOpen()) return;
   if (e.key === 'Escape') { closeMenu(true); return; }
@@ -145,12 +123,10 @@ matchMedia('(min-width: 981px)').addEventListener('change', (e) => { if (e.match
 
 /* ---------------- live meadow ---------------- */
 let meadow = null;
-let sceneMode = '';
 const sceneEl = $('[data-scene]');
 const frontEl = $('[data-front]');
 const hasWebGL = 'WebGL2RenderingContext' in window || 'WebGLRenderingContext' in window;
-const whenIdle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 700 }) : setTimeout(fn, 200));
-if (hasWebGL) whenIdle(() => {
+function loadMeadow() {
   import('./meadow.js')
     .then(async ({ createMeadow }) => {
       const m = await createMeadow({
@@ -159,51 +135,51 @@ if (hasWebGL) whenIdle(() => {
         onReady: () => { root.classList.add('meadow-ready'); root.dataset.meadow = 'ready'; },
       });
       meadow = m;
-      meadow.setMood(sceneMode === 'final' ? 1 : 0, true);
+      meadow.setMood(1, true);
       lastY = -1;
     })
     .catch(() => root.classList.add('no-webgl'));
-});
+}
+// only the closing section uses the meadow now, so it loads when that section gets near
+if (hasWebGL) {
+  const near = new IntersectionObserver(([en]) => { if (en.isIntersecting) { near.disconnect(); loadMeadow(); } }, { rootMargin: '250% 0px' });
+  near.observe($('[data-final]'));
+}
 else root.classList.add('no-webgl');
 
-/* ---------------- hero ---------------- */
+/* ---------------- hero + product window ---------------- */
 const hero = $('[data-hero]');
-const heroCopy = $('[data-hero-copy]');
+const showcase = $('[data-showcase]');
 const app = $('[data-app]');
-const peek = $('[data-peek]');
-const heroBot = $('[data-hero-bot]');
-const peekBot = $('.peek__bot');
-const peekShadow = $('.peek__shadow');
-const bubble = $('[data-bubble]');
-const bubbleText = $('[data-bubble-text]');
 const finalSec = $('[data-final]');
-let botMood = 'skeptic';
-let bubbleTimer = 0;
-function setBubble(text) {
-  bubble.classList.add('is-swap');
-  clearTimeout(bubbleTimer);
-  bubbleTimer = setTimeout(() => { bubbleText.textContent = text; bubble.classList.remove('is-swap'); }, 220);
-}
+initGift({
+  reduced,
+  // on phones the opened box grows; scroll to where the ticket will settle while it rises
+  onOpen: (el) => {
+    const cs = getComputedStyle(el);
+    const ticket = $('.ticket', el);
+    const top = el.getBoundingClientRect().top + parseFloat(cs.getPropertyValue('--gh')) * (parseFloat(cs.getPropertyValue('--by')) / 100)
+      - parseFloat(cs.getPropertyValue('--h')) * 0.46 - ticket.offsetHeight;
+    if (top > 84 && top + ticket.offsetHeight + 60 < window.innerHeight) return;
+    const y = window.scrollY + top - 92;
+    if (lenis) lenis.scrollTo(y, { duration: 1.0 });
+    else window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+  },
+});
+initJoin({ reduced, getLenis: () => lenis });
 
 let vw = window.innerWidth;
 let vh = window.innerHeight;
 // Layout is read once here, never inside the scroll loop: reading it there forces the browser
 // to recalculate the page every frame, which is what makes scrolling stutter.
-const L = { appW: 0, appH: 0, botW: 0, pk: 0, fineBottom: 0, bubbleTop: 0, steps: [] };
+const L = { steps: [] };
 const pageTop = (el) => el.getBoundingClientRect().top + window.scrollY;
 function measure() {
   vw = window.innerWidth;
   // keep the stage steady while mobile browser bars slide in and out
   const h = window.innerHeight;
   if (Math.abs(h - vh) > 120 || !mqMobile.matches) vh = h;
-  L.appW = app.offsetWidth;
-  L.appH = app.offsetHeight;
-  L.botW = peekBot.offsetWidth;
-  L.pk = peek.offsetHeight;
-  L.bubbleTop = bubble.offsetTop;
-  const fine = heroCopy.lastElementChild;
-  L.fineBottom = heroCopy.offsetTop + fine.offsetTop + fine.offsetHeight;
-  L.heroTop = pageTop(hero); L.heroH = hero.offsetHeight;
+  L.showTop = pageTop(showcase); L.showH = showcase.offsetHeight;
   L.finalTop = pageTop(finalSec);
   L.dayTop = pageTop(daySec); L.dayH = daySec.offsetHeight;
   L.artTop = pageTop(resumeArt); L.artH = resumeArt.offsetHeight;
@@ -218,90 +194,31 @@ const queueMeasure = () => {
   requestAnimationFrame(() => { measureQueued = false; measure(); });
 };
 window.addEventListener('resize', queueMeasure);
-// content can change height (fonts arriving, FAQ answers opening), so re-measure when it does
+// content can change height (fonts arriving, FAQ answers opening, the gift box opening), so re-measure when it does
 new ResizeObserver(queueMeasure).observe(document.querySelector('main'));
 document.fonts?.ready.then(queueMeasure);
 
-function updateHero(y) {
-  const r = { top: L.heroTop - y, bottom: L.heroTop + L.heroH - y, height: L.heroH };
-  const p = clamp(-r.top / (r.height - vh));
-  const mobile = mqMobile.matches;
-  const navH = mobile ? 76 : 96;
+let showOn = false;
+function updateTop(y) {
+  nav.classList.toggle('is-solid', y > 40);
 
-  // headline leaves quickly so the walk down the path takes over
-  const cp = clamp(p / 0.22);
-  heroCopy.style.transform = cp > 0 ? `translate3d(0, ${(-cp * 70).toFixed(1)}px, 0) scale(${(1 - cp * 0.05).toFixed(4)})` : '';
-  heroCopy.style.filter = cp > 0 && cp < 1 && !reduced && !mobile ? `blur(${(cp * 7).toFixed(2)}px)` : '';
-  heroCopy.style.opacity = String(1 - smooth(cp));
-  heroCopy.style.visibility = cp >= 1 ? 'hidden' : '';
-  dockSync();
-
-  // the product window grows out of the horizon, where the path ends, as you walk towards it
-  const floor = vh * (mobile ? 0.86 : 0.85) - 10;
-  const appH = L.appH;
-  const endScale = Math.min(1, (floor - navH) / appH);
-  const endTop = navH + Math.max(0, (floor - navH - appH * endScale) / 2);
-  const t = clamp((p - 0.02) / 0.5);
-  const e = mobile ? 1 - Math.pow(1 - t, 3) : easeInOut(t);
-  const s = lerp(mobile ? 0.5 : 0.46, endScale, e);
-  const cy = lerp(vh * (mobile ? 0.62 : 0.58), endTop + (appH * endScale) / 2, e);
-  const rot = reduced ? 0 : lerp(10, 0, e);
-  app.style.transform = `translate3d(-50%, ${(cy - (appH * s) / 2).toFixed(1)}px, 0) perspective(1800px) rotateX(${rot.toFixed(2)}deg) scale(${s.toFixed(4)})`;
-  app.style.opacity = String(smooth(clamp((p - 0.03) / 0.1)));
-
-  // the bot sits on the left hill, then hops onto the window
-  // where the window now sits, worked out from the same numbers used to place it
-  const appTop = cy - (appH * s) / 2;
-  const ar = { left: (vw - L.appW * s) / 2, width: L.appW * s, top: appTop };
-  const botW = L.botW;
-  const pk = L.pk;
-  const dockX = ar.left + ar.width * (mobile ? 0.04 : 0.06);
-  const dockY = Math.max(ar.top + (mobile ? 10 : 14), navH + pk + 6);
-  let hx = dockX;
-  let hy = dockY;
-  let hs = 1;
-  const a = meadow ? meadow.anchor() : null;
-  if (a && a.ok) { hx = a.x - botW * 0.5; hy = a.y + botW * 0.06; hs = clamp(a.scale, 0.6, 2.4); }
-  const k = smooth(clamp((p - 0.16) / 0.2));
-  const hop = Math.sin(k * Math.PI) * (mobile ? 40 : 70);
-  const by = lerp(hy, dockY, k) - hop - pk;
-  peek.style.transform = `translate3d(${lerp(hx, dockX, k).toFixed(1)}px, ${by.toFixed(1)}px, 0) scale(${lerp(hs, 1, k).toFixed(3)})`;
-  peekShadow.style.opacity = String(1 - k);
-  const clash = cp < 1 && by + L.bubbleTop < L.fineBottom + 8;
-  bubble.classList.toggle('is-hidden', clash || !(p < 0.1 || (!mobile && k >= 1 && p < 0.58)));
-  const arrive = a && a.ok ? 1 : k;
-  const underNav = clamp((by - navH + 20) / 50);
-  // on phones the window fills the screen, so the bot says goodbye on the hill instead of docking
-  const leave = mobile ? 1 - smooth(clamp(k / 0.45)) : 1 - smooth(clamp((p - 0.6) / 0.16));
-  peek.style.opacity = String(arrive * underNav * leave);
-  peek.classList.toggle('is-off', r.bottom < 0 || p > 0.8);
-
-  const mood = k > 0.5 ? 'cool' : 'skeptic';
-  if (mood !== botMood) {
-    botMood = mood;
-    heroBot.dataset.mood = mood;
-    setBubble(mood === 'cool' ? "Relax. I've got this." : 'Same form, 50th time today?');
+  // the product window tips up to face you as it scrolls in
+  const top = L.showTop - y;
+  showOn = top < vh && top + L.showH > 0;
+  if (showOn && !reduced) {
+    const t = clamp((vh - top) / (vh * 0.85));
+    const e = 1 - Math.pow(1 - t, 3);
+    app.style.transform = `perspective(2000px) translate3d(0, ${lerp(70, 0, e).toFixed(1)}px, 0) rotateX(${lerp(22, 0, e).toFixed(2)}deg) scale(${lerp(0.9, 1, e).toFixed(4)})`;
   }
 
-  nav.classList.toggle('is-solid', r.bottom < 90);
-
-  // scene: day meadow for the hero, golden hour for the closing section
-  const fr = { top: L.finalTop - y };
-  const heroOn = r.bottom > -40;
-  const finalOn = fr.top < vh + 40;
-  const on = heroOn || finalOn;
+  // the golden meadow behind the closing section
+  const fr = L.finalTop - y;
+  const on = fr < vh + 40;
   sceneEl.classList.toggle('is-off', !on);
   frontEl.classList.toggle('is-off', !on);
-  const mode = heroOn ? 'hero' : finalOn ? 'final' : 'off';
-  if (mode !== sceneMode) {
-    sceneMode = mode;
-    sceneEl.classList.toggle('is-golden', mode === 'final');
-    if (meadow) meadow.setMood(mode === 'final' ? 1 : 0, true);
-  }
   if (meadow) {
     meadow.setActive(on);
-    if (mode === 'hero') meadow.setProgress(clamp(p / 0.82));
-    else if (mode === 'final') meadow.setProgress(lerp(0.55, 0, easeInOut(clamp(1 - fr.top / vh))));
+    if (on) meadow.setProgress(lerp(0.55, 0, easeInOut(clamp(1 - fr / vh))));
   }
 }
 
@@ -317,7 +234,7 @@ function updateHero(y) {
   let n = 14;
   let step = 0;
   setInterval(() => {
-    if (sceneMode !== 'hero' || document.hidden || reduced) return;
+    if (!showOn || document.hidden || reduced) return;
     step = (step + 1) % 4;
     if (step === 1) { swiggy.className = 'status status--done'; swiggy.innerHTML = done; n = n >= 24 ? 14 : n + 1; }
     else if (step === 2) { phonepe.className = 'status status--work'; phonepe.innerHTML = work; }
@@ -559,37 +476,18 @@ function updateDay(y) {
 /* ---------------- control dial ---------------- */
 initControl({ reduced });
 
-/* ---------------- founding seats ---------------- */
-{
-  const grid = $('[data-grid]');
-  for (let i = 0; i < 100; i++) grid.appendChild(document.createElement('i'));
-  const cells = [...grid.children];
-  const claimedEl = $('[data-claimed]');
-  claimedEl.textContent = reduced ? String(CLAIMED) : '0';
-  const io = new IntersectionObserver(([en]) => {
-    if (!en.isIntersecting) return;
-    io.disconnect();
-    const n = CLAIMED;
-    cells.forEach((c, i) => {
-      if (i < n) setTimeout(() => { c.classList.add('is-taken'); claimedEl.textContent = String(i + 1); }, reduced ? 0 : i * 22);
-    });
-    setTimeout(() => { if (cells[n]) cells[n].classList.add('is-you'); seatsDrawn = true; if (n !== CLAIMED) applySeats(CLAIMED); }, reduced ? 0 : n * 22 + 200);
-  }, { threshold: 0.35 });
-  io.observe(grid);
-}
-
-/* ---------------- phones: a sticky claim button once the hero button is gone ---------------- */
+/* ---------------- phones: a sticky join button once no other join button is on screen ---------------- */
 {
   const dock = $('[data-dock]');
-  const heroBtn = $('.hero__ctas .btn');
-  const watched = $$('a[href*="/claim"]').filter((a) => !a.closest('.dock, .nav, .msheet')).concat($('.foot'));
+  const watched = $$('[data-join]').filter((a) => !a.closest('.dock, .nav, .msheet, dialog, [data-ticket]')).concat($('.foot')); // the ticket's button hides inside the closed box
   const visible = new Set();
-  dockSync = () => dock.classList.toggle('is-on', [...visible].every((el) => el === heroBtn && heroCopy.style.visibility === 'hidden'));
+  const sync = () => dock.classList.toggle('is-on', visible.size === 0 && window.scrollY > vh * 0.5);
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => (en.isIntersecting ? visible.add(en.target) : visible.delete(en.target)));
-    dockSync();
+    sync();
   });
   watched.forEach((el) => io.observe(el));
+  window.addEventListener('scroll', sync, { passive: true });
 }
 
 /* ---------------- frame loop: only does work when something moved ---------------- */
@@ -597,9 +495,9 @@ let lastY = -1;
 function frame(time) {
   if (lenis) lenis.raf(time);
   const y = lenis ? lenis.animatedScroll : window.scrollY;
-  if (y !== lastY || sceneMode === 'hero') {
+  if (y !== lastY) {
     lastY = y;
-    updateHero(y);
+    updateTop(y);
     updateHow(y);
     updateResume(y);
     updateDay(y);

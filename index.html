@@ -2,23 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Autoplaced | Your job search, on autopilot</title>
-<meta name="description" content="Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. Claim one of 100 free founding seats.">
-<meta name="theme-color" content="#8fc0e8">
+<meta name="description" content="Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. Join the waitlist and unlock free gifts.">
+<meta name="theme-color" content="#f7f5ef">
 <meta property="og:title" content="Autoplaced | Your job search, on autopilot">
-<meta property="og:description" content="AI resume builder and job search agent. Claim one of 100 free founding seats.">
+<meta property="og:description" content="AI resume builder and job search agent. Join the waitlist and unlock free gifts.">
 <meta property="og:site_name" content="Autoplaced.ai">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://autoplaced-redesign.vercel.app/">
 <link rel="canonical" href="https://www.autoplaced.ai/">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Autoplaced","url":"https://www.autoplaced.ai/","email":"hello@autoplaced.ai","sameAs":["https://www.linkedin.com/company/autoplaced/","https://www.instagram.com/autoplaced.ai/"]},{"@type":"SoftwareApplication","name":"Autoplaced","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI resume builder and job search agent that finds roles, tailors your resume to each one and applies for you.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}]}</script>
-<meta property="og:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg">
+<meta property="og:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Autoplaced: your job search, on autopilot. A sunlit meadow with the Autoplaced robot.">
+<meta property="og:image:alt" content="Autoplaced: your job search, on autopilot. A glass gift box with the Autoplaced robot inside.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg">
+<meta name="twitter:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg?v=2">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -53,8 +53,8 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="dock" data-dock>
-  <a class="btn btn--ink btn--lg" href="https://www.autoplaced.ai/claim?from=dock">Claim my free seat <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-  <span class="dock__note"><b data-seats-left>56</b> left</span>
+  <a class="btn btn--ink btn--lg" href="#join" data-join="dock">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+  <a class="dock__wa" href="#community" data-wa rel="noopener" target="_blank" aria-label="Join the Autoplaced WhatsApp community"><svg width="22" height="22"><use href="#i-wa"/></svg></a>
 </div>
 
 <!-- ============ NAV ============ -->
@@ -72,7 +72,7 @@
     </nav>
     <div class="nav__cta">
       <a class="nav__login" href="https://www.autoplaced.ai/login">Log in</a>
-      <a class="btn btn--ink btn--sm" href="https://www.autoplaced.ai/claim?from=nav">Claim free seat</a>
+      <a class="btn btn--ink btn--sm" href="#join" data-join="nav">Join the waitlist</a>
       <button class="nav__burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu" data-burger><span class="burger__label" aria-hidden="true"><span>Menu</span><span>Close</span></span><span class="burger__icon" aria-hidden="true"><i></i><i></i></span></button>
     </div>
   </div>
@@ -92,21 +92,20 @@
       <li data-stagger style="--i:5"><a href="#faq"><span>FAQ</span><em>10 answers</em></a></li>
     </ul>
     <div class="msheet__foot" data-stagger style="--i:6">
-      <a class="btn btn--sun btn--lg btn--block" href="https://www.autoplaced.ai/claim?from=menu">Claim my free seat <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-      <p class="msheet__meta"><span class="msheet__bar" aria-hidden="true"><i data-seats-bar></i></span><span><b data-seats-left>56</b> of 100 founding seats left</span></p>
+      <a class="btn btn--sun btn--lg btn--block" href="#join" data-join="menu">Join the waitlist <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
       <div class="msheet__row">
         <a href="https://www.autoplaced.ai/login">Log in</a>
         <div class="social">
           <a href="https://www.linkedin.com/company/autoplaced/" aria-label="Autoplaced on LinkedIn" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-in"/></svg></a>
           <a href="https://www.instagram.com/autoplaced.ai/" aria-label="Autoplaced on Instagram" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-ig"/></svg></a>
-          <a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" aria-label="Join the Autoplaced WhatsApp community" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-wa"/></svg></a>
+          <a href="#community" data-wa aria-label="Join the Autoplaced WhatsApp community" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-wa"/></svg></a>
         </div>
       </div>
     </div>
   </nav>
 </div>
 
-<!-- ============ LIVE SCENE (fixed behind hero + final CTA) ============ -->
+<!-- ============ LIVE SCENE (fixed behind the closing section) ============ -->
 <div class="scene" data-scene aria-hidden="true">
   <div class="scene__sky"></div>
   <div class="scene__sun"></div>
@@ -114,138 +113,185 @@
   <div class="scene__fallback"></div>
 </div>
 <canvas class="scene-front" data-front aria-hidden="true"></canvas>
-<div class="peek" data-peek aria-hidden="true">
-  <span class="peek__shadow"></span>
-  <span class="peek__bot" data-bot="skeptic" data-hero-bot></span>
-  <div class="bubble" data-bubble><span data-bubble-text>Same form, 50th time today?</span></div>
-</div>
 
 <main id="main">
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO: the gift box ============ -->
 <section class="hero" id="top" data-hero>
-  <div class="hero__pin">
-    <div class="hero__copy" data-hero-copy>
+  <div class="hero__bg" aria-hidden="true"><i class="hero__beam"></i></div>
+  <div class="hero__grid">
+    <div class="hero__copy">
+      <p class="hero__chip"><span><i></i>The waitlist is open</span><b>Free to join</b></p>
       <h1 class="hero__title">
         <span class="hero__line"><span>Your job search,</span></span>
         <span class="hero__line"><em>on autopilot.</em></span>
       </h1>
       <p class="hero__sub">Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. You wake up to replies.</p>
       <div class="hero__ctas">
-        <a class="btn btn--ink btn--lg" href="https://www.autoplaced.ai/claim?from=hero">
-          Claim my free seat
-          <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span>
-        </a>
+        <a class="btn btn--ink btn--lg" href="#join" data-join="hero">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+        <a class="btn btn--wa btn--lg" href="#community" data-wa rel="noopener" target="_blank" aria-label="Join our WhatsApp community"><span class="btn__wa"><svg width="18" height="18"><use href="#i-wa"/></svg></span><span class="btn--wa__label">WhatsApp community</span></a>
       </div>
-      <p class="hero__fine"><span class="hero__seats"><i></i><b data-seats-left>56</b> of 100 founding seats left</span><span>Free · No card · You approve what goes out</span></p>
     </div>
 
-    <!-- product window rising out of the valley -->
-    <div class="app" data-app role="img" aria-label="Autoplaced app: the agent has found 8 matching jobs at companies like CRED, Swiggy, PhonePe and Razorpay, and is applying to the best fits.">
-      <div class="app__frame" aria-hidden="true">
-        <div class="app__chrome">
-          <span class="dots"><i></i><i></i><i></i></span>
-          <span class="app__url"><svg width="11" height="11"><use href="#i-lock"/></svg>app.autoplaced.ai/find-jobs</span>
-          <span class="app__sample">Sample data</span>
-          <span class="app__live"><i class="pulse"></i>Agent running</span>
-        </div>
-        <div class="app__body">
-          <aside class="app__side">
-            <div class="app__brand"><span data-bot="cool"></span>Autoplaced</div>
-            <ul class="app__nav">
-              <li>Dashboard</li>
-              <li class="is-on">Find jobs</li>
-              <li>Resumes</li>
-              <li>Applications <em>62</em></li>
-              <li>Referrals <em class="new">New</em></li>
-              <li>Recruiter outreach</li>
-              <li>Interview prep</li>
-              <li>Inbox <em>3</em></li>
-            </ul>
-            <div class="agentcard">
-              <div class="agentcard__top"><span>Agent</span><span class="agentcard__state"><i></i>Running</span></div>
-              <div class="agentcard__mode">Approve-first</div>
-              <div class="agentcard__bar"><span data-agent-bar style="width:56%"></span></div>
-              <div class="agentcard__count"><b data-agent-count>14</b> / 25 applications today</div>
-            </div>
-          </aside>
-          <div class="app__main">
-            <div class="app__search">
-              <svg width="15" height="15"><use href="#i-search"/></svg>
-              <span>Senior PM · Fintech · Bengaluru</span>
-              <b>Search</b>
-            </div>
-            <div class="app__filters">
-              <span class="fpill is-on">Past month <svg width="10" height="10"><use href="#i-x"/></svg></span>
-              <span class="fpill">Location</span><span class="fpill">Workplace</span><span class="fpill">Companies</span><span class="fpill">Match ≥ 70%</span>
-            </div>
-            <div class="app__listhead"><b>8 job matches for you</b><span class="scan"><i></i>Scanning 20+ sources</span></div>
-            <ul class="jobs" data-jobs>
-              <li class="job">
-                <span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span>
-                <div class="job__info"><b>Product Manager, Rewards</b><span>CRED · Bengaluru · Onsite · ₹32–48 LPA</span></div>
-                <span class="score" style="--s:92"><i>92</i></span>
-                <span class="status status--done"><svg width="11" height="11"><use href="#i-check"/></svg>Applied</span>
-              </li>
-              <li class="job">
-                <span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span>
-                <div class="job__info"><b>Senior PM, Instamart Supply</b><span>Swiggy · Bengaluru · Hybrid · ₹40–55 LPA</span></div>
-                <span class="score" style="--s:88"><i>88</i></span>
-                <span class="status status--work" data-cycle><span class="spin"></span>Tailoring resume</span>
-              </li>
-              <li class="job">
-                <span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span>
-                <div class="job__info"><b>Lead PM, UPI Merchant Payments</b><span>PhonePe · Pune · Hybrid · ₹45–60 LPA</span></div>
-                <span class="score" style="--s:84"><i>84</i></span>
-                <span class="status status--wait">Needs approval</span>
-              </li>
-              <li class="job is-selected">
-                <span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
-                <div class="job__info"><b>Senior PM, Payments Platform</b><span>Razorpay · Bengaluru · Hybrid · ₹38–52 LPA</span></div>
-                <span class="score" style="--s:78"><i>78</i></span>
-                <span class="status">Selected</span>
-              </li>
-            </ul>
-            <div class="runbar">
-              <span class="mono">Today's run</span>
-              <span><b>1,284</b> postings scanned</span>
-              <span><b>31</b> matches</span>
-              <span><b>3</b> recruiter replies</span>
-            </div>
-          </div>
-          <div class="app__detail">
-            <div class="detail__head">
-              <span class="logo logo--lg logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
-              <div><b>Senior Product Manager, Payments Platform</b><span>Razorpay · posted 2 hours ago</span></div>
-            </div>
-            <div class="detail__facts">
-              <div><span>Salary</span><b>₹38–52 LPA</b></div>
-              <div><span>Experience</span><b>5–8 yrs</b></div>
-              <div><span>Location</span><b>Bengaluru · Hybrid</b></div>
-            </div>
-            <div class="detail__why">
-              <span class="mono"><svg width="12" height="12"><use href="#i-spark"/></svg>Why you match</span>
-              <p>Good fit: you have 6 of the 9 skills this role asks for.</p>
-              <div class="tags">
-                <span class="tag tag--yes">SQL</span><span class="tag tag--yes">Payments</span><span class="tag tag--yes">A/B testing</span>
-                <span class="tag tag--yes">Roadmapping</span><span class="tag tag--yes">UPI</span><span class="tag tag--yes">Analytics</span>
-                <span class="tag tag--no">Go</span><span class="tag tag--no">Risk &amp; fraud</span><span class="tag tag--no">Compliance</span>
+    <div class="gift" data-gift>
+      <div class="gift__dust" aria-hidden="true" data-dust></div>
+      <div class="bubble gift__bubble" data-gift-bubble aria-hidden="true"><span data-gift-say>I brought you something.</span></div>
+      <div class="gift__stage">
+        <div class="gbox" data-gbox>
+      <div class="gbox__layer" aria-hidden="true">
+        <i class="gbox__base"></i>
+        <i class="gbox__floor"><i class="gbox__ring"></i><i class="gbox__pool"></i></i>
+        <i class="f f--bottom"></i>
+        <i class="f f--back"><b class="rb"></b></i>
+        <i class="f f--left"><b class="rb"></b></i>
+      </div>
+          <div class="gbox__mid">
+            <i class="gbox__rays" aria-hidden="true"></i>
+            <i class="gbox__glow" aria-hidden="true"></i>
+            <div class="ticket" data-ticket inert>
+              <div class="ticket__card">
+                <i class="ticket__foil" aria-hidden="true"></i>
+                <div class="ticket__head"><span class="ticket__brand"><span data-bot="happy"></span>autoplaced</span><span class="ticket__admit">Admit one</span></div>
+                <h2 class="ticket__title" tabindex="-1" data-ticket-title>Your gifts for joining</h2>
+                <ul class="ticket__gifts" data-gifts></ul>
+                <div class="ticket__stub">
+                  <a class="btn btn--ink btn--block" href="#join" data-join="gift">Join the waitlist to claim <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+                </div>
               </div>
             </div>
-            <div class="detail__resume">
-              <span class="detail__doc"><svg width="14" height="14"><use href="#i-doc"/></svg></span>
-              <div><b>Resume v3 · Payments</b><span>Tailored 2 min ago</span></div>
-              <span class="score score--sm" style="--s:91"><i>91</i></span>
-            </div>
-            <div class="detail__cta"><svg width="13" height="13"><use href="#i-spark"/></svg>Tailor resume to this job</div>
+            <span class="gbox__bot" data-bot="cool" data-gift-bot aria-hidden="true"></span>
           </div>
+      <div class="gbox__layer gbox__layer--front" aria-hidden="true">
+        <i class="f f--right"><b class="rb"></b></i>
+        <i class="f f--front"><b class="rb"></b></i>
+        <div class="lid">
+          <i class="f l--back"><b class="rb"></b></i>
+          <i class="f l--left"><b class="rb"></b></i>
+          <i class="f l--top"><b class="rb"></b><b class="rb rb--x"></b></i>
+          <i class="f l--right"><b class="rb"></b></i>
+          <i class="f l--front"><b class="rb"></b><span class="gtag"><span>for you</span></span></i>
+          <span class="bow"><svg viewBox="0 0 120 84" width="120" height="84"><defs><linearGradient id="bowg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde29a"/><stop offset=".55" stop-color="#f2b542"/><stop offset="1" stop-color="#cf8616"/></linearGradient></defs><path d="M58 44C46 22 18 6 9 17c-8 10 6 27 49 29z" fill="url(#bowg)"/><path d="M62 44c12-22 40-38 49-27 8 10-6 27-49 29z" fill="url(#bowg)"/><path d="M56 42C44 28 26 19 20 25c-5 6 10 15 36 17zM64 42c12-14 30-23 36-17 5 6-10 15-36 17z" fill="#b8730f" opacity=".35"/><path d="M16 17c4-4 13-3 22 4M104 17c-4-4-13-3-22 4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".55"/><path d="M54 50L40 80l9-3 5 7 8-30zM66 50l14 30-9-3-5 7-8-30z" fill="#d7901c"/><path d="M54 50L42 78M66 50l12 28" stroke="#fde29a" stroke-width="1.6" opacity=".6"/><rect x="49" y="35" width="22" height="20" rx="7" fill="url(#bowg)"/><path d="M53 39h8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".6"/></svg></span>
         </div>
       </div>
+        </div>
+        <button class="gift__hit" type="button" data-gift-hit aria-describedby="gift-status"><span class="sr-only">Mystery gift box. Tap to shake it open.</span></button>
+      </div>
+      <div class="gift__ui">
+        <div class="gift__dots" aria-hidden="true" data-gift-dots></div>
+        <span class="gift__count" data-gift-count aria-hidden="true">Tap 3 times to open</span>
+        <button class="gift__skip" type="button" data-gift-skip>No patience? <u>Open it now</u></button>
+      </div>
+      <p class="sr-only" id="gift-status" aria-live="polite" data-gift-live></p>
     </div>
   </div>
 </section>
 
 <div class="page">
+
+<!-- ============ PRODUCT WINDOW ============ -->
+<section class="showcase" data-showcase>
+  <div class="app" data-app role="img" aria-label="Autoplaced app: the agent has found 8 matching jobs at companies like CRED, Swiggy, PhonePe and Razorpay, and is applying to the best fits.">
+    <div class="app__frame" aria-hidden="true">
+      <div class="app__chrome">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="app__url"><svg width="11" height="11"><use href="#i-lock"/></svg>app.autoplaced.ai/find-jobs</span>
+        <span class="app__sample">Sample data</span>
+        <span class="app__live"><i class="pulse"></i>Agent running</span>
+      </div>
+      <div class="app__body">
+        <aside class="app__side">
+          <div class="app__brand"><span data-bot="cool"></span>Autoplaced</div>
+          <ul class="app__nav">
+            <li>Dashboard</li>
+            <li class="is-on">Find jobs</li>
+            <li>Resumes</li>
+            <li>Applications <em>62</em></li>
+            <li>Referrals <em class="new">New</em></li>
+            <li>Recruiter outreach</li>
+            <li>Interview prep</li>
+            <li>Inbox <em>3</em></li>
+          </ul>
+          <div class="agentcard">
+            <div class="agentcard__top"><span>Agent</span><span class="agentcard__state"><i></i>Running</span></div>
+            <div class="agentcard__mode">Approve-first</div>
+            <div class="agentcard__bar"><span data-agent-bar style="width:56%"></span></div>
+            <div class="agentcard__count"><b data-agent-count>14</b> / 25 applications today</div>
+          </div>
+        </aside>
+        <div class="app__main">
+          <div class="app__search">
+            <svg width="15" height="15"><use href="#i-search"/></svg>
+            <span>Senior PM · Fintech · Bengaluru</span>
+            <b>Search</b>
+          </div>
+          <div class="app__filters">
+            <span class="fpill is-on">Past month <svg width="10" height="10"><use href="#i-x"/></svg></span>
+            <span class="fpill">Location</span><span class="fpill">Workplace</span><span class="fpill">Companies</span><span class="fpill">Match ≥ 70%</span>
+          </div>
+          <div class="app__listhead"><b>8 job matches for you</b><span class="scan"><i></i>Scanning 20+ sources</span></div>
+          <ul class="jobs" data-jobs>
+            <li class="job">
+              <span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span>
+              <div class="job__info"><b>Product Manager, Rewards</b><span>CRED · Bengaluru · Onsite · ₹32–48 LPA</span></div>
+              <span class="score" style="--s:92"><i>92</i></span>
+              <span class="status status--done"><svg width="11" height="11"><use href="#i-check"/></svg>Applied</span>
+            </li>
+            <li class="job">
+              <span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span>
+              <div class="job__info"><b>Senior PM, Instamart Supply</b><span>Swiggy · Bengaluru · Hybrid · ₹40–55 LPA</span></div>
+              <span class="score" style="--s:88"><i>88</i></span>
+              <span class="status status--work" data-cycle><span class="spin"></span>Tailoring resume</span>
+            </li>
+            <li class="job">
+              <span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span>
+              <div class="job__info"><b>Lead PM, UPI Merchant Payments</b><span>PhonePe · Pune · Hybrid · ₹45–60 LPA</span></div>
+              <span class="score" style="--s:84"><i>84</i></span>
+              <span class="status status--wait">Needs approval</span>
+            </li>
+            <li class="job is-selected">
+              <span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
+              <div class="job__info"><b>Senior PM, Payments Platform</b><span>Razorpay · Bengaluru · Hybrid · ₹38–52 LPA</span></div>
+              <span class="score" style="--s:78"><i>78</i></span>
+              <span class="status">Selected</span>
+            </li>
+          </ul>
+          <div class="runbar">
+            <span class="mono">Today's run</span>
+            <span><b>1,284</b> postings scanned</span>
+            <span><b>31</b> matches</span>
+            <span><b>3</b> recruiter replies</span>
+          </div>
+        </div>
+        <div class="app__detail">
+          <div class="detail__head">
+            <span class="logo logo--lg logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
+            <div><b>Senior Product Manager, Payments Platform</b><span>Razorpay · posted 2 hours ago</span></div>
+          </div>
+          <div class="detail__facts">
+            <div><span>Salary</span><b>₹38–52 LPA</b></div>
+            <div><span>Experience</span><b>5–8 yrs</b></div>
+            <div><span>Location</span><b>Bengaluru · Hybrid</b></div>
+          </div>
+          <div class="detail__why">
+            <span class="mono"><svg width="12" height="12"><use href="#i-spark"/></svg>Why you match</span>
+            <p>Good fit: you have 6 of the 9 skills this role asks for.</p>
+            <div class="tags">
+              <span class="tag tag--yes">SQL</span><span class="tag tag--yes">Payments</span><span class="tag tag--yes">A/B testing</span>
+              <span class="tag tag--yes">Roadmapping</span><span class="tag tag--yes">UPI</span><span class="tag tag--yes">Analytics</span>
+              <span class="tag tag--no">Go</span><span class="tag tag--no">Risk &amp; fraud</span><span class="tag tag--no">Compliance</span>
+            </div>
+          </div>
+          <div class="detail__resume">
+            <span class="detail__doc"><svg width="14" height="14"><use href="#i-doc"/></svg></span>
+            <div><b>Resume v3 · Payments</b><span>Tailored 2 min ago</span></div>
+            <span class="score score--sm" style="--s:91"><i>91</i></span>
+          </div>
+          <div class="detail__cta"><svg width="13" height="13"><use href="#i-spark"/></svg>Tailor resume to this job</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ PROOF ============ -->
 <section class="proof" aria-labelledby="proof-title">
@@ -425,7 +471,7 @@
         <li><svg width="18" height="18"><use href="#i-shield"/></svg>No CAPTCHA bypass</li>
         <li><svg width="18" height="18"><use href="#i-eye-off"/></svg>Not used for AI training</li>
       </ul>
-      <a class="btn btn--ink control__cta" href="https://www.autoplaced.ai/claim?from=control">Claim my free seat <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="btn btn--ink control__cta" href="#join" data-join="control">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -486,7 +532,7 @@
       <ul class="facts" data-reveal>
         <li>Never invents experience</li><li>Every version saved</li><li>ATS-safe templates for Workday, Greenhouse and Lever</li><li>Export to PDF or DOCX</li>
       </ul>
-      <a class="btn btn--ink" href="https://www.autoplaced.ai/claim?from=resume" data-reveal>Claim a seat, build your resume <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="btn btn--ink" href="#join" data-join="resume" data-reveal>Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
     </div>
 
     <div class="resume__art" data-resume aria-hidden="true">
@@ -542,7 +588,7 @@
       <h3>Free</h3>
       <p class="plan__for">Build your resume and try the agent</p>
       <p class="plan__price"><b>₹0</b><span>forever</span></p>
-      <a class="btn btn--line" href="https://www.autoplaced.ai/claim?from=pricing">Start free</a>
+      <a class="btn btn--line" href="#join" data-join="pricing">Join the waitlist</a>
       <ul>
         <li>AI Resume Builder (1 resume)</li><li>ATS score checks</li><li>20 job matches / week</li><li>Application tracker</li>
       </ul>
@@ -569,50 +615,17 @@
           <ul><li>Everything in Pro</li><li>Auto apply, up to 40 / day</li><li>Unlimited recruiter outreach</li><li>Priority discovery on new posts</li><li>Priority support</li></ul>
         </div>
       </div>
-      <a class="btn btn--sun" href="https://www.autoplaced.ai/claim?from=pricing">Lock in 50% off: claim a free seat <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="btn btn--sun" href="#join" data-join="pricing">Join the waitlist <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
     </article>
   </div>
-</section>
-
-<!-- ============ FOUNDING SEATS ============ -->
-<section class="seats" id="seats" aria-labelledby="seats-title">
-  <div class="seats__card">
-    <div class="seats__copy">
-      <span class="eyebrow eyebrow--light">100 founding seats</span>
-      <h2 id="seats-title">Claim your free seat. <em>Before someone else does.</em></h2>
-      <p>The first 100 people get a free founding seat. When all 100 are claimed, the offer closes. Everyone after that joins the regular waitlist, without the free applications or the lifetime discount.</p>
-    </div>
-      <ul class="perks">
-        <li><b>100+ applications, free</b><span>Your agent applies to 100+ matching jobs for you, on us. No card needed.</span></li>
-        <li><b>50% off for life</b><span>Your founding discount stays for as long as you're a member.</span></li>
-        <li><b>First in line</b><span>Seat holders get their invites before anyone on the regular waitlist.</span></li>
-        <li><b>Shape the product</b><span>A direct line to the team and a say in which features and job boards come next.</span></li>
-      </ul>
-    <div class="seats__board">
-      <div class="seats__count">
-        <span class="live"><i></i>Live count</span>
-        <p><b data-claimed aria-hidden="true">44</b><span aria-hidden="true">of 100 seats claimed</span><span class="sr-only" data-claimed-sr>44 of 100 seats claimed</span></p>
-      </div>
-      <div class="grid100" data-grid aria-hidden="true"></div>
-      <div class="seats__legend" aria-hidden="true"><span><i class="k k--taken"></i>Claimed</span><span><i class="k k--you"></i>Your seat</span><span class="seats__left"><b data-left>56</b> seats left</span></div>
-      <a class="btn btn--sun btn--lg btn--block" href="https://www.autoplaced.ai/claim?from=offer">Claim my free seat <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-      <p class="seats__fine">Takes 20 seconds · No card · Seat holders are invited first, in the order they joined</p>
-      <a class="seats__wa" href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" rel="noopener" target="_blank"><svg width="16" height="16"><use href="#i-wa"/></svg>Questions first? Ask the team in our WhatsApp community</a>
-    </div>
-  </div>
-  <ol class="next3">
-    <li data-reveal><span>1</span><b>Claim your seat</b><p>Takes 20 seconds. Your founding perks are locked in.</p></li>
-    <li data-reveal style="--d:.08s"><span>2</span><b>Get your invite</b><p>Seat holders are invited first, in the order they joined.</p></li>
-    <li data-reveal style="--d:.16s"><span>3</span><b>Set up once</b><p>About ten minutes to build your resume and set preferences.</p></li>
-  </ol>
 </section>
 
 <!-- ============ FAQ ============ -->
 <section class="faq" id="faq" aria-labelledby="faq-title">
   <header class="shead shead--left" data-reveal>
     <span class="eyebrow">FAQ</span>
-    <h2 id="faq-title">Before you <em>claim a seat.</em></h2>
-    <p>Still curious? Write to <a href="mailto:hello@autoplaced.ai">hello@autoplaced.ai</a> or ask in our <a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" rel="noopener" target="_blank">WhatsApp community</a>.</p>
+    <h2 id="faq-title">Before you <em>join.</em></h2>
+    <p>Still curious? Write to <a href="mailto:hello@autoplaced.ai">hello@autoplaced.ai</a> or ask in our <a href="#community" data-wa rel="noopener" target="_blank">WhatsApp community</a>.</p>
   </header>
   <div class="faq__list">
     <details><summary>Is the Resume Builder free?<i></i></summary><div class="faq__a"><p>Yes. Build one resume, check its ATS score and export it on the Free plan. Paid plans add more resumes and a tailored version for every job.</p></div></details>
@@ -637,9 +650,9 @@
     <h2 id="final-title">You've filled enough <em>forms.</em></h2>
     <p>Set it up once. Autoplaced finds the roles, tailors your resume and applies while you get ready for interviews.</p>
     <div class="hero__ctas">
-      <a class="btn btn--ink btn--lg" href="https://www.autoplaced.ai/claim?from=final">Claim my free seat <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="btn btn--ink btn--lg" href="#join" data-join="final">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
     </div>
-    <p class="final__fine"><span><b data-seats-left>56</b> founding seats left · Takes 20 seconds · No card</span></p>
+    <p class="final__fine"><span>Free to join · Takes 20 seconds · No card</span></p>
   </div>
 </section>
 
@@ -653,18 +666,86 @@
       <div class="social">
         <a href="https://www.linkedin.com/company/autoplaced/" aria-label="Autoplaced on LinkedIn" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-in"/></svg></a>
         <a href="https://www.instagram.com/autoplaced.ai/" aria-label="Autoplaced on Instagram" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-ig"/></svg></a>
-        <a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" aria-label="Join the Autoplaced WhatsApp community" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-wa"/></svg></a>
+        <a href="#community" data-wa aria-label="Join the Autoplaced WhatsApp community" rel="noopener" target="_blank"><svg width="18" height="18"><use href="#i-wa"/></svg></a>
       </div>
     </div>
     <nav class="foot__cols" aria-label="Footer">
-      <div><b>Product</b><a href="#how">How it works</a><a href="#resume">Resume builder</a><a href="#pricing">Pricing</a><a href="#seats">Early access</a><a href="#faq">FAQ</a></div>
-      <div><b>Community</b><a href="https://chat.whatsapp.com/GgEHnv7hqaL8yybgLZDFUe" rel="noopener" target="_blank">WhatsApp community</a><a href="https://whatsapp.com/channel/0029Vb9URlSHAdNRsMXYMJ2x" rel="noopener" target="_blank">WhatsApp channel</a><a href="https://www.linkedin.com/company/autoplaced/" rel="noopener" target="_blank">LinkedIn</a><a href="https://www.instagram.com/autoplaced.ai/" rel="noopener" target="_blank">Instagram</a></div>
-      <div><b>Company</b><a href="mailto:hello@autoplaced.ai">Contact us</a><a href="#seats">Founding seats</a><a href="https://www.autoplaced.ai/login">Log in</a></div>
+      <div><b>Product</b><a href="#how">How it works</a><a href="#resume">Resume builder</a><a href="#pricing">Pricing</a><a href="#join" data-join="footer">Join the waitlist</a><a href="#faq">FAQ</a></div>
+      <div><b>Community</b><a href="#community" data-wa rel="noopener" target="_blank">WhatsApp community</a><a href="https://whatsapp.com/channel/0029Vb9URlSHAdNRsMXYMJ2x" rel="noopener" target="_blank">WhatsApp channel</a><a href="https://www.linkedin.com/company/autoplaced/" rel="noopener" target="_blank">LinkedIn</a><a href="https://www.instagram.com/autoplaced.ai/" rel="noopener" target="_blank">Instagram</a></div>
+      <div><b>Company</b><a href="mailto:hello@autoplaced.ai">Contact us</a><a href="https://www.autoplaced.ai/login">Log in</a></div>
     </nav>
   </div>
   <span class="foot__bot" data-bot="night" aria-hidden="true"></span>
   <div class="foot__base"><span>© 2026 Autoplaced</span><span>Your job search, on autopilot.</span></div>
 </footer>
+
+<!-- ============ JOIN THE WAITLIST ============ -->
+<dialog class="join" id="join" aria-labelledby="join-title" data-join-dialog data-lenis-prevent>
+  <div class="join__card">
+    <button class="join__x" type="button" data-join-close aria-label="Close"><svg width="18" height="18"><use href="#i-x"/></svg></button>
+    <div class="join__art">
+      <div class="ticket ticket--pass" data-pass>
+        <div class="ticket__card">
+          <i class="ticket__foil" aria-hidden="true"></i>
+          <div class="ticket__head"><span class="ticket__brand"><span data-bot="happy"></span>autoplaced</span><span class="ticket__admit">Admit one</span></div>
+          <p class="ticket__name"><span>Name</span><b data-pass-name>Your name here</b></p>
+          <p class="ticket__label" data-pass-label>Unlocks when you join</p>
+          <ul class="ticket__gifts" data-gifts></ul>
+          <div class="ticket__stub"><span>Waitlist member</span><b data-pass-date></b></div>
+          <span class="stamp" aria-hidden="true"><span>You're<br>in</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="join__body">
+      <form class="join__form" data-join-form novalidate>
+        <div class="join__strip" aria-hidden="true"><span>Admit one</span><b data-strip-name>Your name here</b></div>
+        <span class="eyebrow">The waitlist</span>
+        <h2 id="join-title">Join the waitlist. <em>Claim your gifts.</em></h2>
+        <p class="join__lede">Free to join. Takes 20 seconds.</p>
+        <div class="fld" data-fld="name">
+          <label for="jn-name">Full name</label>
+          <input id="jn-name" name="name" type="text" autocomplete="name" autocapitalize="words" maxlength="80" aria-describedby="jn-name-err">
+          <p class="fld__err" id="jn-name-err"></p>
+        </div>
+        <div class="fld" data-fld="phone">
+          <label for="jn-phone">Phone number</label>
+          <div class="fld__tel">
+            <select id="jn-cc" name="countryCode" aria-label="Country code" autocomplete="tel-country-code">
+              <option value="+91" selected>IN +91</option>
+              <option value="+1">US/CA +1</option>
+              <option value="+44">UK +44</option>
+              <option value="+971">AE +971</option>
+              <option value="+65">SG +65</option>
+              <option value="+61">AU +61</option>
+              <option value="+49">DE +49</option>
+            </select>
+            <input id="jn-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="24" placeholder="98765 43210" aria-describedby="jn-phone-hint jn-phone-err">
+          </div>
+          <p class="fld__hint" id="jn-phone-hint">For your invite and gift updates.</p>
+          <p class="fld__err" id="jn-phone-err"></p>
+        </div>
+        <div class="fld" data-fld="email">
+          <label for="jn-email">Email</label>
+          <input id="jn-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="120" aria-describedby="jn-email-err">
+          <p class="fld__err" id="jn-email-err"></p>
+        </div>
+        <p class="join__alert" role="alert" data-join-alert></p>
+        <button class="btn btn--ink btn--lg btn--block" type="submit" data-join-submit><span data-join-label>Join the waitlist</span> <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></button>
+        <p class="join__fine"><svg width="14" height="14"><use href="#i-lock"/></svg>We use your phone and email only for your invite, your gifts and WhatsApp updates.</p>
+      </form>
+      <div class="join__done" data-join-done hidden>
+        <span class="eyebrow">You're on the list</span>
+        <h2 tabindex="-1" data-done-title>You're in, <em data-done-name>friend.</em></h2>
+        <p class="join__lede">Your gifts are saved under your name. Your invite will come to your phone and email.</p>
+        <div class="join__wa">
+          <p><b>One more step.</b> Join the community for launch news, job-search tips and answers from the team.</p>
+          <a class="btn btn--wa btn--lg btn--block" href="#community" data-wa rel="noopener" target="_blank"><span class="btn__wa"><svg width="18" height="18"><use href="#i-wa"/></svg></span>Join the WhatsApp community</a>
+        </div>
+        <button class="join__doneBtn" type="button" data-join-close>Done</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <script type="module" src="js/main.js"></script>
 </body>

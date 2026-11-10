@@ -226,37 +226,41 @@ function paintAll() {
   if (S) paintAfter();
 }
 
-// the pass comes out of the printer line by line, the name and number type themselves, then it is stamped
+// the finished pass feeds out of a printer slot (CSS: .is-printing), then it is stamped and the ticks land
 let printing = false;
-async function printPass() {
+function printPass() {
+  const onEnd = (e) => { if (e.animationName === 'feed') done(); };
+  const done = () => {
+    card.removeEventListener('animationend', onEnd);
+    if (!printing) return;
+    printing = false;
+    fpass.classList.add('is-issued');
+    setTimeout(() => fpass.classList.remove('is-printing'), 500); // the slot fades away after the stamp
+    celebrate({ canvas: $('[data-confetti]'), from: card, reduced });
+  };
   printing = true;
   fpass.classList.remove('is-issued');
+  if (reduced) { done(); return; }
   fpass.classList.add('is-printing');
-  const name = P.name.textContent;
-  const no = P.no.textContent;
-  if (!reduced) {
-    P.name.textContent = '';
-    P.no.textContent = '#';
-    await wait(700);
-    for (let i = 1; i <= name.length; i++) { P.name.textContent = name.slice(0, i); await wait(38 + Math.random() * 40); }
-    for (let i = 2; i <= no.length; i++) { P.no.textContent = no.slice(0, i); await wait(90); }
-    await wait(250);
-  }
-  fpass.classList.remove('is-printing');
-  fpass.classList.add('is-issued');
-  printing = false;
-  setTimeout(() => celebrate({ canvas: $('[data-confetti]'), from: card, reduced }), reduced ? 0 : 280);
+  card.addEventListener('animationend', onEnd);
+  setTimeout(done, 2600); // in case the animation event never comes
 }
 
 function issue(animate) {
   showView('pass');
   paintAll();
   if (animate) {
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    // bring the printer into view, so the pass comes out where the person is looking
+    const top = fpass.getBoundingClientRect().top + window.scrollY - Math.min(140, window.innerHeight * 0.16);
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
     $('[data-pass-h]').focus({ preventScroll: true });
     printPass();
   } else fpass.classList.add('is-issued');
 }
+
+// the notches on the pass sit on its tear line, wherever the line falls
+const notchAt = () => card.style.setProperty('--notch', `${$('.fpass__no', card).offsetTop}px`);
+new ResizeObserver(notchAt).observe(card);
 
 /* ---------------- the form ---------------- */
 // People type numbers many ways: "+91 98765 43210", "0091-98765-43210", "098765 43210".

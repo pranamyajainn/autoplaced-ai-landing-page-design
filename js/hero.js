@@ -1,32 +1,43 @@
-// Hero gift box: tap it a few times (or skip) and it opens to show the gifts for joining.
+// Hero gift box: every tap brings one gift out of the box; the last tap opens it.
+// The ticket inside lists those gifts, plus the locked ones that friends unlock (INVITE_GIFTS).
 // The box tilts towards the mouse; on touch screens it sways by itself (a CSS animation).
-import { GIFTS, TAPS_TO_OPEN } from './config.js';
+import { TAP_GIFTS, TAPS_TO_OPEN, INVITE_GIFTS } from './config.js';
 
 const clamp = (v, a = -1, b = 1) => Math.min(b, Math.max(a, v));
 const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+export const friendsLine = (n) => `Unlocks when ${n} friend${n > 1 ? 's join' : ' joins'}`;
+const LOCK = '<svg width="12" height="12"><use href="#i-lock"/></svg>';
 
 export function renderGifts(ul) {
-  ul.innerHTML = GIFTS.map((g, i) => `<li style="--i:${i}"><span class="gn" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(g)}</span></li>`).join('');
+  const open = TAP_GIFTS.map((g, i) => `<li style="--i:${i}"><span class="gn" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(g)}</span></li>`);
+  const locked = INVITE_GIFTS.map((g, j) => `<li class="is-locked" style="--i:${TAP_GIFTS.length + j}"><span class="gn" aria-hidden="true">${LOCK}</span><span>${esc(g.gift)}<small>${friendsLine(g.friends)}</small></span></li>`);
+  ul.innerHTML = open.concat(locked).join('');
 }
 
-// The agent at work: sample job cards floating around the poster (the same sample data as the product window).
+// The agent at work: sample job cards floating around the poster, across many kinds of roles and job sites.
 // x, y: place on desktop, in % of the hero; mx, my: place on phones (no mx: hidden on phones). z: depth, 0 far to 1 near.
+// sz: logo size inside its tile (default 56%); fill: a black logo shown white on its tile.
+// tall: on phones, shown only on screens tall enough to fit it above the headline.
 const CARDS = [
-  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', tone: 'ok', x: 4, y: 26, z: 0.55, r: -5 },
-  { logo: 'swiggy.svg', c: '#fc8019', t: 'Senior PM, Instamart', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 80, y: 22, z: 0.4, r: 4, mx: 80, my: 43, mz: 0.3 },
-  { logo: 'razorpay.svg', c: '#0c2451', t: 'Senior PM, Payments', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', tone: 'work', x: 79, y: 52, z: 0.75, r: -4 },
-  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', tone: 'work', x: 6, y: 54, z: 0.3, r: 3, mx: -44, my: 49, mz: 0.3 },
+  { logo: 'swiggy.svg', c: '#fc8019', t: 'Software Engineer II', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 3, y: 21, z: 0.55, r: -5, mx: 66, my: 40, mz: 0.3 },
+  { logo: 'phonepe.svg', c: '#5f259f', t: 'Data Analyst', s: 'PhonePe · Pune · Onsite', st: 'Interview call', tone: 'work', x: 81, y: 17, z: 0.4, r: 4, mx: 3, my: -7, mz: 0.1, tall: true },
+  { logo: 'razorpay.svg', c: '#0c2451', t: 'Product Designer', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', tone: 'work', x: 79, y: 45, z: 0.75, r: -4 },
+  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', tone: 'work', x: 7, y: 47, z: 0.3, r: 3 },
+  { logo: 'naukri.png', c: '#fff', sz: '100%', t: 'Digital Marketing Manager', s: 'Mumbai · via Naukri', st: 'Applied', tone: 'ok', x: 2, y: 69, z: 0.7, r: 3, mx: 3, my: 69, mz: 0.2 },
+  { logo: 'instahyre.png', c: '#fff', sz: '100%', t: 'QA Automation Engineer', s: 'Hyderabad · via Instahyre', st: 'Applied', tone: 'ok', x: 82, y: 70, z: 0.5, r: -3, mx: 54, my: 72, mz: 0.2 },
+  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', tone: 'ok', x: 19, y: 34, z: 0.12, r: 2 },
+  { logo: 'indeed.svg', c: '#2164f3', t: 'Business Analyst', s: 'Gurugram · via Indeed', st: 'Tailoring resume', tone: 'work', x: 70, y: 30, z: 0.1, r: -2, mx: 56, my: -5, mz: 0.1, tall: true },
 ];
 function cardHTML(k) {
   const icon = k.kind === 'ring' ? `<span class="jc__ring" style="--v:${k.v}"><i>${k.v}</i></span>`
     : k.kind === 'scan' ? '<span class="jc__scan"><i></i></span>'
-      : `<span class="jc__logo${k.fill ? ' jc__logo--fill' : ''}" style="--c:${k.c}"><img src="assets/logos/${k.logo}" alt="" width="20" height="20"></span>`;
+      : `<span class="jc__logo${k.fill ? ' jc__logo--fill' : ''}" style="--c:${k.c}${k.sz ? `;--sz:${k.sz}` : ''}"><img src="assets/logos/${k.logo}" alt="" width="20" height="20"></span>`;
   return `<div class="jc__push"><div class="jc__in"><div class="jc__card">${icon}<b>${esc(k.t)}</b><small>${esc(k.s)}</small><span class="jc__st${k.tone === 'work' ? ' jc__st--work' : ''}">${k.tone === 'ok' ? '<svg width="11" height="11"><use href="#i-check"/></svg>' : ''}${esc(k.st)}</span></div></div></div>`;
 }
 
 // what the bot says, before and after each tap
-const LINES = ['I brought you something.', 'Ooh. Yes! Keep going.', 'One more. It’s about to pop!', 'Almost there!'];
-const tapsLeft = (n) => (n === TAPS_TO_OPEN ? `Tap ${n} times to open` : `${n} more tap${n > 1 ? 's' : ''}`);
+const LINES = ['I brought you something.', 'That one’s yours. There’s more!', 'One more. It’s about to pop!', 'Almost there!'];
+const tapsLeft = (n) => (n === TAPS_TO_OPEN ? `${n} gifts inside. Tap to open` : `${n} more gift${n > 1 ? 's' : ''} inside`);
 
 export function initGift({ reduced, onOpen = () => {} }) {
   const el = document.querySelector('[data-gift]');
@@ -35,7 +46,8 @@ export function initGift({ reduced, onOpen = () => {} }) {
   const hero = el.closest('[data-hero]');
   const gbox = $('[data-gbox]');
   const hit = $('[data-gift-hit]');
-  const skip = $('[data-gift-skip]');
+  const got = $('[data-gift-got]');
+  const ui = $('.gift__ui');
   const say = $('[data-gift-say]');
   const bubble = $('[data-gift-bubble]');
   const count = $('[data-gift-count]');
@@ -65,6 +77,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
   // the floating cards: depth sets size, blur, fade and how far each one moves
   const field = hero.querySelector('[data-field]');
   const phone = matchMedia('(max-width: 760px)');
+  const short = matchMedia('(max-height: 759px)');
   const cards = CARDS.map((k, i) => {
     const c = document.createElement('div');
     c.className = 'jc';
@@ -77,7 +90,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
   function place() {
     cards.forEach(({ c, k }) => {
       const onPhone = phone.matches;
-      c.hidden = onPhone && k.mx === undefined;
+      c.hidden = onPhone && (k.mx === undefined || (k.tall && short.matches));
       const z = onPhone ? k.mz : k.z;
       c.style.setProperty('--x', `${onPhone ? k.mx : k.x}%`);
       c.style.setProperty('--y', `${onPhone ? k.my : k.y}%`);
@@ -87,6 +100,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
   }
   place();
   phone.addEventListener('change', place);
+  short.addEventListener('change', place);
   // each tap sends a small shock out from the box; opening sends a big one
   function push(strength) {
     if (reduced) return;
@@ -122,6 +136,32 @@ export function initGift({ reduced, onOpen = () => {} }) {
     r.addEventListener('animationend', () => r.remove());
     floor.appendChild(r);
   }
+  // a tap brings a gift out: gold sparks jump out of the box, and the gift shows under it
+  const stage = $('.gift__stage');
+  function sparks(n) {
+    if (reduced) return;
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i');
+      s.className = 'gspark';
+      const a = -Math.PI / 2 + (Math.random() - 0.5) * 2.4;
+      const d = 70 + Math.random() * 90;
+      s.style.cssText = `--dx:${(Math.cos(a) * d).toFixed(0)}px;--dy:${(Math.sin(a) * d).toFixed(0)}px;--sz:${(5 + Math.random() * 6).toFixed(1)}px;--dl:${(Math.random() * 90).toFixed(0)}ms`;
+      s.addEventListener('animationend', () => s.remove());
+      stage.appendChild(s);
+    }
+  }
+  function reveal(n) {
+    got.innerHTML = `<span class="gift__gotN">Gift ${n} of ${TAPS_TO_OPEN}</span><b>${esc(TAP_GIFTS[n - 1])}</b>`;
+    got.hidden = false;
+    ui.classList.add('has-gift');
+    got.classList.remove('is-in');
+    ui.classList.remove('is-pop');
+    void got.offsetWidth; // restart the pop
+    got.classList.add('is-in');
+    ui.classList.add('is-pop');
+    sparks(14);
+  }
+
   function shake(cls, k) {
     gbox.classList.remove('is-shake', 'is-nudge');
     void gbox.offsetWidth; // restart the animation
@@ -130,7 +170,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
   }
   gbox.addEventListener('animationend', (e) => { if (e.target === gbox) gbox.classList.remove('is-shake', 'is-nudge'); });
 
-  function open(method) {
+  function open() {
     if (opened) return;
     opened = true;
     taps = TAPS_TO_OPEN;
@@ -139,14 +179,14 @@ export function initGift({ reduced, onOpen = () => {} }) {
     dots.forEach((d) => d.classList.add('is-on'));
     bot.dataset.mood = 'happy';
     ticket.inert = false;
-    el.dataset.method = method;
+    sparks(22);
     // the lid hinges open towards the back, so from now on it is drawn behind the ticket
     backLayer.appendChild(lid);
     void lid.offsetWidth;
     el.classList.add('is-opening', 'is-open');
     hero.classList.add('is-gift-open');
     setTimeout(() => push(2.6), reduced ? 0 : 120);
-    live.textContent = 'The box is open. Your gifts are on the ticket.';
+    live.textContent = `Gift ${TAPS_TO_OPEN} of ${TAPS_TO_OPEN}: ${TAP_GIFTS[TAPS_TO_OPEN - 1]}. The box is open. Your gifts are on the ticket, and ${INVITE_GIFTS.length} more unlock when friends join.`;
     if (!reduced) ripple();
     // the box button goes away, so focus moves to what came out of it
     title.focus({ preventScroll: true });
@@ -166,15 +206,15 @@ export function initGift({ reduced, onOpen = () => {} }) {
     taps += 1;
     dots[taps - 1]?.classList.add('is-on');
     try { navigator.vibrate?.(taps >= TAPS_TO_OPEN ? [18, 40, 28] : 14); } catch { /* not supported */ }
-    if (taps >= TAPS_TO_OPEN) { open('shake'); return; }
+    if (taps >= TAPS_TO_OPEN) { open(); return; }
     charge();
     if (!reduced) { shake('is-shake', 0.6 + taps * 0.4); ripple(); push(0.6 + taps * 0.35); }
+    reveal(taps);
     speak(LINES[Math.min(taps, LINES.length - 1)]);
     const left = TAPS_TO_OPEN - taps;
     count.textContent = tapsLeft(left);
-    live.textContent = `${left} more tap${left > 1 ? 's' : ''} to open the box.`;
+    live.textContent = `Gift ${taps} of ${TAPS_TO_OPEN}: ${TAP_GIFTS[taps - 1]}. ${left} more tap${left > 1 ? 's' : ''} to open the box.`;
   });
-  skip.addEventListener('click', () => open('skip'));
 
   /* the box follows the mouse: smoothed, and only while the hero is on screen */
   let inView = true;

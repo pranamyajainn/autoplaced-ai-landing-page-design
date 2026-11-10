@@ -65,7 +65,16 @@
     </a>
     <nav class="nav__links" aria-label="Main">
       <a href="#how">How it works</a>
-      <a href="#resume">Resume builder</a>
+      <div class="feat" data-feat>
+        <button class="feat__btn" type="button" aria-expanded="false" aria-controls="feat-menu" data-feat-btn>Features <svg class="feat__chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="feat__panel" id="feat-menu">
+        <a class="feat__item" href="#find"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-search"/></svg></span><span><b>AI job matching</b><small>Roles that fit you, from 20+ job sites, each with a match score</small></span></a>
+        <a class="feat__item" href="#tailor"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-spark"/></svg></span><span><b>Resume tailoring</b><small>A version of your resume for every job, using only real experience</small></span></a>
+        <a class="feat__item" href="#apply"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-arrow"/></svg></span><span><b>Auto apply</b><small>Fills and sends applications for you, at a human pace</small></span></a>
+        <a class="feat__item" href="#outreach"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-mail"/></svg></span><span><b>Cold email</b><small>Personal notes to recruiters, sent only when you say so</small></span></a>
+        <a class="feat__item" href="#resume"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-doc"/></svg></span><span><b>Resume builder <em>New</em></b><small>An ATS-friendly resume, from scratch or your old PDF</small></span></a>
+        </div>
+      </div>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -86,7 +95,7 @@
     <ul class="msheet__links">
       <li data-stagger style="--i:1"><a href="#how"><span>How it works</span><em>4 steps, start to finish</em></a></li>
       <li data-stagger style="--i:2"><a href="#control"><span>Control</span><em>Manual to full auto</em></a></li>
-      <li data-stagger style="--i:3"><a href="#resume"><span>Resume builder</span><em>New</em></a></li>
+      <li class="msheet__feat" data-stagger style="--i:3"><button class="msheet__featBtn" type="button" aria-expanded="false" aria-controls="msheet-feats" data-sheet-feat><span>Features</span><em>Matching to cold email</em></button><div class="msheet__chips" id="msheet-feats" hidden><a href="#find">AI job matching</a><a href="#tailor">Resume tailoring</a><a href="#apply">Auto apply</a><a href="#outreach">Cold email</a><a href="#resume">Resume builder</a></div></li>
       <li data-stagger style="--i:4"><a href="#pricing"><span>Pricing</span><em>Free to start</em></a></li>
       <li data-stagger style="--i:5"><a href="#faq"><span>FAQ</span><em>10 answers</em></a></li>
     </ul>
@@ -121,14 +130,13 @@
   <div class="hero__field" aria-hidden="true" data-field></div>
   <div class="hero__inner">
     <div class="hero__head">
-      <p class="hero__chip"><span><i></i>Waitlist open</span><b>Free to join</b></p>
+      <p class="hero__chip"><i aria-hidden="true"></i>Waitlist open · Free to join</p>
       <h1 class="hero__title">
         <span class="hero__line"><span>Your job search,</span></span>
         <span class="hero__line"><em>on autopilot.</em></span>
       </h1>
     </div>
     <div class="hero__row">
-      <p class="hero__sub">Autoplaced finds roles on Naukri, Instahyre and 20+ other job sites, tailors your resume to each one and applies for you. You wake up to replies.</p>
     <div class="gift" data-gift>
       <div class="gift__dust" aria-hidden="true" data-dust></div>
       <div class="bubble gift__bubble" data-gift-bubble aria-hidden="true"><span data-gift-say>I brought you something.</span></div>
@@ -190,14 +198,11 @@
       </div>
       <div class="gift__ui">
         <div class="gift__dots" aria-hidden="true" data-gift-dots></div>
-        <span class="gift__count" data-gift-count aria-hidden="true">Tap 3 times to open</span>
-        <button class="gift__skip" type="button" data-gift-skip>No patience? <u>Open it now</u></button>
+        <span class="gift__count" data-gift-count aria-hidden="true">3 gifts inside. Tap to open</span>
+        <p class="gift__got" data-gift-got aria-hidden="true" hidden></p>
       </div>
       <p class="sr-only" id="gift-status" aria-live="polite" data-gift-live></p>
     </div>
-      <div class="hero__ctas">
-        <a class="btn btn--ink btn--lg" href="#join" data-join="hero">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-      </div>
     </div>
   </div>
 </section>
@@ -332,25 +337,25 @@
 
   <div class="how__grid">
     <ol class="how__steps">
-      <li class="step" data-step="0">
+      <li class="step" id="find" data-step="0">
         <span class="step__num">01 · Find</span>
         <h3>Finds jobs that actually fit</h3>
         <p>Scans job boards and career pages day and night, removes duplicates and scores every role against your profile. Every score comes with the reasons.</p>
         <ul class="step__points"><li>Same job on three sites? You see it once</li><li>A match score, with the reasons</li></ul>
       </li>
-      <li class="step" data-step="1">
+      <li class="step" id="tailor" data-step="1">
         <span class="step__num">02 · Tailor</span>
         <h3>Tailors your resume for every role</h3>
         <p>Rewrites and reorders your real experience to match each job description. It never adds skills you don't have. Before anything goes out, you see its ATS score: how well the software companies use to filter resumes can read it.</p>
         <ul class="step__points"><li>Uses only experience you have</li><li>ATS score before you send</li></ul>
       </li>
-      <li class="step" data-step="2">
+      <li class="step" id="apply" data-step="2">
         <span class="step__num">03 · Apply</span>
         <h3>Applies in seconds, not evenings</h3>
         <p>Fills every form from your profile and your saved answers. If it isn't sure about an answer, it stops and asks you instead of guessing.</p>
         <ul class="step__points"><li>Works on Workday, Greenhouse, Lever and more</li><li>Human pace, with daily limits</li></ul>
       </li>
-      <li class="step" data-step="3">
+      <li class="step" id="outreach" data-step="3">
         <span class="step__num">04 · Follow up</span>
         <h3>Follows up with recruiters and tracks every reply</h3>
         <p>Drafts personal notes to recruiters for your top roles, sent only when you say so. Inbox sync moves your pipeline when replies land, with a record of exactly what was sent.</p>
@@ -761,6 +766,15 @@
         <span class="eyebrow">You're on the list</span>
         <h2 tabindex="-1" data-done-title>You're in, <em data-done-name>friend.</em></h2>
         <p class="join__lede">Your gifts are saved under your name. Your invite will come to your phone and email.</p>
+        <div class="invite" data-invite>
+          <p class="invite__head"><span class="invite__lock" aria-hidden="true"><svg width="14" height="14"><use href="#i-lock"/></svg></span><b data-invite-title>Unlock 2 more gifts</b></p>
+          <ul class="invite__gifts" data-invite-gifts></ul>
+          <div class="invite__row">
+            <a class="btn btn--ink invite__share" href="#invite" target="_blank" rel="noopener" data-invite-share>Invite friends <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+            <button class="btn btn--line invite__copy" type="button" data-invite-copy>Copy link</button>
+          </div>
+          <p class="invite__link"><span>Your invite link</span><b data-invite-link></b></p>
+        </div>
         <div class="join__next" data-next>
           <p class="join__nextCue"><span class="join__nextArrow" aria-hidden="true"></span>Your ticket came with a community pass</p>
           <p data-next-hint>Tear it off to join us on WhatsApp for launch news, job-search tips and answers from the team.</p>

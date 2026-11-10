@@ -82,8 +82,14 @@ function openMenu() {
   if (lenis) lenis.stop();
   requestAnimationFrame(() => sheet.classList.add('is-open'));
 }
+// phones: the Features row opens to show its links
+const sheetFeat = $('[data-sheet-feat]');
+const sheetFeats = $('#msheet-feats');
+function showSheetFeats(v) { sheetFeat.setAttribute('aria-expanded', String(v)); sheetFeats.hidden = !v; }
+sheetFeat.addEventListener('click', () => showSheetFeats(sheetFeats.hidden));
 function closeMenu(returnFocus = false) {
   if (!isMenuOpen()) return;
+  showSheetFeats(false);
   sheet.classList.remove('is-open');
   root.classList.remove('menu-open');
   sheet.inert = true;
@@ -109,7 +115,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 // the bot leans towards whichever link you point at
-$$('.msheet__links a').forEach((a, i, all) => {
+$$('.msheet__links > li > a, [data-sheet-feat]').forEach((a, i) => {
   const look = () => { sheetBot.dataset.mood = 'happy'; sheetBot.classList.add('is-looking'); sheetBot.style.setProperty('--tilt', `${-6 - i * 4}deg`); };
   const away = () => { sheetBot.dataset.mood = 'cool'; sheetBot.style.setProperty('--tilt', '0deg'); };
   a.addEventListener('pointerenter', look);
@@ -120,6 +126,24 @@ $$('.msheet__links a').forEach((a, i, all) => {
   ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => a.addEventListener(ev, () => a.classList.remove('is-pressed')));
 });
 matchMedia('(min-width: 981px)').addEventListener('change', (e) => { if (e.matches) closeMenu(); });
+
+/* ---------------- Features menu in the nav (wide screens) ---------------- */
+{
+  const feat = $('[data-feat]');
+  const btn = $('[data-feat-btn]');
+  const mouse = matchMedia('(hover: hover) and (pointer: fine)');
+  let timer = 0;
+  const isOpen = () => feat.classList.contains('is-open');
+  const setOpen = (v) => { clearTimeout(timer); feat.classList.toggle('is-open', v); btn.setAttribute('aria-expanded', String(v)); };
+  // a mouse opens it by pointing at it; a click, a tap or the keyboard opens and closes it
+  btn.addEventListener('click', (e) => setOpen(e.detail > 0 && mouse.matches ? true : !isOpen()));
+  feat.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' && mouse.matches) setOpen(true); });
+  feat.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') timer = setTimeout(() => setOpen(false), 200); });
+  feat.addEventListener('focusout', (e) => { if (!feat.contains(e.relatedTarget)) setOpen(false); });
+  document.addEventListener('click', (e) => { if (isOpen() && !feat.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); } });
+  $$('a', feat).forEach((a) => a.addEventListener('click', () => setOpen(false)));
+}
 
 /* ---------------- live meadow ---------------- */
 let meadow = null;

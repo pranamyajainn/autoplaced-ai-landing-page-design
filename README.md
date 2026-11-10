@@ -30,6 +30,7 @@ Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json
 
 - Set `SITE_URL` (for example `https://www.autoplaced.ai`) in the Vercel project when the site moves to the real domain. Share links and the sitemap use this address.
 - The waitlist form sends its data to `WAITLIST_ENDPOINT` in `js/config.js`. The backend team owns that endpoint. While it is empty, the form shows the "You're in" screen and sends nothing.
+- Invites: every person who joins gets an invite link (the site address + `?ref=<code>`). The form sends two codes with each sign-up: `inviteCode` (the person's own code) and `referredBy` (the code of the friend whose link brought them). The backend counts the friends for each code and unlocks the gifts in `INVITE_GIFTS`. If the endpoint answers with `{ "inviteCode": "..." }`, the page uses that code in the link.
 
 ## Folders
 
@@ -37,10 +38,10 @@ Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json
 | --- | --- |
 | `index.html` | The page |
 | `css/styles.css` | All styles and colour tokens |
-| `js/config.js` | Values the client can change: WhatsApp community link, waitlist endpoint, taps to open the box, the gift list |
+| `js/config.js` | Values the client can change: WhatsApp community link, waitlist endpoint, the gifts that come out of the box (one per tap), the locked gifts and how many friends unlock each |
 | `js/main.js` | Start point: scrolling, menu, motion |
-| `js/hero.js` | The hero gift box |
-| `js/join.js` | The "Join the waitlist" form and the "You're in" screen |
+| `js/hero.js` | The hero gift box (one gift per tap) and the floating job cards |
+| `js/join.js` | The "Join the waitlist" form, the "You're in" screen and the invite link |
 | `js/celebrate.js` | The burst of gold paper when someone joins |
 | `js/bot.js` | The robot mascot |
 | `js/dial.js` | The autopilot dial and needle |

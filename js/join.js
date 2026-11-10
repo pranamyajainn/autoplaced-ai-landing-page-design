@@ -1,9 +1,27 @@
 // "Join the waitlist": every join button opens this dialog. Name, phone and email,
-// then a "You're in" ticket with the gifts and the WhatsApp community button.
+// then a "You're in" ticket with the gifts, an invite link that unlocks the locked gifts, and the WhatsApp community pass.
 // Sending is the backend team's endpoint (WAITLIST_ENDPOINT in config.js); this file only collects and checks.
-import { WAITLIST_ENDPOINT } from './config.js';
+// Counting friends who joined with an invite link is the backend's job too: this page sends both codes along.
+import { WAITLIST_ENDPOINT, INVITE_GIFTS } from './config.js';
 import { renderGifts } from './hero.js';
 import { celebrate } from './celebrate.js';
+
+const CODE = /^[A-Za-z0-9_-]{4,40}$/;
+
+// every visitor gets their own invite code; their invite link is this page with ?ref=<code>
+function newCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O or 1/I, so a code read aloud is not misheard
+  return Array.from(crypto.getRandomValues(new Uint8Array(7)), (b) => chars[b % chars.length]).join('');
+}
+// the code of the friend whose invite link brought this visitor here (kept for the visit, in case they move around first)
+function friendCode() {
+  const ref = (new URLSearchParams(location.search).get('ref') || '').trim();
+  const ok = CODE.test(ref) ? ref : '';
+  try {
+    if (ok) sessionStorage.setItem('ap-ref', ok);
+    return ok || sessionStorage.getItem('ap-ref') || '';
+  } catch { return ok; }
+}
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 // with no endpoint set, the form may only pretend to send on a preview address
@@ -40,6 +58,7 @@ export function initJoin({ reduced, getLenis }) {
   const dlg = document.querySelector('[data-join-dialog]');
   if (!dlg) return;
   const $ = (s) => dlg.querySelector(s);
+  const $$ = (s) => [...dlg.querySelectorAll(s)];
   const form = $('[data-join-form]');
   const done = $('[data-join-done]');
   const alertEl = $('[data-join-alert]');
@@ -50,6 +69,11 @@ export function initJoin({ reduced, getLenis }) {
   const passLabel = $('[data-pass-label]');
   const root = document.documentElement;
   renderGifts($('[data-gifts]'));
+  const referredBy = friendCode();
+  let inviteCode = newCode();
+  $('[data-invite-title]').textContent = `Unlock ${INVITE_GIFTS.length} more gift${INVITE_GIFTS.length > 1 ? 's' : ''}`;
+  $('[data-invite-gifts]').innerHTML = INVITE_GIFTS.map((g) => `<li><em>${g.friends} friend${g.friends > 1 ? 's' : ''}</em><span></span></li>`).join('');
+  $$('[data-invite-gifts] span').forEach((sp, i) => { sp.textContent = INVITE_GIFTS[i].gift; });
   $('[data-pass-date]').textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
   let source = 'hero';
@@ -138,7 +162,7 @@ export function initJoin({ reduced, getLenis }) {
         const res = await fetch(WAITLIST_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...data, source, ...utm }),
+          body: JSON.stringify({ ...data, source, inviteCode, referredBy, ...utm }),
           signal: ctrl.signal,
         });
         clearTimeout(timer);
@@ -148,6 +172,9 @@ export function initJoin({ reduced, getLenis }) {
           return;
         }
         if (!res.ok) throw new Error(String(res.status));
+        // the backend may hand out its own invite code
+        const out = await res.json().catch(() => null);
+        if (out && typeof out.inviteCode === 'string' && CODE.test(out.inviteCode)) inviteCode = out.inviteCode;
       } else if (PREVIEW) {
         // preview: nothing is sent
         await new Promise((r) => setTimeout(r, reduced ? 0 : 700));
@@ -164,7 +191,42 @@ export function initJoin({ reduced, getLenis }) {
     }
   });
 
+  // the invite: the phone's own share sheet where there is one, otherwise WhatsApp with the message ready
+  const share = $('[data-invite-share]');
+  const copy = $('[data-invite-copy]');
+  const linkEl = $('[data-invite-link]');
+  let inviteUrl = '';
+  const inviteText = 'I just joined the Autoplaced waitlist. It finds jobs that fit you, tailors your resume for each one and applies for you. Free to join, with free gifts for joining. Join with my link:';
+  function setInvite() {
+    inviteUrl = `${location.origin}${location.pathname}?ref=${encodeURIComponent(inviteCode)}`;
+    linkEl.textContent = inviteUrl.replace(/^https?:\/\//, '');
+    share.href = `https://wa.me/?text=${encodeURIComponent(`${inviteText} ${inviteUrl}`)}`;
+  }
+  share.addEventListener('click', async (e) => {
+    if (!navigator.share) return; // the link itself opens WhatsApp
+    e.preventDefault();
+    try { await navigator.share({ title: 'Autoplaced', text: inviteText, url: inviteUrl }); } catch { /* closed without sharing */ }
+  });
+  let copyTimer = 0;
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(inviteUrl);
+      copy.textContent = 'Copied';
+    } catch {
+      // no clipboard access: select the link so it can be copied by hand
+      const range = document.createRange();
+      range.selectNodeContents(linkEl);
+      const sel = getSelection();
+      sel.empty();
+      sel.addRange(range);
+      copy.textContent = 'Link selected';
+    }
+    clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => { copy.textContent = 'Copy link'; }, 2400);
+  });
+
   function success(data) {
+    setInvite();
     const first = data.name.split(' ')[0];
     passName.textContent = data.name;
     pass.classList.add('has-name');

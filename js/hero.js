@@ -1,32 +1,23 @@
-// Hero gift box: every tap brings one gift out of the box; the last tap opens it.
-// The ticket inside lists those gifts, plus the locked ones that friends unlock (INVITE_GIFTS).
+// Hero gift box: two taps open it, and the founding pass inside takes the visitor to the /join page.
 // The box tilts towards the mouse; on touch screens it sways by itself (a CSS animation).
-import { TAP_GIFTS, TAPS_TO_OPEN, INVITE_GIFTS } from './config.js';
+import { TAPS_TO_OPEN } from './config.js';
 
 const clamp = (v, a = -1, b = 1) => Math.min(b, Math.max(a, v));
 const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-export const friendsLine = (n) => `Unlocks when ${n} friend${n > 1 ? 's join' : ' joins'}`;
-const LOCK = '<svg width="12" height="12"><use href="#i-lock"/></svg>';
 
-export function renderGifts(ul) {
-  const open = TAP_GIFTS.map((g, i) => `<li style="--i:${i}"><span class="gn" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span>${esc(g)}</span></li>`);
-  const locked = INVITE_GIFTS.map((g, j) => `<li class="is-locked" style="--i:${TAP_GIFTS.length + j}"><span class="gn" aria-hidden="true">${LOCK}</span><span>${esc(g.gift)}<small>${friendsLine(g.friends)}</small></span></li>`);
-  ul.innerHTML = open.concat(locked).join('');
-}
-
-// The agent at work: sample job cards floating around the poster, across many kinds of roles and job sites.
+// The agent at work: sample job cards floating around the poster. Software engineers come first, plus one PM role.
 // x, y: place on desktop, in % of the hero; mx, my: place on phones (no mx: hidden on phones). z: depth, 0 far to 1 near.
 // sz: logo size inside its tile (default 56%); fill: a black logo shown white on its tile.
 // tall: on phones, shown only on screens tall enough to fit it above the headline.
 const CARDS = [
-  { logo: 'swiggy.svg', c: '#fc8019', t: 'Software Engineer II', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 3, y: 21, z: 0.55, r: -5, mx: 66, my: 40, mz: 0.3 },
-  { logo: 'phonepe.svg', c: '#5f259f', t: 'Data Analyst', s: 'PhonePe · Pune · Onsite', st: 'Interview call', tone: 'work', x: 81, y: 17, z: 0.4, r: 4, mx: 3, my: -7, mz: 0.1, tall: true },
-  { logo: 'razorpay.svg', c: '#0c2451', t: 'Product Designer', s: 'Razorpay · Bengaluru', st: 'Recruiter replied', tone: 'work', x: 79, y: 45, z: 0.75, r: -4 },
+  { logo: 'google.svg', c: '#fff', t: 'Software Engineer III', s: 'Google · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 3, y: 21, z: 0.55, r: -5, mx: 66, my: 40, mz: 0.3 },
+  { logo: 'microsoft.svg', c: '#fff', sz: '50%', t: 'SDE II, Azure', s: 'Microsoft · Hyderabad', st: 'Interview call', tone: 'work', x: 81, y: 17, z: 0.4, r: 4, mx: 3, my: -7, mz: 0.1, tall: true },
+  { logo: 'atlassian.svg', c: '#0052cc', t: 'Senior Backend Engineer', s: 'Atlassian · Bengaluru · Remote', st: 'Recruiter replied', tone: 'work', x: 79, y: 45, z: 0.75, r: -4 },
   { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', tone: 'work', x: 7, y: 47, z: 0.3, r: 3 },
-  { logo: 'naukri.png', c: '#fff', sz: '100%', t: 'Digital Marketing Manager', s: 'Mumbai · via Naukri', st: 'Applied', tone: 'ok', x: 2, y: 69, z: 0.7, r: 3, mx: 3, my: 69, mz: 0.2 },
-  { logo: 'instahyre.png', c: '#fff', sz: '100%', t: 'QA Automation Engineer', s: 'Hyderabad · via Instahyre', st: 'Applied', tone: 'ok', x: 82, y: 70, z: 0.5, r: -3, mx: 54, my: 72, mz: 0.2 },
+  { logo: 'flipkart.svg', c: '#2874f0', t: 'SDE II, Supply Chain', s: 'Flipkart · Bengaluru · via Naukri', st: 'Applied', tone: 'ok', x: 2, y: 69, z: 0.7, r: 3, mx: 3, my: 69, mz: 0.2 },
+  { logo: 'swiggy.svg', c: '#fc8019', t: 'Software Engineer II', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 82, y: 70, z: 0.5, r: -3, mx: 54, my: 72, mz: 0.2 },
   { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', tone: 'ok', x: 19, y: 34, z: 0.12, r: 2 },
-  { logo: 'indeed.svg', c: '#2164f3', t: 'Business Analyst', s: 'Gurugram · via Indeed', st: 'Tailoring resume', tone: 'work', x: 70, y: 30, z: 0.1, r: -2, mx: 56, my: -5, mz: 0.1, tall: true },
+  { logo: 'razorpay.svg', c: '#0c2451', t: 'Backend Engineer, Payments', s: 'Razorpay · via Instahyre', st: 'Tailoring resume', tone: 'work', x: 70, y: 30, z: 0.1, r: -2, mx: 56, my: -5, mz: 0.1, tall: true },
 ];
 function cardHTML(k) {
   const icon = k.kind === 'ring' ? `<span class="jc__ring" style="--v:${k.v}"><i>${k.v}</i></span>`
@@ -36,8 +27,8 @@ function cardHTML(k) {
 }
 
 // what the bot says, before and after each tap
-const LINES = ['I brought you something.', 'That one’s yours. There’s more!', 'One more. It’s about to pop!', 'Almost there!'];
-const tapsLeft = (n) => (n === TAPS_TO_OPEN ? `${n} gifts inside. Tap to open` : `${n} more gift${n > 1 ? 's' : ''} inside`);
+const LINES = ['I brought you something.', 'Ooh, it rattles. One more tap!', 'Almost there!'];
+const tapsLeft = (n) => (n === TAPS_TO_OPEN ? (n === 2 ? 'Tap twice to open' : `Tap ${n} times to open`) : n === 1 ? 'One more tap!' : `${n} more taps`);
 
 export function initGift({ reduced, onOpen = () => {} }) {
   const el = document.querySelector('[data-gift]');
@@ -46,8 +37,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
   const hero = el.closest('[data-hero]');
   const gbox = $('[data-gbox]');
   const hit = $('[data-gift-hit]');
-  const got = $('[data-gift-got]');
-  const ui = $('.gift__ui');
+  const go = $('[data-gift-go]');
   const say = $('[data-gift-say]');
   const bubble = $('[data-gift-bubble]');
   const count = $('[data-gift-count]');
@@ -59,7 +49,6 @@ export function initGift({ reduced, onOpen = () => {} }) {
   const backLayer = $('.gbox__layer');
   const floor = $('.gbox__floor');
 
-  renderGifts($('[data-gifts]'));
   say.textContent = LINES[0];
   const dotsEl = $('[data-gift-dots]');
   dotsEl.innerHTML = '<i></i>'.repeat(TAPS_TO_OPEN);
@@ -136,7 +125,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
     r.addEventListener('animationend', () => r.remove());
     floor.appendChild(r);
   }
-  // a tap brings a gift out: gold sparks jump out of the box, and the gift shows under it
+  // gold sparks jump out of the box when it opens
   const stage = $('.gift__stage');
   function sparks(n) {
     if (reduced) return;
@@ -150,18 +139,6 @@ export function initGift({ reduced, onOpen = () => {} }) {
       stage.appendChild(s);
     }
   }
-  function reveal(n) {
-    got.innerHTML = `<span class="gift__gotN">Gift ${n} of ${TAPS_TO_OPEN}</span><b>${esc(TAP_GIFTS[n - 1])}</b>`;
-    got.hidden = false;
-    ui.classList.add('has-gift');
-    got.classList.remove('is-in');
-    ui.classList.remove('is-pop');
-    void got.offsetWidth; // restart the pop
-    got.classList.add('is-in');
-    ui.classList.add('is-pop');
-    sparks(14);
-  }
-
   function shake(cls, k) {
     gbox.classList.remove('is-shake', 'is-nudge');
     void gbox.offsetWidth; // restart the animation
@@ -186,7 +163,7 @@ export function initGift({ reduced, onOpen = () => {} }) {
     el.classList.add('is-opening', 'is-open');
     hero.classList.add('is-gift-open');
     setTimeout(() => push(2.6), reduced ? 0 : 120);
-    live.textContent = `Gift ${TAPS_TO_OPEN} of ${TAPS_TO_OPEN}: ${TAP_GIFTS[TAPS_TO_OPEN - 1]}. The box is open. Your gifts are on the ticket, and ${INVITE_GIFTS.length} more unlock when friends join.`;
+    live.textContent = 'The box is open. Your founding pass is ready. Taking you to the join page.';
     if (!reduced) ripple();
     // the box button goes away, so focus moves to what came out of it
     title.focus({ preventScroll: true });
@@ -194,6 +171,8 @@ export function initGift({ reduced, onOpen = () => {} }) {
     // the bot climbs out over the near glass, so it is drawn in front of it from here on
     setTimeout(() => { ticket.appendChild(bot); el.classList.add('is-out'); }, reduced ? 0 : 850);
     setTimeout(() => onOpen(el), reduced ? 0 : 450);
+    // a moment to see the pass rise, then straight to the join page
+    setTimeout(() => location.assign(go.href), reduced ? 400 : 1700);
   }
 
   // instant feedback the moment a finger or mouse goes down
@@ -208,12 +187,11 @@ export function initGift({ reduced, onOpen = () => {} }) {
     try { navigator.vibrate?.(taps >= TAPS_TO_OPEN ? [18, 40, 28] : 14); } catch { /* not supported */ }
     if (taps >= TAPS_TO_OPEN) { open(); return; }
     charge();
-    if (!reduced) { shake('is-shake', 0.6 + taps * 0.4); ripple(); push(0.6 + taps * 0.35); }
-    reveal(taps);
+    if (!reduced) { shake('is-shake', 0.6 + taps * 0.4); ripple(); push(0.6 + taps * 0.35); sparks(8); }
     speak(LINES[Math.min(taps, LINES.length - 1)]);
     const left = TAPS_TO_OPEN - taps;
     count.textContent = tapsLeft(left);
-    live.textContent = `Gift ${taps} of ${TAPS_TO_OPEN}: ${TAP_GIFTS[taps - 1]}. ${left} more tap${left > 1 ? 's' : ''} to open the box.`;
+    live.textContent = `${left} more tap${left > 1 ? 's' : ''} to open the box.`;
   });
 
   /* the box follows the mouse: smoothed, and only while the hero is on screen */

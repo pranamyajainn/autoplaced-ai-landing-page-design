@@ -10,7 +10,7 @@ await fs.rm(OUT, { recursive: true, force: true });
 await fs.mkdir(OUT, { recursive: true });
 
 const js = await esbuild.build({
-  entryPoints: ['js/main.js'],
+  entryPoints: ['js/main.js', 'js/join-page.js', 'js/blog.js'],
   bundle: true,
   splitting: true,
   format: 'esm',
@@ -60,8 +60,26 @@ void meadowChunks;
 const SITE = (process.env.SITE_URL || 'https://autoplaced-redesign.vercel.app').replace(/\/$/, '');
 html = html.replaceAll('https://autoplaced-redesign.vercel.app', SITE);
 await fs.writeFile(`${OUT}/index.html`, html);
+
+// the other pages: /join (the founding pass) and /blog. Vercel serves join.html at /join.
+for (const [page, entry] of [['join.html', 'js/join-page.js'], ['blog.html', 'js/blog.js']]) {
+  const out = rel(jsOut.find(([, o]) => o.entryPoint === entry)[0]);
+  let h = await fs.readFile(page, 'utf8');
+  const swaps = [
+    ['href="css/styles.css"', `href="/${mainCss}"`],
+    ['href="fonts/geist-latin.woff2"', `href="/${font('geist-latin')}"`],
+    [`<script type="module" src="${entry}"></script>`, `<script type="module" src="/${out}"></script>`],
+  ];
+  for (const [from, to] of swaps) {
+    if (!h.includes(from)) throw new Error(`${page}: missing ${from}`);
+    h = h.replace(from, to);
+  }
+  await fs.writeFile(`${OUT}/${page}`, h.replaceAll('https://autoplaced-redesign.vercel.app', SITE));
+}
+
 await fs.writeFile(`${OUT}/robots.txt`, `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-await fs.writeFile(`${OUT}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${SITE}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>\n</urlset>\n`);
+const urls = [['/', '1.0'], ['/join', '0.8'], ['/blog', '0.5']].map(([u, p]) => `  <url><loc>${SITE}${u}</loc><changefreq>weekly</changefreq><priority>${p}</priority></url>`).join('\n');
+await fs.writeFile(`${OUT}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
 await fs.writeFile(`${OUT}/404.html`, (await fs.readFile('404.html', 'utf8')).replace('__CSS__', mainCss));
 await fs.copyFile('site.webmanifest', `${OUT}/site.webmanifest`);
 await fs.copyFile('favicon.ico', `${OUT}/favicon.ico`);

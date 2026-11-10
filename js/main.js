@@ -1,8 +1,7 @@
 import { mountBots } from './bot.js';
 import { initControl } from './dial.js';
 import { initGift } from './hero.js';
-import { initJoin } from './join.js';
-import { WHATSAPP_COMMUNITY_URL } from './config.js';
+import { WHATSAPP_COMMUNITY_URL, VIDEOS } from './config.js';
 
 const root = document.documentElement;
 root.classList.add('js');
@@ -19,6 +18,11 @@ const mqStack = matchMedia('(max-width: 980px)');
 mountBots();
 // every WhatsApp community button takes its address from config.js
 $$('[data-wa]').forEach((a) => { a.href = WHATSAPP_COMMUNITY_URL; });
+// a friend's invite link may land here (/?ref=CODE): keep the code for when this person joins on /join
+{
+  const ref = (new URLSearchParams(location.search).get('ref') || '').trim();
+  if (/^[A-Za-z0-9_-]{4,40}$/.test(ref)) { try { localStorage.setItem('ap-ref', ref); } catch { /* storage blocked */ } }
+}
 
 /* ---------------- smooth scroll ---------------- */
 let lenis = null;
@@ -191,7 +195,6 @@ initGift({
     else window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
   },
 });
-initJoin({ reduced, getLenis: () => lenis });
 
 let vw = window.innerWidth;
 let vh = window.innerHeight;
@@ -208,7 +211,6 @@ function measure() {
   L.showTop = pageTop(showcase); L.showH = showcase.offsetHeight;
   L.finalTop = pageTop(finalSec);
   L.dayTop = pageTop(daySec); L.dayH = daySec.offsetHeight;
-  L.artTop = pageTop(resumeArt); L.artH = resumeArt.offsetHeight;
   L.steps = steps.map((s) => ({ top: pageTop(s), h: s.offsetHeight }));
   buildHills();
   lastY = -1;
@@ -356,46 +358,23 @@ function updateHow(y) {
   setHow(best);
 }
 
-/* ---------------- resume builder ---------------- */
-const resumeArt = $('[data-resume]');
-const resumeFloats = $$('.float', resumeArt);
+/* ---------------- the two videos: a real player once the file is set in config.js ---------------- */
+$$('[data-video]').forEach((frame) => {
+  const v = VIDEOS[frame.dataset.video];
+  if (!v || !v.src) return;
+  const video = document.createElement('video');
+  video.controls = true;
+  video.playsInline = true;
+  video.preload = 'none';
+  if (v.poster) video.poster = v.poster;
+  video.src = v.src;
+  frame.replaceChildren(video);
+});
+
+/* ---------------- where it applies: the orbit only turns while it is on screen ---------------- */
 {
-  const typeEl = $('[data-type]', resumeArt);
-  const ring = $('[data-ring]', resumeArt);
-  const ringNum = $('[data-ring-num]', resumeArt);
-  const text = typeEl.dataset.type;
-  const io = new IntersectionObserver(([en]) => {
-    if (!en.isIntersecting) return;
-    io.disconnect();
-    if (reduced) { typeEl.textContent = text; ring.style.setProperty('--p', 91); ringNum.textContent = '91'; return; }
-    setTimeout(() => {
-      resumeArt.classList.add('is-typing');
-      let i = 0;
-      const tick = () => {
-        typeEl.textContent = text.slice(0, ++i);
-        if (i < text.length) setTimeout(tick, 28 + Math.random() * 40);
-        else setTimeout(() => typeEl.classList.add('is-done'), 1600);
-      };
-      tick();
-      const t0 = performance.now();
-      const run = (t) => {
-        const k = clamp((t - t0) / 1800);
-        const v = Math.round(lerp(58, 91, easeInOut(k)));
-        ring.style.setProperty('--p', v);
-        ringNum.textContent = String(v);
-        if (k < 1) requestAnimationFrame(run);
-      };
-      requestAnimationFrame(run);
-    }, 500);
-  }, { threshold: 0.45 });
-  io.observe(resumeArt);
-}
-function updateResume(y) {
-  if (reduced) return;
-  const r = { top: L.artTop - y, bottom: L.artTop + L.artH - y, height: L.artH };
-  if (r.bottom < 0 || r.top > vh) return;
-  const k = (r.top + r.height / 2 - vh / 2) / vh;
-  resumeFloats.forEach((el, i) => { el.style.transform = `translate3d(0, ${(k * (i % 2 ? 36 : -28)).toFixed(1)}px, 0)`; });
+  const orbit = $('[data-orbit]');
+  if (orbit) new IntersectionObserver(([en]) => orbit.classList.toggle('is-paused', !en.isIntersecting)).observe(orbit);
 }
 
 /* ---------------- 24 hours with your agent ---------------- */
@@ -543,7 +522,6 @@ function frame(time) {
     lastY = y;
     updateTop(y);
     updateHow(y);
-    updateResume(y);
     updateDay(y);
     // over the dark stage the header stays light paper, so it stands apart from the stage
     nav.classList.toggle('is-stage', hero.classList.contains('is-gift-open') && L.heroTop + L.heroH - y > 60);

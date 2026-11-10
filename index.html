@@ -13,12 +13,12 @@
 <meta property="og:url" content="https://autoplaced-redesign.vercel.app/">
 <link rel="canonical" href="https://www.autoplaced.ai/">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Autoplaced","url":"https://www.autoplaced.ai/","email":"hello@autoplaced.ai","sameAs":["https://www.linkedin.com/company/autoplaced/","https://www.instagram.com/autoplaced.ai/"]},{"@type":"SoftwareApplication","name":"Autoplaced","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI resume builder and job search agent that finds roles, tailors your resume to each one and applies for you.","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}]}</script>
-<meta property="og:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg?v=3">
+<meta property="og:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg?v=4">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Autoplaced: your job search, on autopilot. A glass gift box with the Autoplaced robot inside.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg?v=3">
+<meta name="twitter:image" content="https://autoplaced-redesign.vercel.app/assets/og.jpg?v=4">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -53,7 +53,7 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="dock" data-dock>
-  <a class="btn btn--ink btn--lg" href="#join" data-join="dock">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+  <a class="btn btn--ink btn--lg" href="/join?from=dock" data-join="dock">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
 </div>
 
 <!-- ============ NAV ============ -->
@@ -72,15 +72,15 @@
         <a class="feat__item" href="#tailor"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-spark"/></svg></span><span><b>Resume tailoring</b><small>A version of your resume for every job, using only real experience</small></span></a>
         <a class="feat__item" href="#apply"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-arrow"/></svg></span><span><b>Auto apply</b><small>Fills and sends applications for you, at a human pace</small></span></a>
         <a class="feat__item" href="#outreach"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-mail"/></svg></span><span><b>Cold email</b><small>Personal notes to recruiters, sent only when you say so</small></span></a>
-        <a class="feat__item" href="#resume"><span class="feat__ico" aria-hidden="true"><svg width="18" height="18"><use href="#i-doc"/></svg></span><span><b>Resume builder <em>New</em></b><small>An ATS-friendly resume, from scratch or your old PDF</small></span></a>
         </div>
       </div>
       <a href="#pricing">Pricing</a>
+      <a href="/blog">Blog</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav__cta">
       <a class="nav__login" href="https://www.autoplaced.ai/login">Log in</a>
-      <a class="btn btn--ink btn--sm" href="#join" data-join="nav">Join the waitlist</a>
+      <a class="btn btn--ink btn--sm" href="/join?from=nav" data-join="nav">Join the waitlist</a>
       <button class="nav__burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu" data-burger><span class="burger__label" aria-hidden="true"><span>Menu</span><span>Close</span></span><span class="burger__icon" aria-hidden="true"><i></i><i></i></span></button>
     </div>
   </div>
@@ -95,12 +95,13 @@
     <ul class="msheet__links">
       <li data-stagger style="--i:1"><a href="#how"><span>How it works</span><em>4 steps, start to finish</em></a></li>
       <li data-stagger style="--i:2"><a href="#control"><span>Control</span><em>Manual to full auto</em></a></li>
-      <li class="msheet__feat" data-stagger style="--i:3"><button class="msheet__featBtn" type="button" aria-expanded="false" aria-controls="msheet-feats" data-sheet-feat><span>Features</span><em>Matching to cold email</em></button><div class="msheet__chips" id="msheet-feats" hidden><a href="#find">AI job matching</a><a href="#tailor">Resume tailoring</a><a href="#apply">Auto apply</a><a href="#outreach">Cold email</a><a href="#resume">Resume builder</a></div></li>
+      <li class="msheet__feat" data-stagger style="--i:3"><button class="msheet__featBtn" type="button" aria-expanded="false" aria-controls="msheet-feats" data-sheet-feat><span>Features</span><em>Matching to cold email</em></button><div class="msheet__chips" id="msheet-feats" hidden><a href="#find">AI job matching</a><a href="#tailor">Resume tailoring</a><a href="#apply">Auto apply</a><a href="#outreach">Cold email</a></div></li>
       <li data-stagger style="--i:4"><a href="#pricing"><span>Pricing</span><em>Free to start</em></a></li>
-      <li data-stagger style="--i:5"><a href="#faq"><span>FAQ</span><em>10 answers</em></a></li>
+      <li data-stagger style="--i:5"><a href="/blog"><span>Blog</span><em>First posts soon</em></a></li>
+      <li data-stagger style="--i:6"><a href="#faq"><span>FAQ</span><em>10 answers</em></a></li>
     </ul>
-    <div class="msheet__foot" data-stagger style="--i:6">
-      <a class="btn btn--sun btn--lg btn--block" href="#join" data-join="menu">Join the waitlist <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+    <div class="msheet__foot" data-stagger style="--i:7">
+      <a class="btn btn--sun btn--lg btn--block" href="/join?from=menu" data-join="menu">Join the waitlist <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
       <div class="msheet__row">
         <a href="https://www.autoplaced.ai/login">Log in</a>
         <div class="social">
@@ -156,10 +157,10 @@
               <div class="ticket__card">
                 <i class="ticket__foil" aria-hidden="true"></i>
                 <div class="ticket__head"><span class="ticket__brand"><span data-bot="happy"></span>autoplaced</span><span class="ticket__admit">Admit one</span></div>
-                <h2 class="ticket__title" tabindex="-1" data-ticket-title>Your gifts for joining</h2>
-                <ul class="ticket__gifts" data-gifts></ul>
+                <h2 class="ticket__title" tabindex="-1" data-ticket-title>Your founding pass is ready</h2>
+                <p class="ticket__note">Gift box 1 opens the moment you join. Taking you there…</p>
                 <div class="ticket__stub">
-                  <a class="btn btn--ink btn--block" href="#join" data-join="gift">Join the waitlist to claim <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+                  <a class="btn btn--ink btn--block" href="/join?from=box" data-join="box" data-gift-go>Claim my founding pass <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
                 </div>
               </div>
             </div>
@@ -194,12 +195,11 @@
         </div>
       </div>
         </div>
-        <button class="gift__hit" type="button" data-gift-hit aria-describedby="gift-status"><span class="sr-only">Mystery gift box. Tap to shake it open.</span></button>
+        <button class="gift__hit" type="button" data-gift-hit aria-describedby="gift-status"><span class="sr-only">Mystery gift box. Tap it twice to open it.</span></button>
       </div>
       <div class="gift__ui">
         <div class="gift__dots" aria-hidden="true" data-gift-dots></div>
-        <span class="gift__count" data-gift-count aria-hidden="true">3 gifts inside. Tap to open</span>
-        <p class="gift__got" data-gift-got aria-hidden="true" hidden></p>
+        <span class="gift__count" data-gift-count aria-hidden="true">Tap twice to open</span>
       </div>
       <p class="sr-only" id="gift-status" aria-live="polite" data-gift-live></p>
     </div>
@@ -211,7 +211,7 @@
 
 <!-- ============ PRODUCT WINDOW ============ -->
 <section class="showcase" data-showcase>
-  <div class="app" data-app role="img" aria-label="Autoplaced app: the agent has found 8 matching jobs at companies like CRED, Swiggy, PhonePe and Razorpay, and is applying to the best fits.">
+  <div class="app" data-app role="img" aria-label="Autoplaced app: the agent has found 8 matching jobs at companies like Google, Swiggy, PhonePe and Razorpay, and is applying to the best fits.">
     <div class="app__frame" aria-hidden="true">
       <div class="app__chrome">
         <span class="dots"><i></i><i></i><i></i></span>
@@ -242,7 +242,7 @@
         <div class="app__main">
           <div class="app__search">
             <svg width="15" height="15"><use href="#i-search"/></svg>
-            <span>Senior PM · Fintech · Bengaluru</span>
+            <span>Backend engineer · Go, Java · Bengaluru</span>
             <b>Search</b>
           </div>
           <div class="app__filters">
@@ -252,26 +252,26 @@
           <div class="app__listhead"><b>8 job matches for you</b><span class="scan"><i></i>Scanning 20+ sources</span></div>
           <ul class="jobs" data-jobs>
             <li class="job">
-              <span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span>
-              <div class="job__info"><b>Product Manager, Rewards</b><span>CRED · Bengaluru · Onsite · ₹32–48 LPA</span></div>
+              <span class="logo logo--img logo--light" style="--c:#fff"><img src="assets/logos/google.svg" alt="" width="20" height="20"></span>
+              <div class="job__info"><b>Software Engineer III, Backend</b><span>Google · Bengaluru · Hybrid · ₹45–65 LPA</span></div>
               <span class="score" style="--s:92"><i>92</i></span>
               <span class="status status--done"><svg width="11" height="11"><use href="#i-check"/></svg>Applied</span>
             </li>
             <li class="job">
               <span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span>
-              <div class="job__info"><b>Senior PM, Instamart Supply</b><span>Swiggy · Bengaluru · Hybrid · ₹40–55 LPA</span></div>
+              <div class="job__info"><b>SDE II, Instamart Platform</b><span>Swiggy · Bengaluru · Hybrid · ₹30–42 LPA</span></div>
               <span class="score" style="--s:88"><i>88</i></span>
               <span class="status status--work" data-cycle><span class="spin"></span>Tailoring resume</span>
             </li>
             <li class="job">
               <span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span>
-              <div class="job__info"><b>Lead PM, UPI Merchant Payments</b><span>PhonePe · Pune · Hybrid · ₹45–60 LPA</span></div>
+              <div class="job__info"><b>Senior Software Engineer, UPI</b><span>PhonePe · Pune · Hybrid · ₹38–52 LPA</span></div>
               <span class="score" style="--s:84"><i>84</i></span>
               <span class="status status--wait">Needs approval</span>
             </li>
             <li class="job is-selected">
               <span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
-              <div class="job__info"><b>Senior PM, Payments Platform</b><span>Razorpay · Bengaluru · Hybrid · ₹38–52 LPA</span></div>
+              <div class="job__info"><b>Senior SDE, Payments Platform</b><span>Razorpay · Bengaluru · Hybrid · ₹36–50 LPA</span></div>
               <span class="score" style="--s:78"><i>78</i></span>
               <span class="status">Selected</span>
             </li>
@@ -286,25 +286,25 @@
         <div class="app__detail">
           <div class="detail__head">
             <span class="logo logo--lg logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span>
-            <div><b>Senior Product Manager, Payments Platform</b><span>Razorpay · posted 2 hours ago</span></div>
+            <div><b>Senior Software Engineer, Payments Platform</b><span>Razorpay · posted 2 hours ago</span></div>
           </div>
           <div class="detail__facts">
-            <div><span>Salary</span><b>₹38–52 LPA</b></div>
-            <div><span>Experience</span><b>5–8 yrs</b></div>
+            <div><span>Salary</span><b>₹36–50 LPA</b></div>
+            <div><span>Experience</span><b>4–7 yrs</b></div>
             <div><span>Location</span><b>Bengaluru · Hybrid</b></div>
           </div>
           <div class="detail__why">
             <span class="mono"><svg width="12" height="12"><use href="#i-spark"/></svg>Why you match</span>
             <p>Good fit: you have 6 of the 9 skills this role asks for.</p>
             <div class="tags">
-              <span class="tag tag--yes">SQL</span><span class="tag tag--yes">Payments</span><span class="tag tag--yes">A/B testing</span>
-              <span class="tag tag--yes">Roadmapping</span><span class="tag tag--yes">UPI</span><span class="tag tag--yes">Analytics</span>
-              <span class="tag tag--no">Go</span><span class="tag tag--no">Risk &amp; fraud</span><span class="tag tag--no">Compliance</span>
+              <span class="tag tag--yes">Go</span><span class="tag tag--yes">PostgreSQL</span><span class="tag tag--yes">Kafka</span>
+              <span class="tag tag--yes">Microservices</span><span class="tag tag--yes">REST APIs</span><span class="tag tag--yes">AWS</span>
+              <span class="tag tag--no">Kubernetes</span><span class="tag tag--no">gRPC</span><span class="tag tag--no">Payments domain</span>
             </div>
           </div>
           <div class="detail__resume">
             <span class="detail__doc"><svg width="14" height="14"><use href="#i-doc"/></svg></span>
-            <div><b>Resume v3 · Payments</b><span>Tailored 2 min ago</span></div>
+            <div><b>Resume v3 · Backend</b><span>Tailored 2 min ago</span></div>
             <span class="score score--sm" style="--s:91"><i>91</i></span>
           </div>
           <div class="detail__cta"><svg width="13" height="13"><use href="#i-spark"/></svg>Tailor resume to this job</div>
@@ -325,6 +325,18 @@
   </div>
   <p class="sr-only">Supported: Greenhouse, Lever, Workday, Ashby, SmartRecruiters, Naukri, Wellfound, Indeed, Instahyre, Foundit and RemoteOK.</p>
   <p class="statline" data-reveal>Watching <b>2 lakh+</b> live openings at <b>50,000+</b> companies across <b>20+</b> job sites. New roles get picked up <b>within hours</b>, day and night.</p>
+</section>
+
+<!-- ============ VIDEO: WHY AUTOPLACED ============ -->
+<section class="vid" id="why" aria-labelledby="why-title">
+  <header class="shead" data-reveal>
+    <span class="eyebrow">Why Autoplaced</span>
+    <h2 id="why-title">Why we're building it. <em>From the people behind it.</em></h2>
+    <p>A short note from Himanshu on the problem we kept seeing, and how Autoplaced fixes it.</p>
+  </header>
+  <div class="vid__frame" data-video="founder" data-reveal>
+    <div class="vid__ph" role="img" aria-label="Video coming soon: Himanshu on why we're building Autoplaced"><span class="vid__play" aria-hidden="true"><svg viewBox="0 0 20 20"><use href="#i-play"/></svg></span><b>Video coming soon</b><span>Himanshu on why Autoplaced exists</span></div>
+  </div>
 </section>
 
 <!-- ============ HOW IT WORKS ============ -->
@@ -368,7 +380,7 @@
         <span class="tint tint--0"></span><span class="tint tint--1"></span><span class="tint tint--2"></span><span class="tint tint--3"></span>
         <!-- 01 find -->
         <div class="screen screen--find" data-screen="0">
-          <div class="prompt"><span class="prompt__label">Find me</span><span class="prompt__text">Senior PM roles in fintech, Bengaluru</span><span class="caret"></span></div>
+          <div class="prompt"><span class="prompt__label">Find me</span><span class="prompt__text">Backend engineer roles, Bengaluru</span><span class="caret"></span></div>
           <div class="flow">
             <div class="sources">
               <span><i class="ico"><img src="assets/logos/naukri.png" alt="" width="22" height="22" loading="lazy"></i>Naukri</span><span><i class="ico"><img src="assets/logos/instahyre.png" alt="" width="22" height="22" loading="lazy"></i>Instahyre</span><span><i class="ico ico--glyph" style="--c:#000"><img src="assets/logos/wellfound.svg" alt="" width="22" height="22" loading="lazy"></i>Wellfound</span><span><i class="ico ico--glyph" style="--c:#24a47f"><img src="assets/logos/greenhouse.svg" alt="" width="22" height="22" loading="lazy"></i>Greenhouse</span><span><i class="ico"><img src="assets/logos/lever.png" alt="" width="22" height="22" loading="lazy"></i>Lever</span>
@@ -378,7 +390,7 @@
             </svg>
             <svg class="flow__lines flow__lines--down" viewBox="0 0 300 36" preserveAspectRatio="none"><path d="M50 0 C50 20 150 16 150 36"/><path d="M150 0 L150 36"/><path d="M250 0 C250 20 150 16 150 36"/></svg>
             <ul class="ranked">
-              <li><span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span><b>CRED</b><span class="bar"><i style="--w:92%"></i></span><em>92</em></li>
+              <li><span class="logo logo--img logo--light" style="--c:#fff"><img src="assets/logos/google.svg" alt="" width="20" height="20"></span><b>Google</b><span class="bar"><i style="--w:92%"></i></span><em>92</em></li>
               <li><span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span><b>Swiggy</b><span class="bar"><i style="--w:88%"></i></span><em>88</em></li>
               <li><span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span><b>PhonePe</b><span class="bar"><i style="--w:84%"></i></span><em>84</em></li>
               <li><span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span><b>Razorpay</b><span class="bar"><i style="--w:78%"></i></span><em>78</em></li>
@@ -390,18 +402,18 @@
         <!-- 02 tailor -->
         <div class="screen screen--tailor" data-screen="1">
           <div class="doc">
-            <div class="doc__head"><b>Himanshu Jain</b><span>Product Manager · Bengaluru</span></div>
+            <div class="doc__head"><b>Himanshu Jain</b><span>Software Engineer · Bengaluru</span></div>
             <span class="doc__label">Experience</span>
             <div class="diff">
-              <p class="diff__old"><s>Worked on the payments product.</s></p>
-              <p class="diff__new"><svg width="12" height="12"><use href="#i-spark"/></svg><span>Launched UPI checkout, lifting conversion 12%.</span></p>
+              <p class="diff__old"><s>Worked on the payments service.</s></p>
+              <p class="diff__new"><svg width="12" height="12"><use href="#i-spark"/></svg><span>Built a UPI payments service in Go, serving 2M requests a day.</span></p>
             </div>
             <div class="diff">
-              <p class="diff__old"><s>Responsible for roadmap and stakeholders.</s></p>
-              <p class="diff__new"><svg width="12" height="12"><use href="#i-spark"/></svg><span>Owned a 4-quarter roadmap across 3 squads.</span></p>
+              <p class="diff__old"><s>Responsible for APIs and on-call.</s></p>
+              <p class="diff__new"><svg width="12" height="12"><use href="#i-spark"/></svg><span>Cut p99 API latency by 40% with a new caching layer.</span></p>
             </div>
             <span class="doc__label">Skills matched to this job</span>
-            <div class="tags"><span class="tag tag--yes">SQL</span><span class="tag tag--yes">Payments</span><span class="tag tag--yes">A/B testing</span><span class="tag tag--yes">Roadmapping</span></div>
+            <div class="tags"><span class="tag tag--yes">Go</span><span class="tag tag--yes">PostgreSQL</span><span class="tag tag--yes">Kafka</span><span class="tag tag--yes">REST APIs</span></div>
           </div>
           <div class="ats">
             <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" class="ats__track"/><circle cx="60" cy="60" r="50" class="ats__val"/></svg>
@@ -412,7 +424,7 @@
         <!-- 03 apply -->
         <div class="screen screen--apply" data-screen="2">
           <div class="form">
-            <div class="form__head"><span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span><div><b>Senior PM, Payments Platform</b><span>Razorpay · careers page</span></div></div>
+            <div class="form__head"><span class="logo logo--img" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="20" height="20"></span><div><b>Senior SDE, Payments Platform</b><span>Razorpay · careers page</span></div></div>
             <div class="field"><span>Full name</span><b>Himanshu Jain</b><i class="ok"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
             <div class="field"><span>Notice period</span><b>30 days</b><i class="ok"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
             <div class="field"><span>Why this role?</span><b>Drafted from your profile</b><i class="ok"><svg width="11" height="11"><use href="#i-check"/></svg></i></div>
@@ -425,18 +437,30 @@
         <div class="screen screen--follow" data-screen="3">
           <div class="mail">
             <div class="mail__to"><svg width="13" height="13"><use href="#i-mail"/></svg>To: Hiring Manager · Razorpay</div>
-            <p>Hi Priya, I just applied for the PM role and noticed your team is rebuilding checkout. I led a similar rebuild at my last company and would love to share what worked…</p>
+            <p>Hi Priya, I just applied for the backend role and noticed your team is scaling the payments platform. I built a similar service at my last company and would love to share what worked…</p>
             <div class="mail__actions"><span class="btn-mini">Edit</span><span class="btn-mini btn-mini--ink">Approve &amp; send <svg width="12" height="12"><use href="#i-arrow"/></svg></span></div>
           </div>
           <ul class="pipe">
-            <li><span class="logo logo--img logo--cred" style="--c:#000"><img src="assets/logos/cred.png" alt="" width="20" height="20"></span><div><b>Product Manager, Rewards</b><span>CRED</span></div><em class="st st--int">Interview</em></li>
-            <li><span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span><div><b>Senior PM, Instamart</b><span>Swiggy</span></div><em class="st st--view">Viewed</em></li>
-            <li><span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span><div><b>Lead PM, UPI</b><span>PhonePe</span></div><em class="st">Applied</em></li>
+            <li><span class="logo logo--img logo--light" style="--c:#fff"><img src="assets/logos/google.svg" alt="" width="20" height="20"></span><div><b>Software Engineer III</b><span>Google</span></div><em class="st st--int">Interview</em></li>
+            <li><span class="logo logo--img" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="20" height="20"></span><div><b>SDE II, Instamart</b><span>Swiggy</span></div><em class="st st--view">Viewed</em></li>
+            <li><span class="logo logo--img" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="20" height="20"></span><div><b>Senior SWE, UPI</b><span>PhonePe</span></div><em class="st">Applied</em></li>
           </ul>
         </div>
       </div>
       <div class="how__dots"><i></i><i></i><i></i><i></i></div>
     </div>
+  </div>
+</section>
+
+<!-- ============ VIDEO: PRODUCT DEMO ============ -->
+<section class="vid vid--demo" id="demo" aria-labelledby="demo-title">
+  <header class="shead" data-reveal>
+    <span class="eyebrow">Product demo</span>
+    <h2 id="demo-title">See it work <em>in 30 seconds.</em></h2>
+    <p>Find, tailor, apply and follow up, start to finish.</p>
+  </header>
+  <div class="vid__frame" data-video="demo" data-reveal>
+    <div class="vid__ph" role="img" aria-label="Video coming soon: the 30-second product demo"><span class="vid__play" aria-hidden="true"><svg viewBox="0 0 20 20"><use href="#i-play"/></svg></span><b>Video coming soon</b><span>The 30-second product demo</span></div>
   </div>
 </section>
 
@@ -492,7 +516,7 @@
         <li><svg width="18" height="18"><use href="#i-shield"/></svg>No CAPTCHA bypass</li>
         <li><svg width="18" height="18"><use href="#i-eye-off"/></svg>Not used for AI training</li>
       </ul>
-      <a class="btn btn--ink control__cta" href="#join" data-join="control">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="btn btn--ink control__cta" href="/join?from=control" data-join="control">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -536,46 +560,26 @@
   </div>
 </section>
 
-<!-- ============ RESUME BUILDER ============ -->
-<section class="resume" id="resume" aria-labelledby="resume-title">
-  <div class="resume__grid">
-    <div class="resume__copy">
-      <header class="shead shead--left" data-reveal>
-        <span class="eyebrow"><span class="newtag">New</span> AI Resume Builder</span>
-        <h2 id="resume-title">One resume. <em>A sharper version for every job.</em></h2>
-        <p>Build it once. Autoplaced rewrites, tailors and ATS-scores it for every role you apply to, using only experience you actually have.</p>
-      </header>
-      <ol class="trio" data-reveal>
-        <li><span>01</span><b>Build</b><p>From scratch, a template or your old PDF.</p></li>
-        <li><span>02</span><b>Tailor</b><p>A version shaped for every job, automatically.</p></li>
-        <li><span>03</span><b>Score</b><p>See your ATS score before you hit send.</p></li>
-      </ol>
-      <ul class="facts" data-reveal>
-        <li>Never invents experience</li><li>Every version saved</li><li>ATS-safe templates for Workday, Greenhouse and Lever</li><li>Export to PDF or DOCX</li>
-      </ul>
-      <a class="btn btn--ink" href="#join" data-join="resume" data-reveal>Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-    </div>
-
-    <div class="resume__art" data-resume aria-hidden="true">
-      <div class="sheet">
-        <div class="sheet__top">
-          <div><b>Himanshu Jain</b><span>Product Manager · Bengaluru</span></div>
-          <span class="sheet__tpl">Classic template</span>
-        </div>
-        <span class="sheet__label">Experience</span>
-        <div class="sheet__role"><b>Product Manager, Payments</b><span>Payments startup · 2021 – now</span></div>
-        <div class="rewrite">
-          <span class="rewrite__old">• Worked on the payments product.</span>
-          <span class="rewrite__new"><span class="rewrite__ai">AI</span><span data-type="Launched UPI checkout, lifting conversion 12%."></span></span>
-        </div>
-        <ul class="sheet__bullets"><li>Ran pricing experiments across 4 merchant segments.</li><li>Cut payment failures by working with risk and engineering.</li></ul>
-        <span class="sheet__label">Skills</span>
-        <div class="tags"><span class="tag">SQL</span><span class="tag">Payments</span><span class="tag">A/B testing</span><span class="tag">Roadmapping</span></div>
-      </div>
-      <div class="float float--ats"><span class="ring" style="--p:0" data-ring><b data-ring-num>0</b></span><div><b>ATS score</b><span>Parses cleanly in Workday</span></div></div>
-    </div>
+<!-- ============ WHERE IT APPLIES ============ -->
+<section class="reach" id="reach" aria-labelledby="reach-title">
+  <header class="shead" data-reveal>
+    <span class="eyebrow">Where it applies</span>
+    <h2 id="reach-title">Wherever the job is posted, <em>it applies right there.</em></h2>
+    <p>Job boards, the hiring portals companies use, and company career pages. Autoplaced watches 20+ job sites and fills each form the way you would.</p>
+  </header>
+  <div class="orbit" data-orbit aria-hidden="true">
+    <i class="orbit__cross"></i>
+    <div class="orbit__ring orbit__ring--1"><span class="orbit__item" style="--a:18deg"><span class="orbit__tile orbit__tile--c" style="--c:#24a47f"><img src="assets/logos/greenhouse.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:90deg"><span class="orbit__tile orbit__tile--icon"><img src="assets/logos/lever.png" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:162deg"><span class="orbit__tile orbit__tile--pad"><img src="assets/logos/workday.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:234deg"><span class="orbit__tile orbit__tile--icon"><img src="assets/logos/ashby.png" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:306deg"><span class="orbit__tile orbit__tile--icon"><img src="assets/logos/smartrecruiters.png" alt="" width="40" height="40" loading="lazy"></span></span></div>
+    <div class="orbit__ring orbit__ring--2"><span class="orbit__item" style="--a:36deg"><span class="orbit__tile orbit__tile--icon"><img src="assets/logos/naukri.png" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:96deg"><span class="orbit__tile orbit__tile--c" style="--c:#003a9b"><img src="assets/logos/indeed.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:156deg"><span class="orbit__tile orbit__tile--c" style="--c:#000"><img src="assets/logos/wellfound.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:216deg"><span class="orbit__tile orbit__tile--icon"><img src="assets/logos/instahyre.png" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:276deg"><span class="orbit__tile orbit__tile--icon"><img src="assets/logos/foundit.png" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:336deg"><span class="orbit__tile orbit__tile--icon"><img src="assets/logos/remoteok.png" alt="" width="40" height="40" loading="lazy"></span></span></div>
+    <div class="orbit__ring orbit__ring--3"><span class="orbit__item" style="--a:54deg"><span class="orbit__tile"><img src="assets/logos/google.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:105deg"><span class="orbit__tile"><img src="assets/logos/microsoft.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:157deg"><span class="orbit__tile orbit__tile--c" style="--c:#0052cc"><img src="assets/logos/atlassian.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:208deg"><span class="orbit__tile orbit__tile--c" style="--c:#2874f0"><img src="assets/logos/flipkart.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:260deg"><span class="orbit__tile orbit__tile--c" style="--c:#fc8019"><img src="assets/logos/swiggy.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:311deg"><span class="orbit__tile orbit__tile--c" style="--c:#0c2451"><img src="assets/logos/razorpay.svg" alt="" width="40" height="40" loading="lazy"></span></span><span class="orbit__item" style="--a:363deg"><span class="orbit__tile orbit__tile--c" style="--c:#5f259f"><img src="assets/logos/phonepe.svg" alt="" width="40" height="40" loading="lazy"></span></span></div>
+    <span class="orbit__tag orbit__tag--ats"><i></i>ATS portals</span>
+    <span class="orbit__tag orbit__tag--boards"><i></i>Job boards</span>
+    <span class="orbit__tag orbit__tag--sites"><i></i>Company career pages</span>
+    <div class="orbit__core"><span class="orbit__badge"><span data-bot="cool"></span></span><b>Autoplaced</b><small>20+ job sites, one agent</small></div>
   </div>
-
+  <p class="sr-only">It works on job boards such as Naukri, Indeed, Wellfound, Instahyre and Foundit; on ATS portals such as Greenhouse, Lever, Workday, Ashby and SmartRecruiters; and on company career pages.</p>
+  <p class="orbit__note">Logos are examples of sites it works on, not partners or endorsements.</p>
+  <a class="btn btn--ink" href="/join?from=reach" data-join="reach">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
 </section>
 
 <!-- ============ COMPARE ============ -->
@@ -609,7 +613,7 @@
       <h3>Free</h3>
       <p class="plan__for">Build your resume and try the agent</p>
       <p class="plan__price"><b>₹0</b><span>forever</span></p>
-      <a class="btn btn--line" href="#join" data-join="pricing">Join the waitlist</a>
+      <a class="btn btn--line" href="/join?from=pricing" data-join="pricing">Join the waitlist</a>
       <ul>
         <li>AI Resume Builder (1 resume)</li><li>ATS score checks</li><li>20 job matches / week</li><li>Application tracker</li>
       </ul>
@@ -636,7 +640,7 @@
           <ul><li>Everything in Pro</li><li>Auto apply, up to 40 / day</li><li>Unlimited recruiter outreach</li><li>Priority discovery on new posts</li><li>Priority support</li></ul>
         </div>
       </div>
-      <a class="btn btn--sun" href="#join" data-join="pricing">Join the waitlist <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="btn btn--sun" href="/join?from=pricing" data-join="pricing">Join the waitlist <span class="btn__dot btn__dot--ink"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
     </article>
   </div>
 </section>
@@ -671,7 +675,7 @@
     <h2 id="final-title">You've filled enough <em>forms.</em></h2>
     <p>Set it up once. Autoplaced finds the roles, tailors your resume and applies while you get ready for interviews.</p>
     <div class="hero__ctas">
-      <a class="btn btn--ink btn--lg" href="#join" data-join="final">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="btn btn--ink btn--lg" href="/join?from=final" data-join="final">Join the waitlist <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
     </div>
     <p class="final__fine"><span>Free to join · Takes 20 seconds · No card</span></p>
   </div>
@@ -691,7 +695,7 @@
       </div>
     </div>
     <nav class="foot__cols" aria-label="Footer">
-      <div><b>Product</b><a href="#how">How it works</a><a href="#resume">Resume builder</a><a href="#pricing">Pricing</a><a href="#join" data-join="footer">Join the waitlist</a><a href="#faq">FAQ</a></div>
+      <div><b>Product</b><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="/blog">Blog</a><a href="/join?from=footer" data-join="footer">Join the waitlist</a><a href="#faq">FAQ</a></div>
       <div><b>Community</b><a href="#community" data-wa rel="noopener" target="_blank">WhatsApp community</a><a href="https://whatsapp.com/channel/0029Vb9URlSHAdNRsMXYMJ2x" rel="noopener" target="_blank">WhatsApp channel</a><a href="https://www.linkedin.com/company/autoplaced/" rel="noopener" target="_blank">LinkedIn</a><a href="https://www.instagram.com/autoplaced.ai/" rel="noopener" target="_blank">Instagram</a></div>
       <div><b>Company</b><a href="mailto:hello@autoplaced.ai">Contact us</a><a href="https://www.autoplaced.ai/login">Log in</a></div>
     </nav>
@@ -700,91 +704,6 @@
   <div class="foot__base"><span>© 2026 Autoplaced</span><span>Your job search, on autopilot.</span></div>
 </footer>
 
-<!-- ============ JOIN THE WAITLIST ============ -->
-<dialog class="join" id="join" aria-labelledby="join-title" data-join-dialog data-lenis-prevent>
-  <canvas class="join__confetti" aria-hidden="true" data-confetti></canvas>
-  <div class="join__card">
-    <button class="join__x" type="button" data-join-close aria-label="Close"><svg width="18" height="18"><use href="#i-x"/></svg></button>
-    <div class="join__art">
-      <div class="join__sky" aria-hidden="true"><i class="cl" style="--x:-6%;--y:84%;--s:1.25;--d:0s"></i><i class="cl" style="--x:30%;--y:90%;--s:1.5;--d:0.08s"></i><i class="cl" style="--x:70%;--y:85%;--s:1.3;--d:0.04s"></i><i class="cl" style="--x:12%;--y:70%;--s:0.8;--d:0.16s"></i><i class="cl" style="--x:82%;--y:68%;--s:0.85;--d:0.12s"></i><i class="cl" style="--x:48%;--y:58%;--s:0.6;--d:0.22s"></i><i class="cl" style="--x:-2%;--y:40%;--s:0.55;--d:0.3s"></i><i class="cl" style="--x:88%;--y:36%;--s:0.5;--d:0.26s"></i></div>
-      <div class="ticket ticket--pass" data-pass>
-        <div class="ticket__card">
-          <i class="ticket__foil" aria-hidden="true"></i>
-          <div class="ticket__head"><span class="ticket__brand"><span data-bot="happy"></span>autoplaced</span><span class="ticket__admit">Admit one</span></div>
-          <p class="ticket__name"><span>Name</span><b data-pass-name>Your name here</b></p>
-          <p class="ticket__label" data-pass-label>Unlocks when you join</p>
-          <ul class="ticket__gifts" data-gifts></ul>
-          <div class="ticket__stub"><span>Waitlist member</span><b data-pass-date></b></div>
-          <span class="stamp" aria-hidden="true"><span>You're<br>in</span></span>
-        </div>
-        <span class="join__bot" data-bot="happy" aria-hidden="true"></span>
-        <a class="ticket__tear" href="#community" data-wa data-tear rel="noopener" target="_blank" aria-label="Join the Autoplaced WhatsApp community (opens WhatsApp)" hidden>
-          <span class="ticket__tearIcon" aria-hidden="true"><svg width="20" height="20"><use href="#i-wa"/></svg></span>
-          <span class="ticket__tearText" aria-hidden="true"><small>Community pass</small><b>Tear to join us on WhatsApp</b></span>
-          <span class="ticket__tearCue" aria-hidden="true"><svg width="14" height="14"><use href="#i-arrow"/></svg></span>
-        </a>
-      </div>
-    </div>
-    <div class="join__body">
-      <form class="join__form" data-join-form novalidate>
-        <div class="join__strip" aria-hidden="true"><span>Admit one</span><b data-strip-name>Your name here</b></div>
-        <span class="eyebrow">The waitlist</span>
-        <h2 id="join-title">Join the waitlist. <em>Claim your gifts.</em></h2>
-        <p class="join__lede">Free to join. Takes 20 seconds.</p>
-        <div class="fld" data-fld="name">
-          <label for="jn-name">Full name</label>
-          <input id="jn-name" name="name" type="text" autocomplete="name" autocapitalize="words" maxlength="80" aria-describedby="jn-name-err">
-          <p class="fld__err" id="jn-name-err"></p>
-        </div>
-        <div class="fld" data-fld="phone">
-          <label for="jn-phone">Phone number</label>
-          <div class="fld__tel">
-            <select id="jn-cc" name="countryCode" aria-label="Country code" autocomplete="tel-country-code">
-              <option value="+91" selected>IN +91</option>
-              <option value="+1">US/CA +1</option>
-              <option value="+44">UK +44</option>
-              <option value="+971">AE +971</option>
-              <option value="+65">SG +65</option>
-              <option value="+61">AU +61</option>
-              <option value="+49">DE +49</option>
-            </select>
-            <input id="jn-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="24" placeholder="98765 43210" aria-describedby="jn-phone-hint jn-phone-err">
-          </div>
-          <p class="fld__hint" id="jn-phone-hint">For your invite and gift updates.</p>
-          <p class="fld__err" id="jn-phone-err"></p>
-        </div>
-        <div class="fld" data-fld="email">
-          <label for="jn-email">Email</label>
-          <input id="jn-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="120" aria-describedby="jn-email-err">
-          <p class="fld__err" id="jn-email-err"></p>
-        </div>
-        <p class="join__alert" role="alert" data-join-alert></p>
-        <button class="btn btn--ink btn--lg btn--block" type="submit" data-join-submit><span data-join-label>Join the waitlist</span> <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></button>
-        <p class="join__fine"><svg width="14" height="14"><use href="#i-lock"/></svg>We use your phone and email only for your invite, your gifts and WhatsApp updates.</p>
-      </form>
-      <div class="join__done" data-join-done hidden>
-        <span class="eyebrow">You're on the list</span>
-        <h2 tabindex="-1" data-done-title>You're in, <em data-done-name>friend.</em></h2>
-        <p class="join__lede">Your gifts are saved under your name. Your invite will come to your phone and email.</p>
-        <div class="invite" data-invite>
-          <p class="invite__head"><span class="invite__lock" aria-hidden="true"><svg width="14" height="14"><use href="#i-lock"/></svg></span><b data-invite-title>Unlock 2 more gifts</b></p>
-          <ul class="invite__gifts" data-invite-gifts></ul>
-          <div class="invite__row">
-            <a class="btn btn--ink invite__share" href="#invite" target="_blank" rel="noopener" data-invite-share>Invite friends <span class="btn__dot"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-            <button class="btn btn--line invite__copy" type="button" data-invite-copy>Copy link</button>
-          </div>
-          <p class="invite__link"><span>Your invite link</span><b data-invite-link></b></p>
-        </div>
-        <div class="join__next" data-next>
-          <p class="join__nextCue"><span class="join__nextArrow" aria-hidden="true"></span>Your ticket came with a community pass</p>
-          <p data-next-hint>Tear it off to join us on WhatsApp for launch news, job-search tips and answers from the team.</p>
-          <p data-next-done hidden>See you in the community. WhatsApp didn’t open? <a href="#community" data-wa rel="noopener" target="_blank">Open it here</a>.</p>
-        </div>
-        <button class="join__doneBtn" type="button" data-join-close>Done</button>
-      </div>
-    </div>
-  </div>
-</dialog>
 
 <script type="module" src="js/main.js"></script>
 </body>

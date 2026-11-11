@@ -53,7 +53,7 @@ Use same-site paths (for example `/api/waitlist`). The security policy in `verce
 
 Invites: each person's invite link is `/join?ref=<inviteCode>`. The form sends `referredBy` (the code of the friend whose link brought this person). The backend counts the friends for each code. `friends` opens the boxes in `GIFT_BOXES` (box 2 at 1 friend, then 3, 5, 7 and 10).
 
-While `WAITLIST_ENDPOINT` is empty, `/join` is a preview on localhost and `*.vercel.app` addresses. It shows the Google step but sends nothing, keeps the pass in the browser, and shows "Preview controls" to add a friend or start again. On any other address it shows an error, so no sign-up is lost without a warning.
+While `WAITLIST_ENDPOINT` is empty, `/join` is a preview on localhost and `*.vercel.app` addresses. It shows the Google step but sends nothing and keeps the pass in the browser. To demo the boxes opening, open `/join?preview=1`: it adds buttons to add a friend or start again. On any other address it shows an error, so no sign-up is lost without a warning.
 
 Other values in `js/config.js`: `OFFER_ENDS` (when the boxes stop opening; the countdowns use it), `GIFT_BOXES` (the six rewards) and `VIDEOS` (the two homepage videos; put the files in `assets/video/`).
 

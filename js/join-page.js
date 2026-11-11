@@ -19,6 +19,8 @@ $$('[data-wa]').forEach((a) => { a.href = WHATSAPP_COMMUNITY_URL; });
 
 // with no backend, the page may only pretend on a preview address
 const PREVIEW = !WAITLIST_ENDPOINT && /^(localhost|127\.0\.0\.1)$|\.vercel\.app$/.test(location.hostname);
+// buttons to add a friend or start again: hidden, unless a preview address is opened with ?preview=1 (for demos)
+const SHOW_DEMO = PREVIEW && new URLSearchParams(location.search).get('preview') === '1';
 const CODE = /^[A-Za-z0-9_-]{4,40}$/;
 const PASS_KEY = 'ap-pass';
 const REF_KEY = 'ap-ref';
@@ -210,7 +212,7 @@ function paintAfter() {
     $('[data-count-n]').textContent = S.waitlistCount.toLocaleString('en-IN');
     $('[data-count]').hidden = false;
   }
-  $('[data-demo]').hidden = !PREVIEW;
+  $('[data-demo]').hidden = !SHOW_DEMO;
 }
 
 function showView(state) {
@@ -471,8 +473,17 @@ function fit(ctx, text, max, size, weight, family) {
 async function downloadPass() {
   if (!S) return;
   try { await document.fonts.ready; } catch { /* fonts API missing */ }
+  // the card grows with the perks on it, and the image grows with the card
+  const perks = perksFor(openedFor(S.friends));
+  const ROW = 46;
+  const STUB = 86;
+  const lastPerk = 846 + (perks.length - 1) * ROW; // baseline of the last perk, from the card's top
+  const x = 120;
+  const y = 110;
+  const w = 840;
+  const h = lastPerk + 50 + STUB;
   const W = 1080;
-  const H = 1350;
+  const H = y + h + 200;
   const cv = document.createElement('canvas');
   cv.width = W;
   cv.height = H;
@@ -480,22 +491,18 @@ async function downloadPass() {
   const SANS = 'Geist, system-ui, sans-serif';
   const MONO = '"Geist Mono", ui-monospace, monospace';
   const SERIF = '"Instrument Serif", Georgia, serif';
-  // the stage
+  // the stage (painted again inside the notches, so they look cut out of the pass)
   const bg = c.createLinearGradient(0, 0, 0, H);
   bg.addColorStop(0, '#123a3f');
   bg.addColorStop(1, '#0b2629');
-  c.fillStyle = bg;
-  c.fillRect(0, 0, W, H);
   const glow = c.createRadialGradient(W / 2, 520, 40, W / 2, 520, 620);
   glow.addColorStop(0, 'rgba(242,181,66,.32)');
   glow.addColorStop(1, 'rgba(242,181,66,0)');
-  c.fillStyle = glow;
-  c.fillRect(0, 0, W, H);
+  const stage = () => { c.fillStyle = bg; c.fill(); c.fillStyle = glow; c.fill(); };
+  c.beginPath();
+  c.rect(0, 0, W, H);
+  stage();
   // the gold card
-  const x = 120;
-  const y = 110;
-  const w = 840;
-  const h = 1050;
   const gold = c.createLinearGradient(x, y, x + w, y + h);
   gold.addColorStop(0, '#fde8a8');
   gold.addColorStop(0.26, '#f6c862');
@@ -509,6 +516,15 @@ async function downloadPass() {
   rrect(c, x, y, w, h, 36);
   c.fillStyle = gold;
   c.fill();
+  c.restore();
+  // the stub at the bottom of the card
+  c.save();
+  rrect(c, x, y, w, h, 36);
+  c.clip();
+  c.fillStyle = 'rgba(74,48,0,.09)';
+  c.fillRect(x, y + h - STUB, w, STUB);
+  c.fillStyle = 'rgba(120,72,4,.22)';
+  c.fillRect(x, y + h - STUB, w, 2);
   c.restore();
   const ink = '#2b2105';
   const brown = '#6d4a06';
@@ -527,25 +543,27 @@ async function downloadPass() {
   fit(c, S.name.toUpperCase(), w - 96, 86, 700, SANS);
   c.fillText(S.name.toUpperCase(), x + 48, y + 292);
   let yy = y + 352;
-  const dream = dreamLine(S.dreamRole, S.dreamCompany).replace(/<\/?i>/g, '');
+  const dream = dreamLine(S.dreamRole, S.dreamCompany).replace(/<\/?i>/g, '').replace(/&amp;/g, '&');
   if (dream) {
-    c.font = `italic 400 42px ${SERIF}`;
+    fit(c, dream, w - 96, 42, 'italic 400', SERIF);
     c.fillStyle = '#3d2c06';
-    c.fillText(dream.replace(/&amp;/g, '&'), x + 48, yy, w - 96);
+    c.fillText(dream, x + 48, yy);
     yy += 54;
   }
   c.font = `500 26px ${SANS}`;
   c.fillStyle = '#4a3000';
   c.fillText(`Member since ${fmtDate(S.joinedAt)}`, x + 48, yy);
-  // perforation
+  // the tear line, with a notch at each end
+  const tear = y + 470;
   c.strokeStyle = 'rgba(120,72,4,.4)';
   c.setLineDash([12, 10]);
   c.lineWidth = 3;
   c.beginPath();
-  c.moveTo(x + 30, y + 470);
-  c.lineTo(x + w - 30, y + 470);
+  c.moveTo(x + 34, tear);
+  c.lineTo(x + w - 34, tear);
   c.stroke();
   c.setLineDash([]);
+  [x, x + w].forEach((cx) => { c.beginPath(); c.arc(cx, tear, 22, 0, Math.PI * 2); stage(); });
   c.font = `500 22px ${MONO}`;
   c.fillStyle = brown;
   c.fillText('FOUNDING MEMBER NO.', x + 48, y + 540);
@@ -560,13 +578,12 @@ async function downloadPass() {
   let r = hash(S.inviteCode) || 1;
   c.fillStyle = ink;
   while (bx < x + w - 48) { r = (Math.imul(r, 1103515245) + 12345) >>> 0; const bw = 3 + (r % 3) * 2; c.fillRect(bx, y + 560, bw, 140); bx += bw + 3 + ((r >> 4) % 3) * 2; }
-  // perks
+  // perks: every one, each kept inside the card
   c.font = `500 22px ${MONO}`;
   c.fillStyle = brown;
   c.fillText('ON YOUR PASS', x + 48, y + 790);
-  const perks = perksFor(openedFor(S.friends)).slice(0, 6);
   perks.forEach((pk, i) => {
-    const py = y + 846 + i * 44;
+    const py = y + 846 + i * ROW;
     c.fillStyle = '#0a4f57';
     c.beginPath();
     c.arc(x + 62, py - 9, 13, 0, Math.PI * 2);
@@ -579,17 +596,24 @@ async function downloadPass() {
     c.lineTo(x + 70, py - 15);
     c.stroke();
     c.fillStyle = ink;
-    c.font = `560 30px ${SANS}`;
-    c.fillText(pk.p, x + 92, py, w - 140);
+    fit(c, pk.p, w - 140, 30, 560, SANS);
+    c.fillText(pk.p, x + 92, py);
   });
+  // status, in the stub
+  const sy = y + h - STUB / 2 + 8;
   c.font = `500 22px ${MONO}`;
   c.fillStyle = '#4a3000';
-  c.fillText(`STATUS · ON THE WAITLIST     BOXES ${openedFor(S.friends)}/${GIFT_BOXES.length}`, x + 48, y + h - 34);
+  c.fillText('STATUS · ', x + 48, sy);
+  c.fillStyle = '#0a4f57';
+  c.fillText('ON THE WAITLIST', x + 48 + c.measureText('STATUS · ').width, sy);
+  c.textAlign = 'right';
+  c.fillStyle = '#4a3000';
+  c.fillText(`BOXES ${openedFor(S.friends)}/${GIFT_BOXES.length}`, x + w - 48, sy);
   // the invite
   c.textAlign = 'center';
   c.fillStyle = '#e8f2f1';
   c.font = `600 34px ${SANS}`;
-  c.fillText(`Get yours: ${location.host}/join`, W / 2, H - 92);
+  c.fillText(`Get yours: ${location.host}/join`, W / 2, y + h + 112);
   const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
   if (!blob) return;
   const href = URL.createObjectURL(blob);

@@ -1439,52 +1439,44 @@ html.menu-open .nav .burger__icon i:last-child { transform: rotate(-45deg); }
 .gift__dots i { width: 10px; height: 10px; }
 .ticket__note { position: relative; margin: 0 0 4px; font-size: 14.5px; font-weight: 560; line-height: 1.35; color: #3d2c06; }
 
-/* where it applies: the bot in the middle, job sites circling it */
-.reach { padding: var(--section) var(--gutter); overflow: hidden; text-align: center; }
-.reach .shead { margin-bottom: 28px; }
-.orbit { --size: min(660px, 94vw); --tile: 62px; position: relative; width: var(--size); height: var(--size); margin: 0 auto; }
-.orbit::before { content: ""; position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle, rgba(76, 192, 200, .2), rgba(242, 181, 66, .08) 45%, transparent 70%); }
-.orbit__cross { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(var(--line-2), var(--line-2)) 50% 0 / 1px 100% no-repeat, linear-gradient(var(--line-2), var(--line-2)) 0 50% / 100% 1px no-repeat; -webkit-mask: radial-gradient(circle, #000 30%, transparent 70%); mask: radial-gradient(circle, #000 30%, transparent 70%); }
-.orbit__ring { --r: calc(var(--size) * var(--rr)); position: absolute; left: 50%; top: 50%; width: calc(var(--r) * 2); height: calc(var(--r) * 2); margin: calc(var(--r) * -1) 0 0 calc(var(--r) * -1); border-radius: 50%; border: 1.5px dashed rgba(15, 48, 52, .14); animation: orbit var(--t) linear infinite; }
-.orbit__ring--1 { --rr: .2; --t: 50s; }
-.orbit__ring--2 { --rr: .335; --t: 70s; animation-direction: reverse; }
-.orbit__ring--3 { --rr: .465; --t: 95s; }
+/* where it applies: the copy on the left; on the right the bot, with three rings around it, one per kind of site.
+   Each ring carries its own name along its edge and three logos; the rings turn and stop when off screen. */
+.reach { padding: var(--section) var(--gutter); overflow: hidden; }
+.reach__grid { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 96px); align-items: center; }
+.reach .shead { margin-bottom: 34px; }
+.reach h2 { font-size: clamp(36px, 4vw, 58px); }
+.reach__cta { display: grid; justify-items: start; gap: 14px; }
+.orbit__note { font-size: 12.5px; color: var(--ink-3); }
+
+.orbit { --size: min(600px, 48vw); --tile: calc(var(--size) * .11); position: relative; width: var(--size); height: var(--size); justify-self: center; }
+.orbit__halo { position: absolute; inset: 16%; border-radius: 50%; background: radial-gradient(circle, rgba(76, 192, 200, .24), rgba(242, 181, 66, .1) 45%, transparent 70%); }
+.orbit__labels { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.orbit__labels text { font-family: var(--mono); font-size: 19px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; fill: var(--teal-deep); }
+.orbit__ring { --r: calc(var(--size) * var(--rr)); position: absolute; left: 50%; top: 50%; width: calc(var(--r) * 2); height: calc(var(--r) * 2); margin: calc(var(--r) * -1) 0 0 calc(var(--r) * -1); border-radius: 50%; border: 1px solid rgba(15, 48, 52, .12); animation: orbit var(--t) linear infinite; }
+.orbit__ring--1 { --rr: .195; --t: 24s; }
+.orbit__ring--2 { --rr: .33; --t: 32s; animation-direction: reverse; }
+.orbit__ring--3 { --rr: .465; --t: 42s; }
 .orbit__item { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)); }
-.orbit__tile { position: absolute; left: calc(var(--tile) / -2); top: calc(var(--tile) / -2); width: var(--tile); height: var(--tile); display: grid; place-items: center; border-radius: 18px; background: #fff; box-shadow: 0 1px 2px rgba(15, 48, 52, .06), 0 14px 30px -14px rgba(15, 48, 52, .35), inset 0 0 0 1px rgba(15, 48, 52, .06); animation: orbit var(--t) linear infinite reverse; }
+.orbit__tile { position: absolute; left: calc(var(--tile) / -2); top: calc(var(--tile) / -2); width: var(--tile); height: var(--tile); display: grid; place-items: center; border-radius: calc(var(--tile) * .3); background: #fff; box-shadow: 0 1px 2px rgba(15, 48, 52, .06), 0 16px 32px -16px rgba(15, 48, 52, .4), inset 0 0 0 1px rgba(15, 48, 52, .06); animation: orbit var(--t) linear infinite reverse; }
 .orbit__ring--2 .orbit__tile { animation-direction: normal; }
-.orbit__tile img { width: 56%; height: 56%; object-fit: contain; }
-.orbit__tile--c { background: var(--c); }
-.orbit__tile--full img { width: 100%; height: 100%; border-radius: inherit; }
 @keyframes orbit { to { transform: rotate(360deg); } }
 .orbit.is-paused .orbit__ring, .orbit.is-paused .orbit__tile { animation-play-state: paused; }
-.orbit__core { position: absolute; left: 50%; top: 50%; width: 150px; margin: -82px 0 0 -75px; display: grid; justify-items: center; gap: 2px; }
-.orbit__core b { margin-top: 10px; font-size: 18px; letter-spacing: -.03em; }
-.orbit__core small { font-size: 13px; color: var(--ink-3); }
-.orbit__badge { display: grid; place-items: center; width: 104px; height: 104px; border-radius: 30px; background: linear-gradient(180deg, #1c4a50, #0f3034); box-shadow: 0 0 0 8px rgba(76, 192, 200, .14), 0 0 60px 6px rgba(76, 192, 200, .35), 0 24px 40px -18px rgba(15, 48, 52, .7); }
+/* the logo inside each tile: an app icon of the same size and corner everywhere */
+.orbit__icon { display: grid; place-items: center; width: 62%; height: 62%; border-radius: calc(var(--tile) * .18); overflow: hidden; background: var(--c, #fff); }
+.orbit__icon img { width: 100%; height: 100%; object-fit: cover; }
+.orbit__icon--glyph img { width: 62%; height: 62%; object-fit: contain; }
+.orbit__icon--mark img { width: 86%; height: 86%; object-fit: contain; }
+.orbit__core { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.orbit__badge { display: grid; place-items: center; width: 104px; height: 104px; border-radius: 30px; background: linear-gradient(180deg, #1c4a50, #0f3034); box-shadow: 0 0 0 10px rgba(76, 192, 200, .12), 0 0 70px 8px rgba(76, 192, 200, .3), 0 26px 44px -20px rgba(15, 48, 52, .75); }
 .orbit__badge .botwrap { width: 66px; }
-.orbit__tag { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 99px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-1); font-size: 15px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
-.orbit__tag i { width: 8px; height: 8px; border-radius: 50%; background: var(--sun); box-shadow: 0 0 0 3px rgba(242, 181, 66, .25); }
-.orbit__tag--ats { left: 62%; top: 30%; }
-.orbit__tag--boards { right: 70%; top: 44%; }
-.orbit__tag--sites { left: 58%; top: 84%; }
-.orbit__note { margin-top: 18px; font-size: 13px; color: var(--ink-3); }
-.reach .btn { margin-top: 28px; }
+@media (max-width: 980px) {
+  .reach__grid { grid-template-columns: minmax(0, 1fr); }
+  .orbit { --size: min(560px, 90vw); }
+}
 @media (max-width: 760px) {
-  .orbit { --tile: 44px; --size: min(660px, 88vw); }
-  .orbit__tile { border-radius: 13px; }
-  .orbit__core { width: 120px; margin: -64px 0 0 -60px; }
+  .orbit__labels text { font-size: 27px; letter-spacing: .14em; }
   .orbit__badge { width: 76px; height: 76px; border-radius: 22px; }
   .orbit__badge .botwrap { width: 48px; }
-  .orbit__core b { font-size: 15px; margin-top: 8px; }
-  .orbit__core small { display: none; }
-  /* rings a little further out, so the inner logos clear the bot's name */
-  .orbit__ring--1 { --rr: .25; }
-  .orbit__ring--2 { --rr: .37; }
-  .orbit__ring--3 { --rr: .475; }
-  .orbit__tag { padding: 6px 11px; font-size: 12.5px; gap: 6px; }
-  .orbit__tag--ats { left: 56%; top: 24%; }
-  .orbit__tag--boards { right: 64%; top: 41%; }
-  .orbit__tag--sites { left: 46%; top: 86%; }
 }
 @media (prefers-reduced-motion: reduce) { .orbit__ring, .orbit__tile { animation: none; } }
 
@@ -1767,9 +1759,6 @@ html.menu-open .nav .burger__icon i:last-child { transform: rotate(-45deg); }
 
 /* white company marks (Google, Microsoft) need an edge on white cards */
 .logo--light { box-shadow: inset 0 0 0 1px rgba(15, 48, 52, .14); }
-.orbit__tile--icon img { width: 70%; height: 70%; border-radius: 11px; object-fit: cover; }
-.orbit__tile--pad img { width: 70%; height: 70%; }
-@media (max-width: 760px) { .orbit__tile--icon img { border-radius: 8px; } }
 /* short phones: the menu rows tighten a little, so the Blog row fits without scrolling */
 @media (max-height: 760px) and (max-width: 980px) {
   .msheet__links a, .msheet__featBtn { min-height: 56px; padding: 7px 0; }

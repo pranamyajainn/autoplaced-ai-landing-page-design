@@ -51,5 +51,5 @@ export const TAPS_TO_OPEN = 2;
 // While src is empty, each slot shows "Video coming soon".
 export const VIDEOS = {
   founder: { src: '', poster: '' }, // Himanshu on why Autoplaced exists
-  demo: { src: '', poster: '' }, // the 30-second product demo
+  demo: { src: '', poster: '' }, // the product walkthrough (shown after Pricing)
 };

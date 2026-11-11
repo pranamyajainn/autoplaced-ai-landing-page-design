@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- Renders still frames of the live meadow, used as the instant placeholder (assets/meadow/).
+     Not linked from the site. Open it at the frame size you need (the viewport is the frame), then call
+     window.shoot(mood) when window.ready is true: it returns both layers as PNG data URLs.
+     mood: 0.16 = the morning behind the hero, 1 = the golden hour behind the closing section. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Meadow stills</title>
+<style>html, body { margin: 0; background: transparent; overflow: hidden; } canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; }</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js"}}</script>
+</head>
+<body>
+<canvas id="back"></canvas>
+<canvas id="front"></canvas>
+<script type="module">
+  import { createMeadow } from './js/meadow.js';
+  const back = document.getElementById('back');
+  const front = document.getElementById('front');
+  // ?tier=small draws the grass at the density phones use, so the phone stills match the live phone scene
+  const m = await createMeadow({ back, front, tier: new URLSearchParams(location.search).get('tier') || '' });
+  m.setActive(false); // no animation loop: frames are drawn only on request
+  window.shoot = (mood) => {
+    m.setMood(mood, true);
+    m.setProgress(0);
+    m.renderOnce();
+    return { back: back.toDataURL('image/png'), front: front.toDataURL('image/png') };
+  };
+  window.ready = true;
+</script>
+</body>
+</html>

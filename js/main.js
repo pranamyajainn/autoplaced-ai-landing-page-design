@@ -149,31 +149,78 @@ matchMedia('(min-width: 981px)').addEventListener('change', (e) => { if (e.match
   $$('a', feat).forEach((a) => a.addEventListener('click', () => setOpen(false)));
 }
 
-/* ---------------- live meadow ---------------- */
+/* ---------------- live meadow ----------------
+   The meadow is on screen from the first paint as still frames of the 3D scene. The live scene is then built
+   out of sight, drawn hidden for a moment while the page measures its frame rate, and faded in over the stills
+   only if the page stays smooth. Phones that should not run it at all keep the stills and never download it. */
 let meadow = null;
 const sceneEl = $('[data-scene]');
 const frontEl = $('[data-front]');
+const frontStill = $('[data-front-still]');
 const hasWebGL = 'WebGL2RenderingContext' in window || 'WebGLRenderingContext' in window;
+const conn = navigator.connection || {};
+// ?meadow=still shows what those phones see, for checking
+const stillsOnly = new URLSearchParams(location.search).get('meadow') === 'still' || !hasWebGL || reduced || conn.saveData === true || /2g|3g/.test(conn.effectiveType || '') || (navigator.deviceMemory || 8) <= 2;
+// the golden stills behind the closing section load later, and only where the live scene is not running
+let goldenLoaded = false;
+function loadGoldenStills() {
+  if (goldenLoaded) return;
+  goldenLoaded = true;
+  $$('[data-golden] source').forEach((s) => { s.srcset = s.dataset.srcset; });
+  $$('[data-golden] img').forEach((i) => { i.src = i.dataset.src; });
+}
+function useStills(reason) {
+  root.classList.remove('meadow-ready');
+  root.dataset.meadow = reason;
+  loadGoldenStills();
+}
+// the frame-rate check, in rounds of one second with the scene on screen: smooth (about 50 fps or more) shows the
+// live scene; clearly too slow (under 25 fps) gives up at once; in between, up to three rounds while it lowers its resolution
+const gate = { on: false, frames: [], tries: 0, last: 0, start: 0 };
+function gateTick(t) {
+  if (!gate.on) return;
+  if (sceneEl.classList.contains('is-off') || document.hidden) { gate.last = 0; gate.start = 0; gate.frames = []; return; }
+  if (!gate.start) gate.start = t;
+  if (gate.last && t - gate.start > 200) gate.frames.push(t - gate.last); // the first frames after a change are always uneven
+  gate.last = t;
+  if (t - gate.start < 1200 || gate.frames.length < 20) return;
+  const f = gate.frames;
+  const avg = f.reduce((a, b) => a + b, 0) / f.length;
+  const slow = f.filter((ms) => ms > 34).length / f.length;
+  gate.frames = [];
+  gate.start = 0;
+  if (avg <= 21 && slow <= 0.08) {
+    gate.on = false;
+    root.classList.add('meadow-ready');
+    root.dataset.meadow = 'ready';
+  } else if (avg > 40 || ++gate.tries >= 3) {
+    gate.on = false;
+    meadow?.destroy();
+    meadow = null;
+    useStills('still-slow');
+  }
+}
 function loadMeadow() {
   import('./meadow.js')
     .then(async ({ createMeadow }) => {
       const m = await createMeadow({
         back: $('[data-back]'), front: frontEl, reduced,
-        onLost: (l) => root.classList.toggle('no-webgl', l),
-        onReady: () => { root.classList.add('meadow-ready'); root.dataset.meadow = 'ready'; },
+        onLost: (l) => { if (l && meadow) useStills('still-lost'); },
+        onReady: () => { gate.on = true; },
       });
       meadow = m;
       sceneMode = '';
       lastY = -1;
     })
-    .catch(() => root.classList.add('no-webgl'));
+    .catch(() => useStills('still-error'));
 }
 // the day starts in the morning meadow behind the gift box and ends in the golden one behind the closing section
 const MORNING = 0.16; // how far the meadow's light leans from midday towards golden hour
 let sceneMode = '';
-const whenIdle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 700 }) : setTimeout(fn, 200));
-if (hasWebGL) whenIdle(loadMeadow);
-else root.classList.add('no-webgl');
+const whenIdle = (fn) => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1500 }) : setTimeout(fn, 400));
+const afterLoad = (fn) => (document.readyState === 'complete' ? whenIdle(fn) : window.addEventListener('load', () => whenIdle(fn), { once: true }));
+if (stillsOnly) { root.dataset.meadow = 'still'; afterLoad(loadGoldenStills); }
+else afterLoad(loadMeadow);
 
 /* ---------------- hero + product window ---------------- */
 const hero = $('[data-hero]');
@@ -254,11 +301,13 @@ function updateTop(y) {
   const on = heroOn || finalOn;
   sceneEl.classList.toggle('is-off', !on);
   frontEl.classList.toggle('is-off', !on);
+  frontStill.classList.toggle('is-off', !on);
   const mode = heroOn ? 'hero' : finalOn ? 'final' : 'off';
   if (mode !== sceneMode && mode !== 'off') {
     sceneMode = mode;
     sceneEl.classList.toggle('is-golden', mode === 'final');
     sceneEl.classList.toggle('is-morning', mode === 'hero');
+    frontStill.classList.toggle('is-golden', mode === 'final');
     if (meadow) meadow.setMood(mode === 'final' ? 1 : MORNING, true);
   }
   if (meadow) {
@@ -517,6 +566,7 @@ initControl({ reduced });
 let lastY = -1;
 function frame(time) {
   if (lenis) lenis.raf(time);
+  gateTick(time);
   const y = lenis ? lenis.animatedScroll : window.scrollY;
   if (y !== lastY) {
     lastY = y;

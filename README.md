@@ -57,6 +57,16 @@ While `WAITLIST_ENDPOINT` is empty, `/join` is a preview on localhost and `*.ver
 
 Other values in `js/config.js`: `OFFER_ENDS` (when the boxes stop opening; the countdowns use it), `GIFT_BOXES` (the six rewards) and `VIDEOS` (the two homepage videos; put the files in `assets/video/`).
 
+## The meadow on slow devices
+
+The meadow shows from the first paint as still frames of the 3D scene (`assets/meadow/`, about 135 KB on a phone). After the page has loaded, the live 3D scene is built out of sight and drawn hidden while the page measures its frame rate. It fades in over the stills only if the page stays smooth (about 50 frames a second). If not, the 3D scene stops and the stills stay. Phones with data saver on, a 2G or 3G connection, or 2 GB of memory or less never download the 3D scene. Neither do people who ask their device for reduced motion. Add `?meadow=still` to the address to see the page as those phones see it.
+
+If you change the meadow in `js/meadow.js`, make the still frames again. Serve the folder, open `meadow-still.html` at these window sizes, and save both layers of `shoot(0.16)` (day) and `shoot(1)` (golden) as WebP files with the names in `assets/meadow/`:
+
+- 950 × 1266 with `?tier=small` (phones)
+- 1340 × 1000 (square windows)
+- 2160 × 900 (laptops and desktops)
+
 ## Folders
 
 | Path | Contents |
@@ -73,7 +83,9 @@ Other values in `js/config.js`: `OFFER_ENDS` (when the boxes stop opening; the c
 | `js/celebrate.js` | The burst of gold paper when the pass is issued |
 | `js/bot.js` | The robot mascot |
 | `js/dial.js` | The autopilot dial and needle |
-| `js/meadow.js` | The 3D meadow behind the closing section (three.js) |
+| `js/meadow.js` | The 3D meadow behind the hero and the closing section (three.js) |
+| `assets/meadow/` | Still frames of the 3D meadow (see "The meadow on slow devices") |
+| `meadow-still.html` | Source for the still frames in `assets/meadow/` |
 | `assets/` | Icons, share image and company logos |
 | `fonts/` | Geist and Instrument Serif (SIL Open Font License) |
 | `og.html` | Source for the share image `assets/og.jpg` |

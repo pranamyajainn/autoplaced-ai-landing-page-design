@@ -115,11 +115,36 @@
 </div>
 
 <!-- ============ LIVE SCENE (fixed behind the hero and the closing section) ============ -->
+<!-- The meadow shows at once as still frames of the 3D scene (assets/meadow, made with meadow-still.html).
+     The live 3D scene fades in over them only on devices that draw it smoothly. -->
 <div class="scene is-morning" data-scene aria-hidden="true">
   <div class="scene__sky"></div>
   <div class="scene__sun"></div>
+  <div class="scene__stills">
+    <picture class="scene__still">
+      <source media="(max-aspect-ratio: 9/10)" srcset="assets/meadow/back-day-portrait.webp">
+      <source media="(max-aspect-ratio: 27/20)" srcset="assets/meadow/back-day-mid.webp">
+      <img src="assets/meadow/back-day-wide.webp" alt="" fetchpriority="high" decoding="async">
+    </picture>
+    <picture class="scene__still scene__still--golden" data-golden>
+      <source media="(max-aspect-ratio: 9/10)" data-srcset="assets/meadow/back-golden-portrait.webp">
+      <source media="(max-aspect-ratio: 27/20)" data-srcset="assets/meadow/back-golden-mid.webp">
+      <img data-src="assets/meadow/back-golden-wide.webp" alt="" decoding="async">
+    </picture>
+  </div>
   <canvas class="scene__back" data-back></canvas>
-  <div class="scene__fallback"></div>
+</div>
+<div class="scene-front-still" data-front-still aria-hidden="true">
+  <picture class="scene__still">
+    <source media="(max-aspect-ratio: 9/10)" srcset="assets/meadow/front-day-portrait.webp">
+    <source media="(max-aspect-ratio: 27/20)" srcset="assets/meadow/front-day-mid.webp">
+    <img src="assets/meadow/front-day-wide.webp" alt="" decoding="async">
+  </picture>
+  <picture class="scene__still scene__still--golden" data-golden>
+    <source media="(max-aspect-ratio: 9/10)" data-srcset="assets/meadow/front-golden-portrait.webp">
+    <source media="(max-aspect-ratio: 27/20)" data-srcset="assets/meadow/front-golden-mid.webp">
+    <img data-src="assets/meadow/front-golden-wide.webp" alt="" decoding="async">
+  </picture>
 </div>
 <canvas class="scene-front" data-front aria-hidden="true"></canvas>
 

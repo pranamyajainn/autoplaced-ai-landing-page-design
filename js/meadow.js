@@ -450,15 +450,17 @@ void main(){
 /* ------------------------------------------------------------------ */
 // Builds in small steps and hands control back to the browser between them, so the page
 // stays responsive while the meadow is being made. Resolves once the first frame is drawn.
-export async function createMeadow({ back, front, reduced = false, onLost = () => {}, onReady = () => {} }) {
+// tier: '' picks the grass density from the device; meadow-still.html sets it so the stills match what phones draw
+export async function createMeadow({ back, front, reduced = false, onLost = () => {}, onReady = () => {}, tier = '' }) {
   const breathe = () => new Promise((r) => setTimeout(r, 0));
   const lowMem = (navigator.deviceMemory || 8) <= 4 || (navigator.hardwareConcurrency || 8) <= 4;
   const small = Math.min(window.innerWidth, window.innerHeight) < 700;
-  const Q = lowMem
-    ? { hill: 11000, back: 7500, flowersHill: 180, flowersBack: 140, dpr: 1.25, seg: 4 }
-    : small
-      ? { hill: 18000, back: 12000, flowersHill: 260, flowersBack: 200, dpr: 1.5, seg: 5 }
-      : { hill: 62000, back: 46000, flowersHill: 650, flowersBack: 560, dpr: 1.75, seg: 6 };
+  const TIERS = {
+    low: { hill: 11000, back: 7500, flowersHill: 180, flowersBack: 140, dpr: 1.25, seg: 4 },
+    small: { hill: 18000, back: 12000, flowersHill: 260, flowersBack: 200, dpr: 1.5, seg: 5 },
+    full: { hill: 62000, back: 46000, flowersHill: 650, flowersBack: 560, dpr: 1.75, seg: 6 },
+  };
+  const Q = TIERS[tier] || (lowMem ? TIERS.low : small ? TIERS.small : TIERS.full);
 
   const opts = { antialias: (window.devicePixelRatio || 1) < 1.5, alpha: true, powerPreference: 'high-performance' };
   const rBack = new THREE.WebGLRenderer({ canvas: back, ...opts });
@@ -828,12 +830,13 @@ export async function createMeadow({ back, front, reduced = false, onLost = () =
       if (ms < 100) { frameSum += ms; frameCount++; }
     }
     lastT = t;
-    if (frameCount < 40) return;
+    if (frameCount < 30) return;
     const avg = frameSum / frameCount;
     frameSum = 0;
     frameCount = 0;
     if (avg > 20 && qualityScale > 0.55) {
-      qualityScale = Math.max(0.55, qualityScale - 0.15);
+      // far over budget: a bigger step, so a slow device settles in a second or two instead of several
+      qualityScale = Math.max(0.55, qualityScale - (avg > 28 ? 0.25 : 0.15));
       calm = 0;
       applyLayout();
     } else if (avg < 14 && qualityScale < 1 && ++calm > 5) {
@@ -880,6 +883,13 @@ export async function createMeadow({ back, front, reduced = false, onLost = () =
     renderOnce: render,
     anchor: readAnchor,
     quality: small ? 'low' : 'high',
-    destroy() { cancelAnimationFrame(raf); rBack.dispose(); rFront.dispose(); },
+    // stop for good and hand the graphics memory back (the page then keeps the still frames)
+    destroy() {
+      cancelAnimationFrame(raf);
+      state.active = false;
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('pointermove', onPointer);
+      for (const r of [rBack, rFront]) { r.dispose(); r.forceContextLoss(); }
+    },
   };
 }

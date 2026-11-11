@@ -87,6 +87,9 @@ await fs.copyFile('favicon.ico', `${OUT}/favicon.ico`);
 await fs.mkdir(`${OUT}/assets/logos`, { recursive: true });
 for (const f of ['icon.svg', 'icon-32.png', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'og.jpg', 'bot.png']) await fs.copyFile(`assets/${f}`, `${OUT}/assets/${f}`);
 for (const f of await fs.readdir('assets/logos')) await fs.copyFile(`assets/logos/${f}`, `${OUT}/assets/logos/${f}`);
+// still frames of the 3D meadow, shown before (or instead of) the live scene
+await fs.mkdir(`${OUT}/assets/meadow`, { recursive: true });
+for (const f of await fs.readdir('assets/meadow')) await fs.copyFile(`assets/meadow/${f}`, `${OUT}/assets/meadow/${f}`);
 
 const sizes = Object.entries({ ...js.metafile.outputs, ...css.metafile.outputs }).map(([f, o]) => `${rel(f)} ${(o.bytes / 1024).toFixed(1)}KB`);
 console.log(sizes.join('\n'));

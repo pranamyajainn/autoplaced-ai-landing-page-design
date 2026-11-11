@@ -262,16 +262,18 @@ h3 { font-weight: 600; letter-spacing: -.02em; }
 .scene.is-golden .scene__sun { transform: translate(calc(16vmax - 15vw), calc(8vh + 26vmax)) scale(1.125); background: radial-gradient(closest-side, rgba(255, 238, 190, .95), rgba(255, 200, 140, .4) 35%, rgba(255, 190, 140, 0) 72%); }
 .scene__back, .scene-front { position: absolute; inset: 0; width: 100%; height: 100%; }
 .scene-front { position: fixed; inset: 0 0 auto 0; height: 100vh; height: 100lvh; z-index: 2; pointer-events: none; }
-.scene.is-off, .scene-front.is-off { visibility: hidden; }
-.scene__fallback { display: none; position: absolute; inset: auto 0 0 0; height: 46vh; background:
-  radial-gradient(120% 90% at 8% 100%, #4f7d27 0 38%, transparent 39%),
-  radial-gradient(120% 90% at 94% 100%, #5a8a2c 0 40%, transparent 41%),
-  linear-gradient(180deg, transparent 30%, #6f9a55 30%, #4c7a2a); }
-/* while the meadow is being built, a painted hillside holds the place; the live scene fades in over it */
-.scene__fallback { display: block; transition: opacity 1s var(--ease); }
-.scene__back, .scene-front { opacity: 0; transition: opacity 1s var(--ease); }
+.scene.is-off, .scene-front.is-off, .scene-front-still.is-off { visibility: hidden; }
+/* the meadow shows at once as still frames of the 3D scene, cropped exactly as the live camera crops;
+   the live scene fades in over them only once it has proved smooth on this device (js/main.js) */
+.scene__stills, .scene-front-still, .scene__still { position: absolute; inset: 0; display: block; }
+.scene-front-still { position: fixed; inset: 0 0 auto 0; height: 100vh; height: 100lvh; z-index: 2; pointer-events: none; }
+.scene__still img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.scene__still--golden { opacity: 0; transition: opacity 1s var(--ease); }
+.scene.is-golden .scene__still--golden, .scene-front-still.is-golden .scene__still--golden { opacity: 1; }
+.scene__stills, .scene-front-still { transition: opacity .9s var(--ease) .15s; }
+.scene__back, .scene-front { opacity: 0; transition: opacity .9s var(--ease); }
 .meadow-ready .scene__back, .meadow-ready .scene-front { opacity: 1; }
-.meadow-ready:not(.no-webgl) .scene__fallback { opacity: 0; }
+.meadow-ready .scene__stills, .meadow-ready .scene-front-still { opacity: 0; }
 
 /* ---------- hero ---------- */
 .chip {

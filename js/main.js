@@ -1,5 +1,4 @@
 import { mountBots } from './bot.js';
-import { initControl } from './dial.js';
 import { initGift } from './hero.js';
 import { WHATSAPP_COMMUNITY_URL, VIDEOS } from './config.js';
 
@@ -34,6 +33,10 @@ if (!reduced) {
     })
     .catch(() => {});
 }
+function scrollToY(y) {
+  if (lenis) lenis.scrollTo(y, { duration: 1.4 });
+  else window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+}
 function scrollToTarget(target) {
   if (lenis) lenis.scrollTo(target, { offset: target === 0 ? 0 : -84, duration: 1.4 });
   else if (target === 0) window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
@@ -47,7 +50,9 @@ $$('a[href^="#"]:not([data-join]):not([data-wa])').forEach((a) => {
     if (t === null) return;
     e.preventDefault();
     closeMenu();
-    scrollToTarget(t);
+    const card = stepCards.indexOf(t);
+    if (card >= 0) scrollToY(L.dayTop + ((card + 0.1) / (EV_HOURS.length - 1)) * (L.dayH - vh));
+    else scrollToTarget(t);
     // move keyboard focus with the scroll, as a normal anchor jump would
     const focusEl = t === 0 ? $('#main') : t;
     if (!focusEl.hasAttribute('tabindex')) focusEl.setAttribute('tabindex', '-1');
@@ -222,10 +227,8 @@ const afterLoad = (fn) => (document.readyState === 'complete' ? whenIdle(fn) : w
 if (stillsOnly) { root.dataset.meadow = 'still'; afterLoad(loadGoldenStills); }
 else afterLoad(loadMeadow);
 
-/* ---------------- hero + product window ---------------- */
+/* ---------------- hero ---------------- */
 const hero = $('[data-hero]');
-const showcase = $('[data-showcase]');
-const app = $('[data-app]');
 const finalSec = $('[data-final]');
 initGift({
   reduced,
@@ -247,7 +250,7 @@ let vw = window.innerWidth;
 let vh = window.innerHeight;
 // Layout is read once here, never inside the scroll loop: reading it there forces the browser
 // to recalculate the page every frame, which is what makes scrolling stutter.
-const L = { steps: [] };
+const L = {};
 const pageTop = (el) => el.getBoundingClientRect().top + window.scrollY;
 function measure() {
   vw = window.innerWidth;
@@ -255,10 +258,10 @@ function measure() {
   const h = window.innerHeight;
   if (Math.abs(h - vh) > 120 || !mqMobile.matches) vh = h;
   L.heroTop = pageTop(hero); L.heroH = hero.offsetHeight;
-  L.showTop = pageTop(showcase); L.showH = showcase.offsetHeight;
   L.finalTop = pageTop(finalSec);
   L.dayTop = pageTop(daySec); L.dayH = daySec.offsetHeight;
-  L.steps = steps.map((s) => ({ top: pageTop(s), h: s.offsetHeight }));
+  // where each step card starts; on phones the cards are as tall as their content, so the steps differ
+  L.stepTops = stepCards.map((c) => c.offsetTop - stepCards[0].offsetTop);
   buildHills();
   lastY = -1;
 }
@@ -273,7 +276,6 @@ window.addEventListener('resize', queueMeasure);
 new ResizeObserver(queueMeasure).observe(document.querySelector('main'));
 document.fonts?.ready.then(queueMeasure);
 
-let showOn = false;
 let heroSy = -1;
 // only the layers that drift read the scroll value, so the rest of the hero is not restyled every frame
 const heroLayers = [$('[data-field]'), $('.hero__bg')];
@@ -284,15 +286,6 @@ function updateTop(y) {
   // the poster's layers drift apart as it scrolls away: near cards fastest, the sun slowest
   const sy = reduced ? 0 : Math.round(clamp(y / Math.max(1, L.heroH)) * 1000) / 1000;
   if (sy !== heroSy && heroBottom > -40) { heroSy = sy; heroLayers.forEach((el) => el.style.setProperty('--sy', String(sy))); }
-
-  // the product window tips up to face you as it scrolls in
-  const top = L.showTop - y;
-  showOn = top < vh && top + L.showH > 0;
-  if (showOn && !reduced) {
-    const t = clamp((vh - top) / (vh * 0.85));
-    const e = 1 - Math.pow(1 - t, 3);
-    app.style.transform = `perspective(2000px) translate3d(0, ${lerp(70, 0, e).toFixed(1)}px, 0) rotateX(${lerp(22, 0, e).toFixed(2)}deg) scale(${lerp(0.9, 1, e).toFixed(4)})`;
-  }
 
   // the meadow: morning behind the hero, golden hour behind the closing section, off in between
   const fr = L.finalTop - y;
@@ -317,96 +310,6 @@ function updateTop(y) {
   }
 }
 
-/* product window: small signs of life while the hero is on screen */
-{
-  const statuses = $$('.job .status');
-  const count = $('[data-agent-count]');
-  const bar = $('[data-agent-bar]');
-  const swiggy = statuses[1];
-  const phonepe = statuses[2];
-  const done = '<svg width="11" height="11"><use href="#i-check"/></svg>Applied';
-  const work = '<span class="spin"></span>Tailoring resume';
-  let n = 14;
-  let step = 0;
-  setInterval(() => {
-    if (!showOn || document.hidden || reduced) return;
-    step = (step + 1) % 4;
-    if (step === 1) { swiggy.className = 'status status--done'; swiggy.innerHTML = done; n = n >= 24 ? 14 : n + 1; }
-    else if (step === 2) { phonepe.className = 'status status--work'; phonepe.innerHTML = work; }
-    else if (step === 3) { phonepe.className = 'status status--done'; phonepe.innerHTML = done; n = n >= 24 ? 14 : n + 1; }
-    else {
-      swiggy.className = 'status status--work'; swiggy.innerHTML = work;
-      phonepe.className = 'status status--wait'; phonepe.textContent = 'Needs approval';
-    }
-    count.textContent = String(n);
-    bar.style.width = `${(n / 25) * 100}%`;
-  }, 2400);
-}
-
-/* ---------------- how it works ---------------- */
-const steps = $$('.step');
-const device = $('[data-device]');
-const howDots = $$('.how__dots i');
-let howActive = -1;
-// a screen plays its scene when it turns on; the ATS score counts up with its ring
-function setScreen(scr, on) {
-  if (scr.classList.contains('is-on') === on) return;
-  scr.classList.toggle('is-on', on);
-  const num = on && $('[data-ats]', scr);
-  if (!num) return;
-  const to = +(num.dataset.to ||= num.textContent);
-  const run = (num.run = (num.run || 0) + 1);
-  if (reduced) { num.textContent = String(to); return; }
-  const t0 = performance.now();
-  const tick = (now) => {
-    if (num.run !== run) return;
-    const k = Math.min(1, (now - t0) / 1400);
-    num.textContent = String(Math.round(to * (1 - (1 - k) ** 3)));
-    if (k < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-}
-const deviceScreens = $$('[data-screen]', device);
-function setHow(i) {
-  if (i === howActive) return;
-  howActive = i;
-  device.dataset.active = String(i);
-  deviceScreens.forEach((s, k) => setScreen(s, k === i));
-  steps.forEach((s, k) => s.classList.toggle('is-active', k === i));
-  howDots.forEach((d, k) => d.classList.toggle('is-on', k === i));
-}
-setHow(0);
-// stacked layout: every step gets its own copy of its screen
-steps.forEach((s, i) => {
-  const wrap = document.createElement('div');
-  wrap.className = `device device--inline device--t${i}`;
-  wrap.setAttribute('aria-hidden', 'true');
-  const scr = $(`[data-screen="${i}"]`, device).cloneNode(true);
-  scr.classList.remove('is-on');
-  wrap.appendChild(scr);
-  s.appendChild(wrap);
-});
-// each card plays once it is well on screen, and again whenever it comes back
-const inlineIO = new IntersectionObserver((entries) => {
-  entries.forEach((en) => {
-    const scr = en.target.querySelector('.screen');
-    if (en.intersectionRatio >= 0.45) setScreen(scr, true);
-    else if (!en.isIntersecting) setScreen(scr, false);
-  });
-}, { threshold: [0, 0.45] });
-$$('.device--inline').forEach((d) => inlineIO.observe(d));
-
-function updateHow(y) {
-  if (mqStack.matches) return;
-  let best = 0;
-  let bestD = Infinity;
-  L.steps.forEach((s, i) => {
-    const d = Math.abs(s.top - y + s.h / 2 - vh * 0.5);
-    if (d < bestD) { bestD = d; best = i; }
-  });
-  setHow(best);
-}
-
 /* ---------------- the two videos: a real player once the file is set in config.js ---------------- */
 $$('[data-video]').forEach((frame) => {
   const v = VIDEOS[frame.dataset.video];
@@ -420,16 +323,28 @@ $$('[data-video]').forEach((frame) => {
   frame.replaceChildren(video);
 });
 
-/* ---------------- where it applies: the orbit only turns while it is on screen ---------------- */
+/* ---------------- the moving strip of job sites: a Pause button, and it rests while off screen ---------------- */
 {
-  const orbit = $('[data-orbit]');
-  if (orbit) new IntersectionObserver(([en]) => orbit.classList.toggle('is-paused', !en.isIntersecting)).observe(orbit);
+  const sites = $('[data-sites]');
+  const btn = $('[data-sites-pause]', sites);
+  btn.addEventListener('click', () => {
+    const paused = sites.classList.toggle('is-paused');
+    btn.textContent = paused ? 'Play' : 'Pause';
+  });
+  new IntersectionObserver(([en]) => sites.classList.toggle('is-away', !en.isIntersecting)).observe(sites);
 }
 
-/* ---------------- 24 hours with your agent ---------------- */
+/* ---------------- how it works: 24 hours with your agent ----------------
+   Scrolling through the section moves the clock from 6 AM to 2 AM in four parts. In each part one step card
+   slides into view (Find, Tailor, Apply, Follow up), and the agent's alerts stack up as the clock reaches them. */
 const daySec = $('[data-day]');
 const dayEvents = $$('[data-ev]');
-const notes = $$('[data-note]');
+const notes = $$('.feed .note').map((el) => ({ el, hour: Number(el.dataset.hour), rank: '' }));
+const stepTrack = $('[data-steps]');
+const stepCards = $$('.stepc', stepTrack);
+const railEl = $('[data-rail]');
+const hintEl = $('[data-day-hint]');
+let stepY = -1;
 const clockEl = $('[data-clock]');
 const ampmEl = $('[data-ampm]');
 const sunEl = $('[data-sun]');
@@ -456,7 +371,8 @@ const SKY = [
   [29.2, '#0b2a2e', '#1f5f63', '#c98a4a', '#0d241c', '#163a30', '#2a5248'],
   [31.5, '#4f8fc7', '#a9cfe0', '#f4dfae', '#3d7530', '#68965a', '#a2b8a0'],
 ].map(([h, ...c]) => [h, c.map(hex)]);
-const EV_HOURS = [6, 11, 15, 20, 26, 31.5];
+// the clock stops at each of these hours: 6 AM, 11 AM, 3 PM, 9 PM and 2 AM (26 is 2 AM the next day)
+const EV_HOURS = [6, 11, 15, 21, 26];
 let dayEv = -1;
 let dayMood = '';
 
@@ -492,6 +408,13 @@ function updateDay(y) {
   // linger on each event, then move on
   const f = smooth(clamp((seg - i - 0.2) / 0.6));
   const hour = lerp(EV_HOURS[i], EV_HOURS[i + 1], f);
+  // the step cards move with the clock: Find at 6 AM, Tailor at 11 AM, Apply at 3 PM, Follow up from 9 PM
+  const pos = Math.min(stepCards.length - 1, i + f);
+  const at = Math.floor(pos);
+  const sy = Math.round(lerp(L.stepTops[at], L.stepTops[Math.min(stepCards.length - 1, at + 1)], pos - at));
+  if (sy !== stepY) { stepY = sy; stepTrack.style.transform = `translate3d(0, ${-sy}px, 0)`; }
+  railEl.style.transform = `scaleY(${t.toFixed(4)})`;
+  hintEl.classList.toggle('is-gone', t > 0.02);
 
   let k = 0;
   while (k < SKY.length - 2 && hour > SKY[k + 1][0]) k++;
@@ -533,20 +456,22 @@ function updateDay(y) {
   if (ampmEl.textContent !== ampm) ampmEl.textContent = ampm;
   trackEl.style.transform = `scaleX(${t.toFixed(4)})`;
 
-  // the caption follows the clock: whichever event time is nearest
-  // the caption and feed show what has already happened by the clock's time
+  // the caption shows what has already happened by the clock's time
   const ev = EV_HOURS.reduce((n, h, j) => (hour >= h - 0.05 ? j : n), 0);
   if (ev !== dayEv) {
     dayEv = ev;
     dayEvents.forEach((li, j) => li.classList.toggle('is-on', j === ev));
-    notes.forEach((n, j) => { n.classList.toggle('is-in', j <= ev); n.classList.toggle('is-new', j === ev); n.classList.toggle('is-old', j < ev - 1); });
   }
-  const mood = ev === EV_HOURS.length - 1 ? 'happy' : dark ? 'night' : 'cool';
+  // the alerts stack up: the newest on top, the two before it fading below, older ones gone
+  const reached = notes.reduce((n, x) => (x.hour <= hour + 0.05 ? n + 1 : n), 0);
+  notes.forEach((x, j) => {
+    const k = reached - 1 - j;
+    const rank = k < 0 ? 'next' : k > 2 ? 'old' : String(k);
+    if (rank !== x.rank) { x.rank = rank; x.el.dataset.rank = rank; }
+  });
+  const mood = dark ? 'night' : 'cool';
   if (mood !== dayMood) { dayMood = mood; dayBot.dataset.mood = mood; }
 }
-
-/* ---------------- control dial ---------------- */
-initControl({ reduced });
 
 /* ---------------- phones: a sticky join button once no other join button is on screen ---------------- */
 {
@@ -571,7 +496,6 @@ function frame(time) {
   if (y !== lastY) {
     lastY = y;
     updateTop(y);
-    updateHow(y);
     updateDay(y);
     // over the dark stage the header stays light paper, so it stands apart from the stage
     nav.classList.toggle('is-stage', hero.classList.contains('is-gift-open') && L.heroTop + L.heroH - y > 60);

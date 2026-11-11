@@ -5,24 +5,27 @@ import { TAPS_TO_OPEN } from './config.js';
 const clamp = (v, a = -1, b = 1) => Math.min(b, Math.max(a, v));
 const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
-// The agent at work: sample job cards floating around the poster. Software engineers come first, plus one PM role.
+// The agent at work: ten sample job cards, from Himanshu's "Hero tiles" sheet. Five on the left and five on the
+// right, in the sheet's order from top to bottom, across software, product, analytics, QA and leadership roles.
 // x, y: place on desktop, in % of the hero; mx, my: place on phones (no mx: hidden on phones). z: depth, 0 far to 1 near.
-// sz: logo size inside its tile (default 56%); fill: a black logo shown white on its tile.
+// c: the tile colour from the sheet. sz: logo size inside its tile (default 56%).
 // tall: on phones, shown only on screens tall enough to fit it above the headline.
 const CARDS = [
-  { logo: 'google.svg', c: '#fff', t: 'Software Engineer III', s: 'Google · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 3, y: 21, z: 0.55, r: -5, mx: 66, my: 40, mz: 0.3 },
-  { logo: 'microsoft.svg', c: '#fff', sz: '50%', t: 'SDE II, Azure', s: 'Microsoft · Hyderabad', st: 'Interview call', tone: 'work', x: 81, y: 17, z: 0.4, r: 4, mx: 3, my: -7, mz: 0.1, tall: true },
-  { logo: 'atlassian.svg', c: '#0052cc', t: 'Senior Backend Engineer', s: 'Atlassian · Bengaluru · Remote', st: 'Recruiter replied', tone: 'work', x: 79, y: 45, z: 0.75, r: -4 },
-  { kind: 'scan', t: 'Scanning 20+ job sites', s: '1,284 postings today', st: '31 matches', tone: 'work', x: 7, y: 47, z: 0.3, r: 3 },
-  { logo: 'flipkart.svg', c: '#2874f0', t: 'SDE II, Supply Chain', s: 'Flipkart · Bengaluru · via Naukri', st: 'Applied', tone: 'ok', x: 2, y: 69, z: 0.7, r: 3, mx: 3, my: 69, mz: 0.2 },
-  { logo: 'swiggy.svg', c: '#fc8019', t: 'Software Engineer II', s: 'Swiggy · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 82, y: 70, z: 0.5, r: -3, mx: 54, my: 72, mz: 0.2 },
-  { logo: 'cred.png', c: '#000', fill: true, t: 'Product Manager, Rewards', s: 'CRED · Bengaluru · ₹32–48 LPA', st: 'Applied', tone: 'ok', x: 19, y: 34, z: 0.12, r: 2 },
-  { logo: 'razorpay.svg', c: '#0c2451', t: 'Backend Engineer, Payments', s: 'Razorpay · via Instahyre', st: 'Tailoring resume', tone: 'work', x: 70, y: 30, z: 0.1, r: -2, mx: 56, my: -5, mz: 0.1, tall: true },
+  // left side
+  { logo: 'google.svg', c: '#fff', t: 'Software Engineer III', s: 'Google · Bengaluru · Hybrid', st: 'Applied', tone: 'ok', x: 3, y: 19, z: 0.55, r: -5, mx: 66, my: 40, mz: 0.3 },
+  { logo: 'swiggy.svg', c: '#fc8019', t: 'Product Manager', s: 'Swiggy · Bengaluru · Hybrid', st: 'Interview call', tone: 'work', x: 18, y: 33, z: 0.12, r: 2, mx: 3, my: -7, mz: 0.1, tall: true },
+  { logo: 'microsoft.svg', c: '#fff', sz: '50%', t: 'SDE II, Azure', s: 'Microsoft · Hyderabad', st: 'Recruiter replied', tone: 'work', x: 6, y: 46, z: 0.3, r: 3, mx: 56, my: -5, mz: 0.1, tall: true },
+  { logo: 'jpmorgan.svg', c: '#3b2a1e', sz: '52%', t: 'Business Analyst', s: 'JPMorgan Chase · Mumbai', st: 'Tailoring resume', tone: 'work', x: 12, y: 59, z: 0.16, r: -2, mx: 3, my: 69, mz: 0.2 },
+  { logo: 'amazon.svg', c: '#232f3e', t: 'SDE I, Prime Video', s: 'Amazon · Bengaluru · Onsite', st: 'Applied', tone: 'ok', x: 2, y: 71, z: 0.7, r: 3 },
+  // right side
+  { logo: 'atlassian.svg', c: '#0c66e4', t: 'Senior Backend Engineer', s: 'Atlassian · Bengaluru · Remote', st: 'Interview call', tone: 'work', x: 81, y: 17, z: 0.45, r: 4 },
+  { logo: 'browserstack.svg', c: '#e8562a', sz: '62%', t: 'SDET II', s: 'BrowserStack · Mumbai', st: 'Applied', tone: 'ok', x: 70, y: 31, z: 0.1, r: -2 },
+  { logo: 'razorpay.svg', c: '#072654', t: 'Backend Engineer, Payments', s: 'Razorpay · Bengaluru', st: 'Tailoring resume', tone: 'work', x: 80, y: 45, z: 0.72, r: -4 },
+  { logo: 'salesforce.svg', c: '#00a1e0', sz: '64%', t: 'Engineering Manager', s: 'Salesforce · Hyderabad', st: 'Recruiter replied', tone: 'work', x: 72, y: 59, z: 0.2, r: 2, mx: 54, my: 72, mz: 0.2 },
+  { logo: 'fractal.svg', c: '#1d3a8a', sz: '64%', t: 'Product Analyst', s: 'Fractal Analytics · Mumbai', st: 'Applied', tone: 'ok', x: 82, y: 71, z: 0.5, r: -3 },
 ];
 function cardHTML(k) {
-  const icon = k.kind === 'ring' ? `<span class="jc__ring" style="--v:${k.v}"><i>${k.v}</i></span>`
-    : k.kind === 'scan' ? '<span class="jc__scan"><i></i></span>'
-      : `<span class="jc__logo${k.fill ? ' jc__logo--fill' : ''}" style="--c:${k.c}${k.sz ? `;--sz:${k.sz}` : ''}"><img src="assets/logos/${k.logo}" alt="" width="20" height="20"></span>`;
+  const icon = `<span class="jc__logo${k.fill ? ' jc__logo--fill' : ''}" style="--c:${k.c}${k.sz ? `;--sz:${k.sz}` : ''}"><img src="assets/logos/${k.logo}" alt="" width="20" height="20"></span>`;
   return `<div class="jc__push"><div class="jc__in"><div class="jc__card">${icon}<b>${esc(k.t)}</b><small>${esc(k.s)}</small><span class="jc__st${k.tone === 'work' ? ' jc__st--work' : ''}">${k.tone === 'ok' ? '<svg width="11" height="11"><use href="#i-check"/></svg>' : ''}${esc(k.st)}</span></div></div></div>`;
 }
 

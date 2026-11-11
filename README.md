@@ -37,6 +37,20 @@ The build writes the finished site to `dist/`. It also writes `robots.txt` and `
 Vercel runs `npm run build` and serves `dist/`. The settings are in `vercel.json`.
 
 - Set `SITE_URL` (for example `https://www.autoplaced.ai`) in the Vercel project when the site moves to the real domain. Share links and the sitemap use this address.
+## The landing page, top to bottom
+
+The order follows the client's sitemap document. Each section in `index.html` starts with a `SCROLL n` comment.
+
+1. Hero: the gift box and ten job cards. The cards are listed in `CARDS` in `js/hero.js`, five for each side, from top to bottom.
+2. Scroll 1, the numbers: three number cards and a moving strip of job sites. People can pause the strip.
+3. Scroll 2, the problem: four problem cards and the LinkedIn line.
+4. Scroll 3: the product walkthrough video.
+5. Scroll 4, how it works: as the person scrolls, the clock moves from 6 AM to 2 AM. The four step cards (Find, Tailor, Apply, Follow up) slide past, and the agent's alerts stack up under the clock. Each alert has its time of day in `data-hour` (26 means 2 AM the next day). The four Features menu items scroll to the matching step card.
+6. Scroll 5: the old way compared with Autoplaced.
+7. Scroll 6: the "Why Autoplaced" video.
+8. Scroll 7: the FAQ.
+9. Scroll 8: the closing "Join the waitlist" over the golden meadow.
+
 ## Joining: what the backend team must supply
 
 Every "Join the waitlist" button and the hero gift box (after two taps) open `/join`. The flow is:
@@ -77,12 +91,11 @@ If you change the meadow in `js/meadow.js`, make the still frames again. Serve t
 | `css/styles.css` | All styles and colour tokens, for all three pages |
 | `js/config.js` | Values the client can change: WhatsApp community link, the three backend addresses, the offer end date, the six gift boxes, the taps to open the hero box, the two videos |
 | `js/main.js` | Start point of the landing page: scrolling, menu, motion, videos |
-| `js/hero.js` | The hero gift box (two taps, then `/join`) and the floating job cards |
+| `js/hero.js` | The hero gift box (two taps, then `/join`) and the ten floating job cards |
 | `js/join-page.js` | The join page: form, Google step, founding pass, gift boxes, sharing, pass download |
 | `js/blog.js` | Start point of the blog page |
 | `js/celebrate.js` | The burst of gold paper when the pass is issued |
 | `js/bot.js` | The robot mascot |
-| `js/dial.js` | The autopilot dial and needle |
 | `js/meadow.js` | The 3D meadow behind the hero and the closing section (three.js) |
 | `assets/meadow/` | Still frames of the 3D meadow (see "The meadow on slow devices") |
 | `meadow-still.html` | Source for the still frames in `assets/meadow/` |

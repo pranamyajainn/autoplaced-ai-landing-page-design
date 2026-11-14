@@ -99,6 +99,7 @@ If you change the meadow in `js/meadow.js`, make the still frames again. Serve t
 | `js/meadow.js` | The 3D meadow behind the hero and the closing section (three.js) |
 | `assets/meadow/` | Still frames of the 3D meadow (see "The meadow on slow devices") |
 | `meadow-still.html` | Source for the still frames in `assets/meadow/` |
+| `extras/orbit/` | The "Where it applies" orbit section, kept as a page of its own after it left the landing page. See `extras/orbit/README.md`. |
 | `assets/` | Icons, share image and company logos |
 | `fonts/` | Geist and Instrument Serif (SIL Open Font License) |
 | `og.html` | Source for the share image `assets/og.jpg` |
